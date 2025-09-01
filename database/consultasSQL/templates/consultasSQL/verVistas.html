@@ -1,0 +1,25 @@
+<!-- consultasSQL/templates/consultasSQL/verVistas.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ver Vistas</title>
+</head>
+<body>
+    <h2>Vistas</h2>
+    {% if views %}
+        <ul>
+            {% for view in views %}
+                <li>
+                    {{ view.0 }} 
+                    <a href="{% url 'ver_resumen_vista' view.0 %}">Ver Resumen</a> |
+                    <a href="?sql_query=SELECT * FROM {{ view.0 }} LIMIT 10;">Ver Definición SQL</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No hay vistas disponibles.</p>
+    {% endif %}
+</body>
+</html>

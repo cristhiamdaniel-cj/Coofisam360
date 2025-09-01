@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}Inicio · Coofisam 360{% endblock %}
+
+{% block content %}
+<div class="card p-4 shadow-sm">
+  <h2>¡Bienvenido a Coofisam!</h2>
+  <p>Has iniciado sesión correctamente.</p>
+
+  <div class="d-flex gap-2 mt-3">
+    <a class="btn btn-primary" href="{% url 'consultas_sql' %}">Consultar SQL</a>
+    <a class="btn btn-success" href="{% url 'users:modulo_financiero' %}">Módulo Financiero</a>
+    <a class="btn btn-secondary" href="{% url 'users:logout' %}">Salir</a>
+  </div>
+</div>
+{% endblock %}

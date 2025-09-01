@@ -1,0 +1,40 @@
+<!-- consultasSQL/templates/consultasSQL/resumenVista.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resumen de Vista</title>
+</head>
+<body>
+    <h2>Resumen de la Vista: {{ view_name }}</h2>
+    {% if result %}
+        <h3>Campos</h3>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Campo</th>
+                    <th>Tipo de Dato</th>
+                </tr>
+            </thead>
+                <tbody>
+                    {# Ordena result alfabéticamente por el primer elemento de la tupla (row.0 = nombre del campo) #}
+                    {% for row in result|dictsort:"0" %}
+                        <tr>
+                            <td>{{ row.0 }}</td>
+                            <td>{{ row.1 }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+
+        </table>
+    {% else %}
+        <p>No se encontraron campos.</p>
+    {% endif %}
+    
+    {% if definition %}
+        <h3>Definición SQL de la Vista:</h3>
+        <pre>{{ definition.0 }}</pre>
+    {% endif %}
+</body>
+</html>
