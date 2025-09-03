@@ -421,3 +421,31 @@ def finanzas_etl_stream(request):
     resp = StreamingHttpResponse(event_stream(), content_type='text/event-stream')
     resp['Cache-Control'] = 'no-cache'
     return resp
+
+from django.http import JsonResponse
+from django.shortcuts import render
+
+def home_view(request):
+    """Vista principal de Coofisam360"""
+    context = {
+        'title': 'Coofisam360 - Sistema Integral',
+        'message': 'Bienvenido a Coofisam360',
+        'api_status': 'Funcionando',
+        'version': '1.0'
+    }
+    return render(request, 'home.html', context)
+
+def api_info(request):
+    """Información de la API"""
+    return JsonResponse({
+        'app': 'Coofisam360',
+        'status': 'active',
+        'api_version': '1.0',
+        'endpoints': {
+            'api': '/api/v1/',
+            'admin': '/admin/',
+            'users': '/users/',
+            'consultas': '/consultas/'
+        },
+        'message': 'API funcionando correctamente'
+    })

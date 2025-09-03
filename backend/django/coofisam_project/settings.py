@@ -34,7 +34,7 @@ SECRET_KEY = 'django-insecure-#j0h06r!vq-7^uha=p-v7gz91o0(u)0s$qm!$xy^o93(9e@7dp
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['coofisam360.ngrok.io', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['coofisam360.ngrok.io', '*']
 
 
 
@@ -54,16 +54,17 @@ INSTALLED_APPS = [
     'consultasSQL',
 ]
 '''
-MIDDLEWARE = [
+MIDDLEWARE = [    'corsheaders.middleware.CorsMiddleware',
+
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
-]
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',]
 '''
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -74,6 +75,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',   # <-- AÑADE ESTA LÍNEA
 ]
 ROOT_URLCONF = 'coofisam_project.urls'
 
@@ -149,10 +151,10 @@ USE_I18N = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 # Ruta destino para collectstatic (fuera de /static que usas en dev)
 import os
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 # Si quieres seguir usando /static en desarrollo:
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
@@ -165,7 +167,7 @@ LOGIN_REDIRECT_URL = 'users:home'
 
 # coofisam_project/settings.py
 
-CSRF_TRUSTED_ORIGINS = [
+CSRF_TRUSTED_ORIGINS = ['https://coofisam360.ngrok.io', 
     'https://coofisam360.ngrok.io',
 ]
 
@@ -196,3 +198,9 @@ CORS_ALLOW_ALL_ORIGINS = True  # Solo para desarrollo
 
 # API URLs
 APPEND_SLASH = False
+
+STORAGES = {
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+}

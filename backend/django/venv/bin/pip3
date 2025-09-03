@@ -1,4 +1,4 @@
-#!/home/desarrollo/coofisam_web/venv/bin/python3
+#!/home/desarrollo/coofisam360/backend/django/venv/bin/python
 # -*- coding: utf-8 -*-
 import re
 import sys
