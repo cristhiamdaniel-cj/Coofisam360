@@ -105,11 +105,12 @@ WSGI_APPLICATION = 'coofisam_project.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'coofisam360',
+        'NAME': 'coofisam_db',  # Base de datos principal
         'USER': 'postgres',
         'PASSWORD': 'Alejito10.',
-        'HOST': 'localhost',  # Cambia esto si es necesario (por ejemplo, si usas un contenedor o una dirección diferente)
-        'PORT': '5432',  # Puerto por defecto para PostgreSQL
+        'HOST': 'localhost',
+        'PORT': '5432',
+        # 'OPTIONS': { 'options': '-c search_path=finanzas,public' },  # opcional
     }
 }
 
