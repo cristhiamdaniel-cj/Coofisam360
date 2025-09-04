@@ -1,0 +1,31 @@
+from django.contrib import admin
+from django.urls import path, include
+from users.views import home_view, api_info
+
+urlpatterns = [
+    # Página principal
+    path('', home_view, name='home'),
+    path('info/', api_info, name='api-info'),
+    
+    # Administración
+    path('admin/', admin.site.urls),
+    
+    # URLs de aplicaciones web existentes
+    path('users/', include('users.urls')),
+    path('consultas/', include('consultasSQL.urls')),
+    
+    # URLs de la API REST
+    path('api/v1/', include('users.api_urls')),
+    
+    # API de autenticación de Django REST Framework
+    path('api-auth/', include('rest_framework.urls')),
+
+    path('login/', login_redirect, name='login-redirect'),  # <-- NUEVA RUTA
+]
+
+# Agregar antes del cierre de urlpatterns
+from django.shortcuts import redirect
+
+def login_redirect(request):
+    return redirect('/admin/login/')
+

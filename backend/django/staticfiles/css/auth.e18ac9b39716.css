@@ -1,0 +1,74 @@
+/* === Fondo del login con el logo a lo ancho === */
+body.login-bg{
+  /* usa tu archivo existente */
+  background: url("../img/coofisam.bb3bcc3b45ad.png") center/cover no-repeat fixed;
+  /* si el logo es claro, opcionalmente oscurecemos un poco para contraste */
+  position: relative;
+}
+
+body.login-bg::before{
+  /* leve velo para leer mejor los campos encima del fondo */
+  content:"";
+  position: fixed; inset:0;
+  background: rgba(0,0,0,.15);
+  pointer-events: none;
+}
+
+/* === Centrado vertical del formulario en páginas con login-bg === */
+body.login-bg .site-main{
+  min-height: calc(100vh - 120px); /* header+footer */
+  display: grid;
+  place-items: center;
+}
+
+/* === Tarjeta translúcida (glass) === */
+.card.glass{
+  width: min(520px, 92vw);
+  background: rgba(255,255,255,.18);
+  border: 1px solid rgba(255,255,255,.35);
+  border-radius: 18px;
+  box-shadow: 0 10px 40px rgba(0,0,0,.18);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  padding: 26px 22px;
+  color: #14203a;
+}
+
+/* Título del login */
+.card.glass h2{
+  margin: 0 0 14px; font-size: 24px; font-weight: 700;
+  color: #0f1a30;
+}
+
+/* Campos y botón */
+.card.glass .field{ margin-bottom: 14px; }
+.card.glass label{ font-size: 14px; color: #22314d; }
+.card.glass input[type="text"],
+.card.glass input[type="password"]{
+  width: 100%;
+  border: 1px solid rgba(255,255,255,.55);
+  border-radius: 12px;
+  padding: 12px 12px;
+  background: rgba(255,255,255,.75);
+  outline: none;
+  font-size: 16px;
+}
+.card.glass input:focus{
+  border-color: #1b7bff;
+  box-shadow: 0 0 0 3px rgba(27,123,255,.18);
+}
+
+.card.glass .btn-primary{
+  width: 100%;
+  border: 0; border-radius: 12px;
+  background: #1b7bff;
+  color: #fff; font-weight: 600;
+  padding: 12px 14px; margin-top: 6px;
+  cursor: pointer;
+}
+.card.glass .btn-primary:hover{ background:#1563cc; }
+
+/* El footer en login queda semitransparente para no tapar el fondo */
+body.login-bg footer{
+  background: rgba(0,0,0,.65) !important;
+}
