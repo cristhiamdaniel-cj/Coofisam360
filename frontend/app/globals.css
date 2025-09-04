@@ -1,0 +1,60 @@
+:root{
+  --coofi-bg: #fde8ea;         /* rosa claro fondo */
+  --coofi-maroon: #7a0e0e;     /* rojo vino sidebar */
+  --coofi-maroon-2: #5e0a0a;   /* más oscuro */
+  --coofi-card: #ffffff;
+  --coofi-head: #7a0e0e;       /* encabezado de tabla */
+  --coofi-head-text: #fff;
+  --coofi-row-alt: #fdeef0;    /* zebra */
+  --coofi-text: #391414;
+}
+
+*{ box-sizing: border-box; }
+
+.coofi-body{
+  margin: 0;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  color: var(--coofi-text);
+  background: var(--coofi-bg);
+}
+
+.coofi-layout{
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  min-height: 100vh;
+}
+
+.coofi-sidebar{
+  background: linear-gradient(180deg, var(--coofi-maroon), var(--coofi-maroon-2));
+  color: #fff;
+  padding: 18px 16px;
+}
+.coofi-brand{ display:flex; align-items:center; gap:12px; padding: 8px 4px 18px; border-bottom:1px solid rgba(255,255,255,.2);}
+.coofi-logo{ width:42px; height:42px; border-radius:50%; background:#fff3; }
+.coofi-brand-text{ font-weight:800; text-transform:uppercase; letter-spacing:.5px; }
+.coofi-mod-title{ margin:18px 2px 8px; font-weight:700; opacity:.9; }
+.coofi-nav{ display:flex; flex-direction:column; gap:10px; margin-top:12px; }
+.coofi-nav-item{ color:#fff; text-decoration:none; padding:8px 10px; border-radius:6px; opacity:.92; }
+.coofi-nav-item:hover{ background: #ffffff22; }
+.coofi-sidebar-exit{ margin-top:auto; padding-top:18px; opacity:.85; }
+.coofi-sidebar-exit a{ color:#fff; text-decoration:none; }
+
+.coofi-main{ padding: 28px 28px 80px; }
+
+.coofi-title{ margin:0 0 18px; font-size: 34px; font-weight: 800; letter-spacing: .5px; }
+
+.coofi-card{ background: var(--coofi-card); border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,.08); overflow:auto; }
+.coofi-table{ width:100%; border-collapse:collapse; }
+.coofi-table th{ background: var(--coofi-head); color: var(--coofi-head-text); text-align:left; padding:12px 14px; position:sticky; top:0; }
+.coofi-table td{ padding:12px 14px; border-bottom:1px solid #eee; }
+.coofi-table tr:nth-child(even){ background: var(--coofi-row-alt); }
+.coofi-table .num{ text-align:right; white-space:nowrap; }
+
+.coofi-footer{ position:fixed; left:0; right:0; bottom:0; background:#000; color:#fff; text-align:center; padding:10px 12px; font-size:13px; }
+
+@media (max-width: 860px){
+  .coofi-layout{ grid-template-columns: 1fr; }
+  .coofi-sidebar{ display:none; }
+  .coofi-main{ padding: 18px 12px 80px; }
+}
+
