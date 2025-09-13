@@ -18,8 +18,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
-# Carpeta donde guardaremos los Excel del Libro de Balance
-LIBRO_BALANCE_ROOT = BASE_DIR / "Coofisam" / "data" / "Libro_de_Balance_subidos"
+# Carpeta donde guardaremos/leeremos los Excel del Libro de Balance
+# Unificamos con la ruta que usa el script ETL en /home/desarrollo/Coofisam
+from pathlib import Path as _P
+LIBRO_BALANCE_ROOT = _P('/home/desarrollo/Coofisam/data/Libro_de_Balance_x_Aanoo')
 LIBRO_BALANCE_ROOT.mkdir(parents=True, exist_ok=True)
 
 # (Opcional) permisos de archivo creados por Django (rw-r--r--)
@@ -34,7 +36,14 @@ SECRET_KEY = 'django-insecure-#j0h06r!vq-7^uha=p-v7gz91o0(u)0s$qm!$xy^o93(9e@7dp
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['coofisam360.ngrok.io', '*']
+# ALLOWED_HOSTS = ['coofisam360.ngrok.io', '*']
+ALLOWED_HOSTS = [
+    "localhost",
+    "127.0.0.1",
+    "192.168.0.101",
+    "coofisam360.ngrok.io",
+    "inti-data.ngrok.io",	
+]
 
 
 
@@ -186,6 +195,7 @@ REST_FRAMEWORK = {
 }
 
 # CORS Configuration
+'''
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "http://127.0.0.1:3000",
@@ -194,8 +204,24 @@ CORS_ALLOWED_ORIGINS = [
     "http://192.168.0.101:3000",
     "http://0.tcp.ngrok.io",
 ]
+'''
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",         # si usas frontend dev
+    "http://127.0.0.1:3000",
+    "https://coofisam360.ngrok.io", # tu túnel público
+    
+]
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://coofisam360.ngrok.io",
+    "https://inti-data.ngrok.io",
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+]
 
 CORS_ALLOW_ALL_ORIGINS = True  # Solo para desarrollo
+# Permitir enviar cookies/sesión en peticiones cross-origin (requerido para SessionAuth y SSE con credenciales)
+CORS_ALLOW_CREDENTIALS = True
 
 # API URLs
 APPEND_SLASH = False
@@ -203,5 +229,41 @@ APPEND_SLASH = False
 STORAGES = {
     "staticfiles": {
         "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+}
+# Carpeta de logs
+LOG_DIR = BASE_DIR / "logs"
+LOG_DIR.mkdir(parents=True, exist_ok=True)
+
+# Logging a archivo para depuración en entorno dev
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '[{levelname}] {asctime} {name} | {message}',
+            'style': '{',
+        },
+    },
+    'handlers': {
+        'file': {
+            'level': 'INFO',
+            'class': 'logging.FileHandler',
+            'filename': str(LOG_DIR / 'coofisam.log'),
+            'formatter': 'verbose',
+            'encoding': 'utf-8',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['file'],
+            'level': 'INFO',
+            'propagate': True,
+        },
+        'coofisam': {
+            'handlers': ['file'],
+            'level': 'INFO',
+            'propagate': False,
+        },
     },
 }

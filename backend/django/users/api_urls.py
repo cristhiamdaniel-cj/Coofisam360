@@ -16,6 +16,8 @@ urlpatterns = [
     path('finanzas/tree/', api_views.finanzas_tree, name='api-finanzas-tree'),
     path('finanzas/upload/', api_views.finanzas_upload, name='api-finanzas-upload'),
     path('finanzas/files/', api_views.finanzas_files, name='api-finanzas-files'),
+    path('finanzas/download/', api_views.finanzas_download, name='api-finanzas-download'),
+    path('finanzas/delete/', api_views.finanzas_delete, name='api-finanzas-delete'),
     path('finanzas/sample/', api_views.finanzas_sample, name='api-finanzas-sample'),
     path('finanzas/indicadores/spec/', api_views.finanzas_indicadores_spec, name='api-finanzas-indicadores-spec'),
     path('finanzas/indicadores/', api_views.finanzas_indicadores_list, name='api-finanzas-indicadores-list'),
@@ -29,4 +31,10 @@ urlpatterns = [
     path('finanzas/presupuesto/upload/', api_views.PresupuestoUploadView.as_view(), name='api-finanzas-presupuesto-upload'),
     path('finanzas/indicadores/consolidados/', api_views.finanzas_indicadores_consolidados, name='api-finanzas-indicadores-consolidados'),
     path('finanzas/indicadores/analisis/', api_views.IndicadoresAnalisisView.as_view(), name='api-finanzas-indicadores-analisis'),
+    # Indicadores (tabla comparativa propia)
+    path('indicadores/comparativa/', api_views.indicadores_comparativa, name='api-indicadores-comparativa'),
+
+    # Oficinas (finanzas.oficinas_mes)
+    path('finanzas/oficinas/', api_views.OficinasView.as_view(), name='api-finanzas-oficinas-list'),
+    path('finanzas/oficinas/<str:codigo>/', api_views.OficinaView.as_view(), name='api-finanzas-oficina-detail'),
 ]

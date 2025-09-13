@@ -1,4 +1,5 @@
 from rest_framework import generics, status
+import logging
 from rest_framework.views import APIView
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
@@ -12,6 +13,7 @@ import re
 import unicodedata
 from datetime import datetime
 from django.db import connections
+from django.http import FileResponse
 
 # ====== Helpers de detección de vistas por esquema ======
 def _view_exists(schema: str, view: str) -> bool:
@@ -118,18 +120,25 @@ def _get_balance_root() -> Path:
     # Fallback relativo al proyecto
     return Path(settings.BASE_DIR) / 'Coofisam' / 'data' / 'Libro_de_Balance_subidos'
 
-def _build_tree(path: Path, max_depth: int = 3, include_files: bool = True, _depth: int = 0):
-    node = {"name": path.name or str(path), "type": "dir", "children": []}
+def _build_tree(root: Path, path: Path, max_depth: int = 3, include_files: bool = True, _depth: int = 0):
+    """Construye árbol con rutas relativas (rel) seguras desde root."""
+    rel = path.relative_to(root) if path != root else Path("")
+    node = {"name": path.name or str(path), "type": "dir", "children": [], "rel": rel.as_posix()}
     if _depth >= max_depth:
         return node
     try:
         with os.scandir(path) as it:
             entries = sorted(it, key=lambda e: (not e.is_dir(follow_symlinks=False), e.name.lower()))
             for entry in entries:
+                entry_path = Path(entry.path)
                 if entry.is_dir(follow_symlinks=False):
-                    node["children"].append(_build_tree(Path(entry.path), max_depth, include_files, _depth + 1))
+                    node["children"].append(_build_tree(root, entry_path, max_depth, include_files, _depth + 1))
                 elif include_files:
-                    node["children"].append({"name": entry.name, "type": "file"})
+                    node["children"].append({
+                        "name": entry.name,
+                        "type": "file",
+                        "rel": entry_path.relative_to(root).as_posix(),
+                    })
     except FileNotFoundError:
         node["error"] = f"Ruta no existe: {path}"
     except PermissionError:
@@ -146,12 +155,74 @@ def finanzas_tree(request):
     depth = int(request.query_params.get('depth', 3))
     include_files = request.query_params.get('includeFiles', 'true').lower() != 'false'
     root = _get_balance_root()
-    data = _build_tree(root, max_depth=max(1, min(depth, 8)), include_files=include_files)
+    data = _build_tree(root, root, max_depth=max(1, min(depth, 8)), include_files=include_files)
     return Response({
         'root': root.name,
         'absolute_root': str(root),
         'tree': data.get('children', []),
     })
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def finanzas_download(request):
+    """Descarga un archivo bajo LIBRO_BALANCE_ROOT indicado por path relativo (?path=rel)."""
+    rel = request.query_params.get('path')
+    if not rel:
+        return Response({"error": "Parámetro 'path' requerido"}, status=400)
+    root = _get_balance_root()
+    try:
+        root_resolved = root.resolve(strict=False)
+        target = (root / Path(rel)).resolve(strict=False)
+    except Exception:
+        return Response({"error": "Ruta inválida"}, status=400)
+
+    # Evitar path traversal fuera de root
+    root_prefix = str(root_resolved) + os.sep
+    if not (str(target).startswith(root_prefix) or str(target) == str(root_resolved)):
+        return Response({"error": "Ruta fuera de la raíz"}, status=400)
+    if not target.exists() or not target.is_file():
+        return Response({"error": "Archivo no encontrado"}, status=404)
+
+    ext = target.suffix.lower()
+    if ext == '.xlsx':
+        ctype = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+    elif ext == '.xls':
+        ctype = 'application/vnd.ms-excel'
+    else:
+        ctype = 'application/octet-stream'
+
+    return FileResponse(open(target, 'rb'), as_attachment=True, filename=target.name, content_type=ctype)
+
+
+@api_view(['DELETE', 'POST'])
+@permission_classes([IsAuthenticated])
+def finanzas_delete(request):
+    """Elimina un archivo bajo LIBRO_BALANCE_ROOT indicado por path relativo (?path=rel o JSON {path})."""
+    rel = request.query_params.get('path') or (request.data.get('path') if hasattr(request, 'data') else None)
+    if not rel:
+        return Response({"error": "Parámetro 'path' requerido"}, status=400)
+    root = _get_balance_root()
+    try:
+        root_resolved = root.resolve(strict=False)
+        target = (root / Path(rel)).resolve(strict=False)
+    except Exception:
+        return Response({"error": "Ruta inválida"}, status=400)
+
+    # Evitar path traversal fuera de root
+    root_prefix = str(root_resolved) + os.sep
+    if not (str(target).startswith(root_prefix) or str(target) == str(root_resolved)):
+        return Response({"error": "Ruta fuera de la raíz"}, status=400)
+    if not target.exists():
+        return Response({"error": "No existe"}, status=404)
+    if target.is_dir():
+        return Response({"error": "Sólo se permiten archivos, no carpetas"}, status=400)
+
+    try:
+        target.unlink()
+        return Response({"success": True, "deleted": rel})
+    except Exception as e:
+        return Response({"error": str(e)}, status=500)
 
 
 @api_view(['POST'])
@@ -499,6 +570,9 @@ def finanzas_cupos_credito_list(request):
     entidad = request.query_params.get('entidad')
     limit = int(request.query_params.get('limit', '200'))
     where = []
+    # Expresiones robustas para convertir mes/anio a entero sin lanzar errores
+    month_expr = CASE_MONTH_TO_INT
+    year_expr = CASE_YEAR_TO_INT
     params = {}
     if year:
         where.append('EXTRACT(year FROM fecha_renovado) = %(year)s::int')
@@ -1069,3 +1143,400 @@ class IndicadoresAnalisisView(APIView):
                     [indicador, anio, mes, analisis],
                 )
         return Response({'success': True})
+
+
+# ====== Indicadores Comparativa (tabla dedicada) ======
+
+@api_view(['GET', 'POST'])
+@permission_classes([IsAuthenticated])
+def indicadores_comparativa(request):
+    """GET: Lista indicadores desde indicadores.indicadores_comparativa
+       Filtros opcionales: ?year=&month=&indicador=&limit=
+       POST: upsert por (nombre_indicador, anio, mes)
+       Body acepta: nombre_indicador, anio, mes, alcance, valor_indicador,
+         anio_menos_1_dic, valor_indicador_2, valor_indicador_3, analisis
+    """
+    from hashlib import md5
+    def _ensure_table():
+        with connections['default'].cursor() as c:
+            c.execute("CREATE SCHEMA IF NOT EXISTS indicadores;")
+            c.execute(
+                """
+                CREATE TABLE IF NOT EXISTS indicadores.indicadores_comparativa (
+                  nombre_indicador text NOT NULL,
+                  anio int NOT NULL,
+                  mes int NOT NULL,
+                  periodo text,
+                  alcance text,
+                  valor_indicador numeric,
+                  mes_de_diciembre_fijo numeric,
+                  anio_menos_1_dic numeric,
+                  periodo2 text,
+                  valor_indicador_2 numeric,
+                  anio_menos_1 int,
+                  mismo_mes_ref_1 int,
+                  periodo3 text,
+                  valor_indicador_3 numeric,
+                  anio_menos_2 int,
+                  mismo_mes_ref_2 int,
+                  periodo4 text,
+                  valor_indicador_4 numeric,
+                  analisis text,
+                  CONSTRAINT indicadores_comparativa_pk PRIMARY KEY (nombre_indicador, anio, mes)
+                )
+                """
+            )
+
+    # Utilidades de mes
+    MONTHS_MAP = {
+        'enero': 1, 'febrero': 2, 'marzo': 3, 'abril': 4,
+        'mayo': 5, 'junio': 6, 'julio': 7, 'agosto': 8,
+        'septiembre': 9, 'setiembre': 9, 'octubre': 10, 'noviembre': 11, 'diciembre': 12,
+    }
+    MONTHS_INV = {v: k.capitalize() for k, v in MONTHS_MAP.items()}
+
+    # Expresiones SQL reutilizables: mes/anio → int
+    CASE_MONTH_TO_INT = (
+        "CASE\n"
+        "  WHEN NULLIF(TRIM((mes)::text),'') ~ '^[0-9]+' THEN (NULLIF(TRIM((mes)::text),'')::int)\n"
+        "  WHEN LOWER(NULLIF(TRIM((mes)::text),'')) IN ('enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','setiembre','octubre','noviembre','diciembre') THEN\n"
+        "    CASE LOWER(NULLIF(TRIM((mes)::text),''))\n"
+        "      WHEN 'enero' THEN 1 WHEN 'febrero' THEN 2 WHEN 'marzo' THEN 3 WHEN 'abril' THEN 4 WHEN 'mayo' THEN 5 WHEN 'junio' THEN 6 WHEN 'julio' THEN 7 WHEN 'agosto' THEN 8 WHEN 'septiembre' THEN 9 WHEN 'setiembre' THEN 9 WHEN 'octubre' THEN 10 WHEN 'noviembre' THEN 11 WHEN 'diciembre' THEN 12\n"
+        "    END\n"
+        "  ELSE NULL\n"
+        "END"
+    )
+    CASE_YEAR_TO_INT = (
+        "CASE\n"
+        "  WHEN NULLIF(TRIM((anio)::text),'') ~ '^[0-9]{1,4}$' THEN (NULLIF(TRIM((anio)::text),'')::int)\n"
+        "  ELSE NULL\n"
+        "END"
+    )
+
+    logger = logging.getLogger('coofisam')
+
+    if request.method == 'POST':
+        data = request.data
+        nombre = (data.get('nombre_indicador') or data.get('indicador') or '').strip()
+        if not nombre:
+            return Response({'error': 'nombre_indicador es requerido'}, status=400)
+        try:
+            anio = int(data.get('anio'))
+            mes = int(data.get('mes'))
+        except Exception:
+            return Response({'error': 'anio y mes deben ser enteros'}, status=400)
+        alcance = (data.get('alcance') or data.get('descripcion') or data.get('scope') or '').strip() or None
+        def to_num(v):
+            if v in (None, ''): return None
+            try: return float(v)
+            except Exception: return None
+        v_actual = to_num(data.get('valor_indicador') or data.get('mesActual') or data.get('mes_actual'))
+        v_dic = to_num(data.get('anio_menos_1_dic') or data.get('diciembre1a') or data.get('diciembre_1a'))
+        v_1a = to_num(data.get('valor_indicador_2') or data.get('mes1a') or data.get('mes_1a'))
+        v_2a = to_num(data.get('valor_indicador_3') or data.get('mes2a') or data.get('mes_2a'))
+        analisis = (data.get('analisis') or '').strip() or None
+        mes_str = MONTHS_INV.get(mes) or str(mes)
+        periodo_str = (data.get('periodo') or f"{anio:04d}-{mes:02d}").strip()[:7]
+
+        try:
+            logger.info(f"[comparativa] POST intento update | nombre={nombre} anio={anio} mes={mes} periodo={periodo_str} analisis_len={len(analisis or '')}")
+            with connections['default'].cursor() as c:
+                # 1) UPDATE por (indicador + periodo YYYY-MM)
+                c.execute(
+                    """
+                    UPDATE indicadores.indicadores_comparativa
+                    SET analisis = COALESCE(%s, analisis)
+                    WHERE lower(trim(nombre_indicador)) = lower(trim(%s))
+                      AND SUBSTRING(trim(periodo) FROM 1 FOR 7) = %s
+                    """,
+                    [analisis, nombre, periodo_str]
+                )
+                updated = c.rowcount
+                logger.info(f"[comparativa] update by indicador+periodo YYYY-MM -> rows={updated}")
+
+                # 2) Si no existe, UPSERT usando index inference por expresiones (coincide con índice único)
+                if updated == 0:
+                    c.execute(
+                        """
+                        INSERT INTO indicadores.indicadores_comparativa (mes, anio, periodo, nombre_indicador, analisis)
+                        VALUES (%s, %s, %s, %s, %s)
+                        ON CONFLICT (
+                            lower(trim(nombre_indicador)),
+                            substring(trim(periodo) from 1 for 7)
+                        ) DO UPDATE SET analisis = EXCLUDED.analisis
+                        """,
+                        [str(mes), anio, periodo_str, nombre, analisis]
+                    )
+                    updated = 1
+                    logger.info("[comparativa] upsert by (lower(trim(indicador)), substring(periodo,1,7)) -> rows=1")
+            logger.info(f"[comparativa] OK actualizado | rows={updated}")
+            return Response({'success': True, 'updated_rows': updated})
+        except Exception as e:
+            msg = str(e)
+            logger.exception(f"[comparativa] ERROR POST: {msg}")
+            if 'indicadores_comparativa' in msg and ('does not exist' in msg or 'no existe' in msg):
+                _ensure_table()
+                with connections['default'].cursor() as c:
+                    c.execute(
+                        """
+                        INSERT INTO indicadores.indicadores_comparativa (
+                            nombre_indicador, anio, mes, alcance,
+                            valor_indicador, anio_menos_1_dic, valor_indicador_2,
+                            valor_indicador_3, analisis
+                        ) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s)
+                        """,
+                        [nombre, anio, mes_str, alcance, v_actual, v_dic, v_1a, v_2a, analisis]
+                    )
+                logger.info("[comparativa] Tabla creada y fila insertada por fallback")
+                return Response({'success': True, 'id': md5(f"{nombre}|{anio}|{mes}".encode()).hexdigest()[:16]}, status=201)
+            return Response({'error': msg}, status=500)
+
+    # GET
+    year = request.query_params.get('year')
+    month = request.query_params.get('month')
+    indicador = request.query_params.get('indicador')
+    limit = int(request.query_params.get('limit') or '500')
+    where = []
+    params = {}
+    if year and month:
+        try:
+            periodo_ym = f"{int(year):04d}-{int(month):02d}"
+            where.append("COALESCE(SUBSTRING(trim(periodo) FROM 1 FOR 7), '') = %(periodo)s")
+            params['periodo'] = periodo_ym
+        except Exception:
+            pass
+    if indicador:
+        where.append('lower(trim(nombre_indicador)) LIKE lower(trim(%(indicador)s))')
+        params['indicador'] = f"%{indicador}%"
+    where_sql = ('WHERE ' + ' AND '.join(where)) if where else ''
+
+    sql = f"""
+        SELECT nombre_indicador, alcance, anio, mes, periodo,
+               valor_indicador,
+               CASE
+                   WHEN NULLIF(TRIM(anio_menos_1_dic::text),'') ~ '^-?[0-9]+(\\.[0-9]+)?$'
+                        THEN (NULLIF(TRIM(anio_menos_1_dic::text),'')::numeric)
+                   WHEN NULLIF(TRIM(mes_de_diciembre_fijo::text),'') ~ '^-?[0-9]+(\\.[0-9]+)?$'
+                        THEN (NULLIF(TRIM(mes_de_diciembre_fijo::text),'')::numeric)
+                   ELSE NULL
+               END AS dic_anterior,
+               valor_indicador_2 AS mes_1a,
+               valor_indicador_3 AS mes_2a,
+               analisis
+        FROM indicadores.indicadores_comparativa
+        {where_sql}
+        ORDER BY nombre_indicador, anio DESC, periodo DESC NULLS LAST
+        LIMIT {limit}
+    """
+    try:
+        with connections['default'].cursor() as c:
+            c.execute(sql, params)
+            cols = [col[0] for col in c.description]
+            rows = [dict(zip(cols, row)) for row in c.fetchall()]
+    except Exception as e:
+        msg = str(e)
+        logger.exception(f"[comparativa] ERROR GET: {msg}")
+        if 'indicadores_comparativa' in msg and ('does not exist' in msg or 'no existe' in msg):
+            _ensure_table()
+            with connections['default'].cursor() as c:
+                c.execute(sql, params)
+                cols = [col[0] for col in c.description]
+                rows = [dict(zip(cols, row)) for row in c.fetchall()]
+        else:
+            return Response({'error': msg}, status=500)
+
+    # Normalizar al shape que espera el front
+    from hashlib import md5
+    items = []
+    def _month_to_int(val):
+        try:
+            n = int(str(val))
+            if 1 <= n <= 12:
+                return n
+        except Exception:
+            pass
+        key = str(val or '').strip().lower()
+        return MONTHS_MAP.get(key, 1)
+    for r in rows:
+        y = int(r.get('anio') or 0)
+        m = _month_to_int(r.get('mes'))
+        iso_date = f"{y:04d}-{m:02d}-01"
+        name = r.get('nombre_indicador') or ''
+        _id = md5(f"{name}|{y}|{m}".encode()).hexdigest()[:16]
+        items.append({
+            'id': _id,
+            'fecha': iso_date,
+            'anio': y,
+            'mes': m,
+            'periodo': (r.get('periodo') or f"{y:04d}-{m:02d}").strip() if r.get('periodo') is not None else f"{y:04d}-{m:02d}",
+            'indicador': name,
+            'alcance': r.get('alcance'),
+            'mesActual': r.get('valor_indicador'),
+            'diciembre1a': r.get('dic_anterior'),
+            'mes1a': r.get('mes_1a'),
+            'mes2a': r.get('mes_2a'),
+            'analisis': r.get('analisis') or '',
+        })
+
+    return Response({'items': items, 'count': len(items), 'filters': {'year': year, 'month': month, 'indicador': indicador}})
+
+
+# ====== Oficinas (finanzas.oficinas_mes) ======
+
+class OficinasView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        year = request.query_params.get('year') or request.query_params.get('anio')
+        month = request.query_params.get('month') or request.query_params.get('mes')
+        q = request.query_params.get('q') or request.query_params.get('search') or request.query_params.get('indicador')
+        limit = int(request.query_params.get('limit') or '500')
+
+        where = []
+        params = {}
+        if year:
+            where.append('anio = %(anio)s::int')
+            params['anio'] = year
+        if month:
+            where.append('mes_num = %(mes)s::int')
+            params['mes'] = month
+        if q:
+            where.append('(lower(codigo_oficina) LIKE lower(%(q)s) OR lower(nombre_oficina) LIKE lower(%(q)s))')
+            params['q'] = f"%{q}%"
+        where_sql = ('WHERE ' + ' AND '.join(where)) if where else ''
+
+        sql = f"""
+            SELECT 
+              codigo_oficina::text AS codigo,
+              nombre_oficina::text AS nombre,
+              anio::int AS anio,
+              mes_num::int AS mes,
+              COALESCE(mes_nombre::text,'') AS mes_nombre,
+              fecha_apertura::date AS fecha,
+              COALESCE(asociados,0)::int AS asociados,
+              COALESCE(entidades_financieras,0)::int AS entidades,
+              COALESCE(poblacion,0)::int AS poblacion,
+              COALESCE(cartera_credito,0)::numeric AS cartera_credito,
+              COALESCE(depositos,0)::numeric AS depositos
+            FROM finanzas.oficinas_mes
+            {where_sql}
+            ORDER BY codigo_oficina, anio DESC, mes_num DESC
+            LIMIT {limit}
+        """
+        with connections['default'].cursor() as c:
+            c.execute(sql, params)
+            cols = [col[0] for col in c.description]
+            rows = [dict(zip(cols, row)) for row in c.fetchall()]
+
+        # Mapear al shape que el front espera
+        def map_row(r):
+            from hashlib import md5
+            _id = md5(f"{r['codigo']}|{r['anio']}|{r['mes']}".encode()).hexdigest()[:16]
+            return {
+                'id': _id,
+                'codigo': r['codigo'],
+                'nombre': r['nombre'],
+                'fecha': r['fecha'],
+                'cta_puc_14': '',
+                'cta_puc_21': '',
+                'asociados': r['asociados'],
+                'entidades': r['entidades'],
+                'poblacion': r['poblacion'],
+                'anio': r['anio'],
+                'mes': r['mes'],
+            }
+
+        items = [map_row(r) for r in rows]
+        return Response({'items': items, 'count': len(items), 'filters': {'year': year, 'month': month, 'q': q}})
+
+    def post(self, request):
+        data = request.data
+        codigo = (data.get('codigo') or data.get('codigo_oficina') or '').strip()
+        if not codigo:
+            return Response({'error': 'codigo (codigo_oficina) es requerido'}, status=400)
+        try:
+            anio = int(data.get('anio') or data.get('year'))
+            mes = int(data.get('mes') or data.get('month'))
+        except Exception:
+            return Response({'error': 'anio y mes (mes_num) son requeridos y deben ser enteros'}, status=400)
+
+        nombre = (data.get('nombre') or data.get('nombre_oficina') or '').strip() or None
+        fecha = data.get('fecha') or data.get('fecha_apertura') or None
+        def to_int(x):
+            try:
+                return None if x in (None, '', '-') else int(str(x).replace(',', ''))
+            except Exception:
+                return None
+        asociados = to_int(data.get('asociados'))
+        entidades = to_int(data.get('entidades') or data.get('entidades_financieras'))
+        poblacion = to_int(data.get('poblacion'))
+
+        with connections['default'].cursor() as c:
+            # Intentar UPDATE primero
+            c.execute(
+                """
+                UPDATE finanzas.oficinas_mes
+                SET nombre_oficina = COALESCE(%s, nombre_oficina),
+                    fecha_apertura = COALESCE(%s::date, fecha_apertura),
+                    asociados = COALESCE(%s, asociados),
+                    entidades_financieras = COALESCE(%s, entidades_financieras),
+                    poblacion = COALESCE(%s, poblacion)
+                WHERE codigo_oficina = %s AND anio = %s AND mes_num = %s
+                """,
+                [nombre, fecha, asociados, entidades, poblacion, codigo, anio, mes]
+            )
+            if c.rowcount == 0:
+                # INSERT si no existe registro para (codigo, anio, mes)
+                c.execute(
+                    """
+                    INSERT INTO finanzas.oficinas_mes
+                    (codigo_oficina, nombre_oficina, anio, mes_num, fecha_apertura, asociados, entidades_financieras, poblacion)
+                    VALUES (%s,%s,%s,%s,%s::date,%s,%s,%s)
+                    """,
+                    [codigo, nombre or '', anio, mes, fecha, asociados, entidades, poblacion]
+                )
+
+        return Response({'success': True, 'saved': {'codigo': codigo, 'anio': anio, 'mes': mes}})
+
+
+class OficinaView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, codigo: str):
+        year = request.query_params.get('year') or request.query_params.get('anio')
+        month = request.query_params.get('month') or request.query_params.get('mes')
+        where = ['codigo_oficina = %(codigo)s']
+        params = {'codigo': codigo}
+        if year:
+            where.append('anio = %(anio)s::int')
+            params['anio'] = year
+        if month:
+            where.append('mes_num = %(mes)s::int')
+            params['mes'] = month
+        where_sql = ' AND '.join(where)
+        sql = f"""
+            SELECT 
+              codigo_oficina::text AS codigo,
+              nombre_oficina::text AS nombre,
+              anio::int AS anio,
+              mes_num::int AS mes,
+              fecha_apertura::date AS fecha,
+              COALESCE(asociados,0)::int AS asociados,
+              COALESCE(entidades_financieras,0)::int AS entidades,
+              COALESCE(poblacion,0)::int AS poblacion
+            FROM finanzas.oficinas_mes
+            WHERE {where_sql}
+            ORDER BY anio DESC, mes DESC
+            LIMIT 1
+        """
+        with connections['default'].cursor() as c:
+            c.execute(sql, params)
+            row = c.fetchone()
+            if not row:
+                return Response({'error': 'Oficina no encontrada'}, status=404)
+            cols = [col[0] for col in c.description]
+            r = dict(zip(cols, row))
+        r['id'] = r.get('codigo')
+        r['cta_puc_14'] = ''
+        r['cta_puc_21'] = ''
+        return Response(r)
