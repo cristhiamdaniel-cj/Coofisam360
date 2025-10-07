@@ -227,6 +227,7 @@ import unicodedata
 import subprocess
 from datetime import datetime
 from pathlib import Path
+from django.conf import settings
 
 # ====== Vistas generales ======
 
@@ -297,7 +298,8 @@ def finanzas_form_cupos(request):
 
 
 # ====== API: Árbol de archivos para Libro de Balance ======
-BALANCE_ROOT = "/home/desarrollo/Coofisam/data/Libro_de_Balance_x_Aanoo"
+# Usar la ruta configurada en settings para unificar ubicación de archivos subidos
+BALANCE_ROOT = str(getattr(settings, 'LIBRO_BALANCE_ROOT', "/home/desarrollo/Coofisam/data/Libro_de_Balance_x_Aanoo"))
 
 def _build_tree(path: str) -> dict:
     node = {"name": os.path.basename(path) or path, "type": "dir", "children": []}
@@ -394,14 +396,33 @@ def upload_libro_balance(request):
     })
 
 
-# ====== ETL: streaming de logs por SSE (opcional ya listo) ======
-@login_required
+# ====== ETL: streaming de logs por SSE (con soporte de token o sesión) ======
 def finanzas_etl_stream(request):
     """
     GET /finanzas/etl/stream/
     Ejecuta: cd /home/desarrollo/Coofisam && source .venv/bin/activate && python cargue_balance_agencias_coreNuevo.py
     y envía stdout/stderr por Server-Sent Events.
     """
+    # Autenticación: sesión o token en query/header
+    try:
+        from rest_framework.authtoken.models import Token
+    except Exception:
+        Token = None
+
+    user_ok = False
+    if request.user.is_authenticated:
+        user_ok = True
+    else:
+        token = request.GET.get('token') or request.headers.get('Authorization', '').replace('Token ', '').strip()
+        if token and Token is not None:
+            try:
+                t = Token.objects.select_related('user').get(key=token)
+                user_ok = t.user is not None
+            except Exception:
+                user_ok = False
+    if not user_ok:
+        from django.http import HttpResponseForbidden
+        return HttpResponseForbidden('Auth requerida (sesión activa o token)')
     def event_stream():
         yield "data: 🚀 Iniciando ETL...\n\n"
         cmd = (

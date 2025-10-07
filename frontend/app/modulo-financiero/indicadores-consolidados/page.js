@@ -42,13 +42,23 @@ export default function IndicadoresConsolidadosPage() {
     try{
       setSaving(true);
       const token = localStorage.getItem('authToken');
+      const payload = {
+        indicador,
+        anio: year,
+        mes: month,
+        // Si está vacío, no enviar el campo para permitir borrar
+        analisis: ((analisis || '').trim() || undefined)
+      };
       const res = await fetch(`${base}/api/v1/finanzas/indicadores/analisis/`, {
         method:'POST',
         headers:{ 'Content-Type':'application/json', Authorization:`Token ${token}` },
-        body: JSON.stringify({ indicador, anio: year, mes: month, analisis })
+        body: JSON.stringify(payload)
       });
-      const data = await res.json().catch(()=>({}));
-      if(!res.ok) throw new Error(data.error || `Error ${res.status}`);
+      const ct = res.headers.get('content-type') || '';
+      const data = ct.includes('application/json') ? await res.json().catch(()=>({})) : await res.text();
+      if(!res.ok) throw new Error((data && data.error) || `Error ${res.status}`);
+      // Refrescar tabla para reflejar el cambio (incluye cuando se borra)
+      await load();
     }catch(e){ setError(e.message); }
     finally{ setSaving(false); }
   }

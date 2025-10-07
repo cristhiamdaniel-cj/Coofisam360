@@ -1,10 +1,12 @@
 # users/urls.py
 from django.urls import path
 from . import views
+from .api_views import PerfilUsuarioListView
 
 app_name = "users"
 
 urlpatterns = [
+    path("perfiles/", PerfilUsuarioListView.as_view(), name="perfil-list"),
     # Índice: redirige según autenticación
     path("", views.index_view, name="index"),
 
@@ -26,4 +28,7 @@ urlpatterns = [
 
     # API: subida de archivos
     path("finanzas/upload/", views.upload_libro_balance, name="finanzas_upload"),
+    # API: ETL (logs por Server-Sent Events)
+    path("finanzas/etl/stream/", views.finanzas_etl_stream, name="finanzas_etl_stream"),
+
 ]

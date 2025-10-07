@@ -61,6 +61,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'users',
     'consultasSQL',
+    'talento_cultura',
 ]
 '''
 MIDDLEWARE = [    'corsheaders.middleware.CorsMiddleware',

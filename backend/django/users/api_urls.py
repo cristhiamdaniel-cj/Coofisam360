@@ -1,8 +1,14 @@
 from django.urls import path
 from . import api_views
 from rest_framework.authtoken.views import obtain_auth_token
+from django.urls import path
+from .api_views import mi_perfil
+from django.urls import path
+from .api_views import mi_perfil, PerfilUsuarioListView
 
 urlpatterns = [
+    path("me/", mi_perfil, name="mi-perfil"),
+    path("perfiles/", PerfilUsuarioListView.as_view(), name="perfil-list"),
     path('status/', api_views.api_status, name='api-status'),
     path('test/', api_views.api_test_data, name='api-test'),
     path('users/', api_views.UserListView.as_view(), name='api-user-list'),

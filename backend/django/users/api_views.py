@@ -14,6 +14,30 @@ import unicodedata
 from datetime import datetime
 from django.db import connections
 from django.http import FileResponse
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+from users.models import PerfilUsuario
+from users.serializers import PerfilUsuarioSerializer
+from rest_framework.generics import ListAPIView
+from rest_framework.permissions import IsAdminUser
+from users.models import PerfilUsuario
+from users.serializers import PerfilUsuarioSerializer
+
+class PerfilUsuarioListView(ListAPIView):
+    queryset = PerfilUsuario.objects.all()
+    serializer_class = PerfilUsuarioSerializer
+    permission_classes = [IsAdminUser]  # solo staff o superusuarios
+
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+def mi_perfil(request):
+    try:
+        perfil = PerfilUsuario.objects.get(user=request.user)
+        serializer = PerfilUsuarioSerializer(perfil)
+        return Response(serializer.data)
+    except PerfilUsuario.DoesNotExist:
+        return Response({"error": "Perfil no encontrado"}, status=404)
 
 # ====== Helpers de detección de vistas por esquema ======
 def _view_exists(schema: str, view: str) -> bool:
@@ -36,6 +60,270 @@ def _choose_view(candidates):
         except Exception:
             continue
     return None
+
+
+def _ensure_indicadores_comparativa_table():
+    """Garantiza que indicadores.indicadores_comparativa exista con columnas nuevas."""
+    with connections['default'].cursor() as c:
+        c.execute("CREATE SCHEMA IF NOT EXISTS indicadores;")
+        c.execute(
+            """
+            CREATE TABLE IF NOT EXISTS indicadores.indicadores_comparativa (
+              nombre_indicador text NOT NULL,
+              anio int NOT NULL,
+              mes int NOT NULL,
+              periodo text,
+              alcance text,
+              valor_indicador numeric,
+              mes_de_diciembre_fijo numeric,
+              anio_menos_1_dic numeric,
+              periodo2 text,
+              valor_indicador_2 numeric,
+              anio_menos_1 int,
+              mismo_mes_ref_1 int,
+              periodo3 text,
+              valor_indicador_3 numeric,
+              anio_menos_2 int,
+              mismo_mes_ref_2 int,
+              periodo4 text,
+              valor_indicador_4 numeric,
+              analisis text,
+              codigo int,
+              saldo_c14 numeric,
+              saldo_c21 numeric,
+              CONSTRAINT indicadores_comparativa_pk PRIMARY KEY (nombre_indicador, anio, mes)
+            )
+            """
+        )
+        c.execute(
+            "ALTER TABLE indicadores.indicadores_comparativa ADD COLUMN IF NOT EXISTS codigo int;"
+        )
+        c.execute(
+            "ALTER TABLE indicadores.indicadores_comparativa ADD COLUMN IF NOT EXISTS saldo_c14 numeric;"
+        )
+        c.execute(
+            "ALTER TABLE indicadores.indicadores_comparativa ADD COLUMN IF NOT EXISTS saldo_c21 numeric;"
+        )
+        c.execute(
+            """
+            DO $$
+            BEGIN
+              IF NOT EXISTS (
+                SELECT 1 FROM pg_constraint
+                WHERE conname = 'uq_ic_codigo_anio_mes'
+                  AND conrelid = 'indicadores.indicadores_comparativa'::regclass
+              ) THEN
+                ALTER TABLE indicadores.indicadores_comparativa
+                  ADD CONSTRAINT uq_ic_codigo_anio_mes UNIQUE (codigo, anio, mes);
+              END IF;
+            END;
+            $$;
+            """
+        )
+
+
+def _refresh_oficina_saldos(anio: int | None = None, mes: int | None = None, codigo: int | None = None, logger: logging.Logger | None = None) -> None:
+    """Sincroniza saldo_c14 y saldo_c21 desde saldos_agencia por oficina."""
+    _ensure_indicadores_comparativa_table()
+
+    filters = [
+        "NULLIF(TRIM(sa.agencia_codigo::text), '') ~ '^-?[0-9]+'"
+    ]
+    params: dict[str, object] = {}
+    if anio is not None:
+        params['anio'] = anio
+        filters.append('sa.anio = %(anio)s::int')
+    if mes is not None:
+        params['mes'] = mes
+        filters.append('sa.mes = %(mes)s::int')
+    if codigo is not None:
+        params['codigo_raw'] = str(codigo)
+        filters.append("NULLIF(TRIM(sa.agencia_codigo::text), '') = %(codigo_raw)s")
+
+    where_sql = f"WHERE {' AND '.join(filters)}" if filters else ''
+
+    sql = f"""
+        WITH src AS (
+            SELECT
+                NULLIF(TRIM(sa.agencia_codigo::text),'')::int AS codigo,
+                sa.anio::int AS anio,
+                sa.mes::int AS mes,
+                SUM(sa.saldo_final) FILTER (
+                    WHERE NULLIF(TRIM(sa.cuenta::text),'') ~ '^-?[0-9]+(\\.[0-9]+)?$'
+                      AND NULLIF(TRIM(sa.cuenta::text),'')::numeric = 14
+                ) AS saldo_c14,
+                SUM(sa.saldo_final) FILTER (
+                    WHERE NULLIF(TRIM(sa.cuenta::text),'') ~ '^-?[0-9]+(\\.[0-9]+)?$'
+                      AND NULLIF(TRIM(sa.cuenta::text),'')::numeric = 21
+                ) AS saldo_c21
+            FROM saldos_agencia sa
+            {where_sql}
+            GROUP BY 1, 2, 3
+        ),
+        prepared AS (
+            SELECT
+                s.codigo,
+                s.anio,
+                s.mes,
+                LPAD(s.anio::text, 4, '0') || '-' || LPAD(s.mes::text, 2, '0') AS periodo,
+                CONCAT('__OFICINA__:', LPAD(s.codigo::text, 3, '0')) AS nombre_indicador,
+                COALESCE(s.saldo_c14, 0) AS saldo_c14,
+                COALESCE(s.saldo_c21, 0) AS saldo_c21
+            FROM src s
+            WHERE s.codigo IS NOT NULL
+        )
+        INSERT INTO indicadores.indicadores_comparativa (codigo, anio, mes, periodo, nombre_indicador, saldo_c14, saldo_c21)
+        SELECT
+            p.codigo,
+            p.anio,
+            p.mes,
+            p.periodo,
+            p.nombre_indicador,
+            p.saldo_c14,
+            p.saldo_c21
+        FROM prepared p
+        ON CONFLICT (codigo, anio, mes) DO UPDATE
+        SET periodo = EXCLUDED.periodo,
+            nombre_indicador = EXCLUDED.nombre_indicador,
+            saldo_c14 = EXCLUDED.saldo_c14,
+            saldo_c21 = EXCLUDED.saldo_c21;
+    """
+
+    try:
+        with connections['default'].cursor() as c:
+            c.execute(sql, params)
+    except Exception:
+        if logger:
+            logger.exception('[comparativa] Error al sincronizar saldos por oficina')
+        else:
+            raise
+
+
+def _refresh_global_indicadores(anio: int | None = None, mes: int | None = None, logger: logging.Logger | None = None) -> None:
+    """Replica indicadores consolidados del datamart hacia indicadores.indicadores_comparativa."""
+    if anio is None or mes is None:
+        return
+
+    periodo_str = f"{anio:04d}-{mes:02d}"
+    _ensure_indicadores_comparativa_table()
+
+    sql = (
+        """
+        WITH src AS (
+            SELECT
+              v.nombre_indicador::text AS nombre_indicador,
+              %(anio)s::int AS anio,
+              %(mes)s::int AS mes,
+              COALESCE(NULLIF(TRIM(v.periodo), ''), %(periodo)s)::text AS periodo,
+              NULLIF(TRIM(v.alcance), '')::text AS alcance,
+              v.valor_indicador::numeric,
+              NULLIF(TRIM(v.mes_de_diciembre_fijo), '')::text AS mes_de_diciembre_fijo,
+              v.anio_menos_1_dic::int AS anio_menos_1_dic,
+              NULLIF(TRIM(v.periodo2), '')::text AS periodo2,
+              v.valor_indicador_2::numeric,
+              v.anio_menos_1::int AS anio_menos_1,
+              NULLIF(TRIM(v.mismo_mes_ref_1), '')::text AS mismo_mes_ref_1,
+              NULLIF(TRIM(v.periodo3), '')::text AS periodo3,
+              v.valor_indicador_3::numeric,
+              v.anio_menos_2::int AS anio_menos_2,
+              NULLIF(TRIM(v.mismo_mes_ref_2), '')::text AS mismo_mes_ref_2,
+              NULLIF(TRIM(v.periodo4), '')::text AS periodo4,
+              v.valor_indicador_4::numeric,
+              NULLIF(TRIM(v.analisis), '')::text AS analisis,
+              NULLIF(TRIM(v.mes), '')::text AS mes_nombre,
+              make_date(%(anio)s::int, %(mes)s::int, 1) AS fecha,
+              %(mes)s::int AS mes_orden
+            FROM indicadores.vista_indicadores_comparativa v
+            WHERE v.anio = %(anio)s::int
+              AND COALESCE(NULLIF(TRIM(v.periodo), ''), %(periodo)s) = %(periodo)s
+        )
+        INSERT INTO indicadores.indicadores_comparativa (
+            nombre_indicador,
+            anio,
+            mes,
+            periodo,
+            alcance,
+            valor_indicador,
+            mes_de_diciembre_fijo,
+            anio_menos_1_dic,
+            periodo2,
+            valor_indicador_2,
+            anio_menos_1,
+            mismo_mes_ref_1,
+            periodo3,
+            valor_indicador_3,
+            anio_menos_2,
+            mismo_mes_ref_2,
+            periodo4,
+            valor_indicador_4,
+            analisis,
+            mes_nombre,
+            mes_orden,
+            fecha
+        )
+        SELECT
+            nombre_indicador,
+            anio,
+            mes,
+            periodo,
+            alcance,
+            valor_indicador,
+            mes_de_diciembre_fijo,
+            anio_menos_1_dic,
+            periodo2,
+            valor_indicador_2,
+            anio_menos_1,
+            mismo_mes_ref_1,
+            periodo3,
+            valor_indicador_3,
+            anio_menos_2,
+            mismo_mes_ref_2,
+            periodo4,
+            valor_indicador_4,
+            analisis,
+            mes_nombre,
+            mes_orden,
+            fecha
+        FROM src
+        ON CONFLICT (lower(trim(nombre_indicador)), substring(trim(periodo) from 1 for 7)) DO UPDATE
+        SET
+            valor_indicador = EXCLUDED.valor_indicador,
+            mes_de_diciembre_fijo = EXCLUDED.mes_de_diciembre_fijo,
+            anio_menos_1_dic = EXCLUDED.anio_menos_1_dic,
+            periodo2 = EXCLUDED.periodo2,
+            valor_indicador_2 = EXCLUDED.valor_indicador_2,
+            anio_menos_1 = EXCLUDED.anio_menos_1,
+            mismo_mes_ref_1 = EXCLUDED.mismo_mes_ref_1,
+            periodo3 = EXCLUDED.periodo3,
+            valor_indicador_3 = EXCLUDED.valor_indicador_3,
+            anio_menos_2 = EXCLUDED.anio_menos_2,
+            mismo_mes_ref_2 = EXCLUDED.mismo_mes_ref_2,
+            periodo4 = EXCLUDED.periodo4,
+            valor_indicador_4 = EXCLUDED.valor_indicador_4,
+            alcance = COALESCE(EXCLUDED.alcance, indicadores.indicadores_comparativa.alcance),
+            anio = EXCLUDED.anio,
+            mes = EXCLUDED.mes,
+            periodo = EXCLUDED.periodo,
+            mes_nombre = COALESCE(EXCLUDED.mes_nombre, indicadores.indicadores_comparativa.mes_nombre),
+            mes_orden = EXCLUDED.mes_orden,
+            fecha = EXCLUDED.fecha,
+            analisis = CASE
+                WHEN COALESCE(indicadores.indicadores_comparativa.analisis, '') <> '' THEN indicadores.indicadores_comparativa.analisis
+                ELSE EXCLUDED.analisis
+            END
+        ;
+        """
+    )
+
+    params = {'anio': anio, 'mes': mes, 'periodo': periodo_str}
+    try:
+        with connections['default'].cursor() as c:
+            c.execute(sql, params)
+    except Exception:
+        if logger:
+            logger.exception('[comparativa] Error al refrescar indicadores consolidados')
+        else:
+            raise
 class UserListView(generics.ListCreateAPIView):
     queryset = User.objects.all()
     permission_classes = [IsAuthenticated]
@@ -1157,35 +1445,8 @@ def indicadores_comparativa(request):
          anio_menos_1_dic, valor_indicador_2, valor_indicador_3, analisis
     """
     from hashlib import md5
-    def _ensure_table():
-        with connections['default'].cursor() as c:
-            c.execute("CREATE SCHEMA IF NOT EXISTS indicadores;")
-            c.execute(
-                """
-                CREATE TABLE IF NOT EXISTS indicadores.indicadores_comparativa (
-                  nombre_indicador text NOT NULL,
-                  anio int NOT NULL,
-                  mes int NOT NULL,
-                  periodo text,
-                  alcance text,
-                  valor_indicador numeric,
-                  mes_de_diciembre_fijo numeric,
-                  anio_menos_1_dic numeric,
-                  periodo2 text,
-                  valor_indicador_2 numeric,
-                  anio_menos_1 int,
-                  mismo_mes_ref_1 int,
-                  periodo3 text,
-                  valor_indicador_3 numeric,
-                  anio_menos_2 int,
-                  mismo_mes_ref_2 int,
-                  periodo4 text,
-                  valor_indicador_4 numeric,
-                  analisis text,
-                  CONSTRAINT indicadores_comparativa_pk PRIMARY KEY (nombre_indicador, anio, mes)
-                )
-                """
-            )
+
+    _ensure_indicadores_comparativa_table()
 
     # Utilidades de mes
     MONTHS_MAP = {
@@ -1234,20 +1495,26 @@ def indicadores_comparativa(request):
         v_dic = to_num(data.get('anio_menos_1_dic') or data.get('diciembre1a') or data.get('diciembre_1a'))
         v_1a = to_num(data.get('valor_indicador_2') or data.get('mes1a') or data.get('mes_1a'))
         v_2a = to_num(data.get('valor_indicador_3') or data.get('mes2a') or data.get('mes_2a'))
-        analisis = (data.get('analisis') or '').strip() or None
+        analisis_raw = data.get('analisis')
+        analisis = None
+        if analisis_raw is not None:
+            analisis_stripped = str(analisis_raw).strip()
+            analisis = analisis_stripped if analisis_stripped else None
         mes_str = MONTHS_INV.get(mes) or str(mes)
         periodo_str = (data.get('periodo') or f"{anio:04d}-{mes:02d}").strip()[:7]
 
         try:
             logger.info(f"[comparativa] POST intento update | nombre={nombre} anio={anio} mes={mes} periodo={periodo_str} analisis_len={len(analisis or '')}")
+            logger.info(f"[comparativa] POST payload completo: {data}")
+            logger.info(f"[comparativa] POST analisis raw: '{analisis_raw}' -> procesado: '{analisis}'")
             with connections['default'].cursor() as c:
                 # 1) UPDATE por (indicador + periodo YYYY-MM)
                 c.execute(
                     """
-                    UPDATE indicadores.indicadores_comparativa
-                    SET analisis = COALESCE(%s, analisis)
+                    UPDATE indicadores.indicadores_financieros_comparativa
+                    SET analisis = %s
                     WHERE lower(trim(nombre_indicador)) = lower(trim(%s))
-                      AND SUBSTRING(trim(periodo) FROM 1 FOR 7) = %s
+                      AND periodo = %s
                     """,
                     [analisis, nombre, periodo_str]
                 )
@@ -1258,24 +1525,22 @@ def indicadores_comparativa(request):
                 if updated == 0:
                     c.execute(
                         """
-                        INSERT INTO indicadores.indicadores_comparativa (mes, anio, periodo, nombre_indicador, analisis)
+                        INSERT INTO indicadores.indicadores_financieros_comparativa (mes, anio, periodo, nombre_indicador, analisis)
                         VALUES (%s, %s, %s, %s, %s)
-                        ON CONFLICT (
-                            lower(trim(nombre_indicador)),
-                            substring(trim(periodo) from 1 for 7)
-                        ) DO UPDATE SET analisis = EXCLUDED.analisis
+                        ON CONFLICT (nombre_indicador, anio, mes, agencia_codigo)
+                        DO UPDATE SET analisis = EXCLUDED.analisis
                         """,
                         [str(mes), anio, periodo_str, nombre, analisis]
                     )
                     updated = 1
-                    logger.info("[comparativa] upsert by (lower(trim(indicador)), substring(periodo,1,7)) -> rows=1")
+                    logger.info("[comparativa] upsert by (nombre_indicador, anio, mes, agencia_codigo) -> rows=1")
             logger.info(f"[comparativa] OK actualizado | rows={updated}")
             return Response({'success': True, 'updated_rows': updated})
         except Exception as e:
             msg = str(e)
             logger.exception(f"[comparativa] ERROR POST: {msg}")
             if 'indicadores_comparativa' in msg and ('does not exist' in msg or 'no existe' in msg):
-                _ensure_table()
+                _ensure_indicadores_comparativa_table()
                 with connections['default'].cursor() as c:
                     c.execute(
                         """
@@ -1294,6 +1559,45 @@ def indicadores_comparativa(request):
     # GET
     year = request.query_params.get('year')
     month = request.query_params.get('month')
+    logger.info(f"[comparativa] GET request - year: {year}, month: {month}")
+    logger.info(f"[comparativa] GET request - year type: {type(year)}, month type: {type(month)}")
+    logger.info(f"[comparativa] GET request - year bool: {bool(year)}, month bool: {bool(month)}")
+    include_offices = request.query_params.get('include_oficinas') or request.query_params.get('include_offices')
+    include_flag = ''
+    if include_offices not in (None, ''):
+        include_flag = str(include_offices).strip().lower()
+    codigo_param = request.query_params.get('codigo') or request.query_params.get('codigo_oficina') or request.query_params.get('office')
+    codigo_int = None
+    try:
+        if codigo_param not in (None, ''):
+            codigo_int = int(str(codigo_param))
+    except Exception:
+        codigo_int = None
+
+    try:
+        year_int = int(str(year)) if year not in (None, '') else None
+    except Exception:
+        year_int = None
+    try:
+        month_int = int(str(month)) if month not in (None, '') else None
+    except Exception:
+        month_int = None
+
+    include_truthy = include_flag not in ('', '0', 'false', 'no')
+
+    if year_int is not None and month_int is not None:
+        try:
+            _refresh_global_indicadores(year_int, month_int, logger)
+        except Exception:
+            logger.exception('[comparativa] No se pudo refrescar indicadores consolidados')
+
+    if codigo_int is not None or include_truthy:
+        if year_int is not None and month_int is not None:
+            try:
+                _refresh_oficina_saldos(year_int, month_int, codigo_int, logger)
+            except Exception:
+                logger.exception('[comparativa] No se pudo refrescar saldos para oficinas')
+
     indicador = request.query_params.get('indicador')
     limit = int(request.query_params.get('limit') or '500')
     where = []
@@ -1301,31 +1605,66 @@ def indicadores_comparativa(request):
     if year and month:
         try:
             periodo_ym = f"{int(year):04d}-{int(month):02d}"
-            where.append("COALESCE(SUBSTRING(trim(periodo) FROM 1 FOR 7), '') = %(periodo)s")
+            where.append("ifc_actual.periodo = %(periodo)s")
             params['periodo'] = periodo_ym
-        except Exception:
-            pass
+            logger.info(f"[comparativa] Filtro por período: {periodo_ym}")
+        except Exception as e:
+            # Si hay error en el formato, usar el período más reciente disponible
+            where.append("ifc_actual.periodo = (SELECT MAX(periodo) FROM indicadores.indicadores_financieros_comparativa WHERE agencia_codigo = 0)")
+            logger.info(f"[comparativa] Error en formato de período: {e}, usando período más reciente")
+    else:
+        # Si no se especifica año y mes, usar el período más reciente disponible
+        where.append("ifc_actual.periodo = (SELECT MAX(periodo) FROM indicadores.indicadores_financieros_comparativa WHERE agencia_codigo = 0)")
+        logger.info("[comparativa] No se especificó año/mes, usando período más reciente")
     if indicador:
-        where.append('lower(trim(nombre_indicador)) LIKE lower(trim(%(indicador)s))')
+        where.append('lower(trim(ifc_actual.nombre_indicador)) LIKE lower(trim(%(indicador)s))')
         params['indicador'] = f"%{indicador}%"
-    where_sql = ('WHERE ' + ' AND '.join(where)) if where else ''
+    if codigo_int is not None:
+        where.append('ifc_actual.agencia_codigo = %(codigo)s::int')
+        params['codigo'] = codigo_int
+    # Siempre mostrar solo el consolidado (agencia_codigo = 0) para evitar duplicados
+    where.append('ifc_actual.agencia_codigo = 0')
+    where_sql = (' AND ' + ' AND '.join(where)) if where else ''
 
     sql = f"""
-        SELECT nombre_indicador, alcance, anio, mes, periodo,
-               valor_indicador,
-               CASE
-                   WHEN NULLIF(TRIM(anio_menos_1_dic::text),'') ~ '^-?[0-9]+(\\.[0-9]+)?$'
-                        THEN (NULLIF(TRIM(anio_menos_1_dic::text),'')::numeric)
-                   WHEN NULLIF(TRIM(mes_de_diciembre_fijo::text),'') ~ '^-?[0-9]+(\\.[0-9]+)?$'
-                        THEN (NULLIF(TRIM(mes_de_diciembre_fijo::text),'')::numeric)
-                   ELSE NULL
-               END AS dic_anterior,
-               valor_indicador_2 AS mes_1a,
-               valor_indicador_3 AS mes_2a,
-               analisis
-        FROM indicadores.indicadores_comparativa
-        {where_sql}
-        ORDER BY nombre_indicador, anio DESC, periodo DESC NULLS LAST
+        SELECT 
+            ROW_NUMBER() OVER (ORDER BY ifc_actual.nombre_indicador) as id,
+            ifc_actual.nombre_indicador as indicador,
+            ifc_actual.nombre_indicador as nombre_indicador,
+            COALESCE(ifc_actual.alcance, 'Descripción del indicador') as alcance,
+            ifc_actual.periodo as fecha,
+            ifc_actual.valor_calculado as mesActual,
+            ifc_actual.valor_calculado as valor_indicador,
+            COALESCE(ifc_dic.valor_calculado, 0) as diciembre1a,
+            COALESCE(ifc_dic.valor_calculado, 0) as anio_menos_1_dic,
+            COALESCE(ifc_dic.valor_calculado, 0) as mes_de_diciembre_fijo,
+            COALESCE(ifc_1a.valor_calculado, 0) as mes1a,
+            COALESCE(ifc_1a.valor_calculado, 0) as valor_indicador_2,
+            COALESCE(ifc_2a.valor_calculado, 0) as mes2a,
+            COALESCE(ifc_2a.valor_calculado, 0) as valor_indicador_3,
+            ifc_actual.analisis,
+            ifc_actual.analisis as analysis,
+            ifc_actual.anio,
+            ifc_actual.mes,
+            ifc_actual.agencia_codigo as codigo
+        FROM indicadores.indicadores_financieros_comparativa ifc_actual
+        LEFT JOIN indicadores.indicadores_financieros_comparativa ifc_dic 
+            ON ifc_actual.nombre_indicador = ifc_dic.nombre_indicador 
+            AND ifc_dic.anio = ifc_actual.anio - 1 
+            AND ifc_dic.mes = 12 
+            AND ifc_dic.agencia_codigo = ifc_actual.agencia_codigo
+        LEFT JOIN indicadores.indicadores_financieros_comparativa ifc_1a 
+            ON ifc_actual.nombre_indicador = ifc_1a.nombre_indicador 
+            AND ifc_1a.anio = ifc_actual.anio - 1 
+            AND ifc_1a.mes = ifc_actual.mes 
+            AND ifc_1a.agencia_codigo = ifc_actual.agencia_codigo
+        LEFT JOIN indicadores.indicadores_financieros_comparativa ifc_2a 
+            ON ifc_actual.nombre_indicador = ifc_2a.nombre_indicador 
+            AND ifc_2a.anio = ifc_actual.anio - 2 
+            AND ifc_2a.mes = ifc_actual.mes 
+            AND ifc_2a.agencia_codigo = ifc_actual.agencia_codigo
+        WHERE 1=1 {where_sql}
+        ORDER BY ifc_actual.nombre_indicador
         LIMIT {limit}
     """
     try:
@@ -1337,7 +1676,7 @@ def indicadores_comparativa(request):
         msg = str(e)
         logger.exception(f"[comparativa] ERROR GET: {msg}")
         if 'indicadores_comparativa' in msg and ('does not exist' in msg or 'no existe' in msg):
-            _ensure_table()
+            _ensure_indicadores_comparativa_table()
             with connections['default'].cursor() as c:
                 c.execute(sql, params)
                 cols = [col[0] for col in c.description]
@@ -1376,9 +1715,25 @@ def indicadores_comparativa(request):
             'mes1a': r.get('mes_1a'),
             'mes2a': r.get('mes_2a'),
             'analisis': r.get('analisis') or '',
+            'codigo': r.get('codigo'),
+            'saldo_c14': r.get('saldo_c14'),
+            'saldo_c21': r.get('saldo_c21'),
+            'ctaPuc14': r.get('saldo_c14'),
+            'ctaPuc21': r.get('saldo_c21'),
+            'tipo_calculo': r.get('tipo_calculo'),
         })
 
-    return Response({'items': items, 'count': len(items), 'filters': {'year': year, 'month': month, 'indicador': indicador}})
+    return Response({
+        'items': items,
+        'count': len(items),
+        'filters': {
+            'year': year,
+            'month': month,
+            'indicador': indicador,
+            'codigo': codigo_param,
+            'include_oficinas': include_offices,
+        }
+    })
 
 
 # ====== Oficinas (finanzas.oficinas_mes) ======
@@ -1391,6 +1746,17 @@ class OficinasView(APIView):
         month = request.query_params.get('month') or request.query_params.get('mes')
         q = request.query_params.get('q') or request.query_params.get('search') or request.query_params.get('indicador')
         limit = int(request.query_params.get('limit') or '500')
+
+        logger = logging.getLogger('coofisam')
+
+        try:
+            year_int = int(str(year)) if year not in (None, '') else None
+        except Exception:
+            year_int = None
+        try:
+            month_int = int(str(month)) if month not in (None, '') else None
+        except Exception:
+            month_int = None
 
         where = []
         params = {}
@@ -1405,23 +1771,72 @@ class OficinasView(APIView):
             params['q'] = f"%{q}%"
         where_sql = ('WHERE ' + ' AND '.join(where)) if where else ''
 
+        _ensure_indicadores_comparativa_table()
+
+        if year_int is not None and month_int is not None:
+            try:
+                _refresh_oficina_saldos(year_int, month_int, None, logger)
+            except Exception:
+                logger.exception('[oficinas] No se pudo refrescar saldos antes del listado')
+
         sql = f"""
-            SELECT 
-              codigo_oficina::text AS codigo,
-              nombre_oficina::text AS nombre,
-              anio::int AS anio,
-              mes_num::int AS mes,
-              COALESCE(mes_nombre::text,'') AS mes_nombre,
-              fecha_apertura::date AS fecha,
-              COALESCE(asociados,0)::int AS asociados,
-              COALESCE(entidades_financieras,0)::int AS entidades,
-              COALESCE(poblacion,0)::int AS poblacion,
-              COALESCE(cartera_credito,0)::numeric AS cartera_credito,
-              COALESCE(depositos,0)::numeric AS depositos
-            FROM finanzas.oficinas_mes
-            {where_sql}
-            ORDER BY codigo_oficina, anio DESC, mes_num DESC
-            LIMIT {limit}
+            WITH base AS (
+              SELECT
+                codigo_oficina::text AS codigo,
+                CASE
+                  WHEN NULLIF(codigo_oficina::text, '') ~ '^[0-9]+' THEN NULLIF(codigo_oficina::text, '')::int
+                  ELSE NULL
+                END AS codigo_num,
+                nombre_oficina::text AS nombre,
+                anio::int AS anio,
+                mes_num::int AS mes,
+                COALESCE(mes_nombre::text,'') AS mes_nombre,
+                fecha_apertura::date AS fecha,
+                COALESCE(asociados,0)::int AS asociados,
+                COALESCE(entidades_financieras,0)::int AS entidades,
+                COALESCE(poblacion,0)::int AS poblacion,
+                COALESCE(cartera_credito,0)::numeric AS cartera_credito,
+                COALESCE(depositos,0)::numeric AS depositos
+              FROM finanzas.oficinas_mes
+              {where_sql}
+              ORDER BY codigo_oficina, anio DESC, mes_num DESC
+              LIMIT {limit}
+            ),
+            ic_data AS (
+              SELECT
+                codigo,
+                CASE
+                  WHEN NULLIF(TRIM(anio::text),'') ~ '^-?[0-9]+$' THEN NULLIF(TRIM(anio::text),'')::int
+                  ELSE NULL
+                END AS anio_int,
+                CASE
+                  WHEN NULLIF(TRIM(mes::text),'') ~ '^-?[0-9]+$' THEN NULLIF(TRIM(mes::text),'')::int
+                  ELSE NULL
+                END AS mes_int,
+                saldo_c14,
+                saldo_c21
+              FROM indicadores.indicadores_comparativa
+            )
+            SELECT
+              b.codigo,
+              b.nombre,
+              b.anio,
+              b.mes,
+              b.mes_nombre,
+              b.fecha,
+              b.asociados,
+              b.entidades,
+              b.poblacion,
+              b.cartera_credito,
+              b.depositos,
+              COALESCE(ic.saldo_c14, 0)::numeric AS saldo_c14,
+              COALESCE(ic.saldo_c21, 0)::numeric AS saldo_c21
+            FROM base b
+            LEFT JOIN ic_data ic
+              ON ic.codigo = b.codigo_num
+             AND ic.anio_int = b.anio
+             AND ic.mes_int = b.mes
+            ORDER BY b.codigo, b.anio DESC, b.mes DESC
         """
         with connections['default'].cursor() as c:
             c.execute(sql, params)
@@ -1437,8 +1852,10 @@ class OficinasView(APIView):
                 'codigo': r['codigo'],
                 'nombre': r['nombre'],
                 'fecha': r['fecha'],
-                'cta_puc_14': '',
-                'cta_puc_21': '',
+                'saldo_c14': r.get('saldo_c14') or 0,
+                'saldo_c21': r.get('saldo_c21') or 0,
+                'ctaPuc14': r.get('saldo_c14') or 0,
+                'ctaPuc21': r.get('saldo_c21') or 0,
                 'asociados': r['asociados'],
                 'entidades': r['entidades'],
                 'poblacion': r['poblacion'],
@@ -1514,20 +1931,80 @@ class OficinaView(APIView):
             where.append('mes_num = %(mes)s::int')
             params['mes'] = month
         where_sql = ' AND '.join(where)
+
+        _ensure_indicadores_comparativa_table()
+
+        logger = logging.getLogger('coofisam')
+        try:
+            year_int = int(str(year)) if year not in (None, '') else None
+        except Exception:
+            year_int = None
+        try:
+            month_int = int(str(month)) if month not in (None, '') else None
+        except Exception:
+            month_int = None
+        try:
+            codigo_int = int(str(codigo)) if codigo not in (None, '') else None
+        except Exception:
+            codigo_int = None
+
+        if year_int is not None and month_int is not None and codigo_int is not None:
+            try:
+                _refresh_oficina_saldos(year_int, month_int, codigo_int, logger)
+            except Exception:
+                logger.exception('[oficina] No se pudo refrescar saldos antes de la consulta puntual')
+
         sql = f"""
-            SELECT 
-              codigo_oficina::text AS codigo,
-              nombre_oficina::text AS nombre,
-              anio::int AS anio,
-              mes_num::int AS mes,
-              fecha_apertura::date AS fecha,
-              COALESCE(asociados,0)::int AS asociados,
-              COALESCE(entidades_financieras,0)::int AS entidades,
-              COALESCE(poblacion,0)::int AS poblacion
-            FROM finanzas.oficinas_mes
-            WHERE {where_sql}
-            ORDER BY anio DESC, mes DESC
-            LIMIT 1
+            WITH base AS (
+                SELECT
+                  codigo_oficina::text AS codigo,
+                  CASE
+                    WHEN NULLIF(codigo_oficina::text, '') ~ '^[0-9]+' THEN NULLIF(codigo_oficina::text, '')::int
+                    ELSE NULL
+                  END AS codigo_num,
+                  nombre_oficina::text AS nombre,
+                  anio::int AS anio,
+                  mes_num::int AS mes,
+                  fecha_apertura::date AS fecha,
+                  COALESCE(asociados,0)::int AS asociados,
+                  COALESCE(entidades_financieras,0)::int AS entidades,
+                  COALESCE(poblacion,0)::int AS poblacion
+                FROM finanzas.oficinas_mes
+                WHERE {where_sql}
+                ORDER BY anio DESC, mes_num DESC
+                LIMIT 1
+            ),
+            ic_data AS (
+                SELECT
+                  codigo,
+                  CASE
+                    WHEN NULLIF(TRIM(anio::text),'') ~ '^-?[0-9]+$' THEN NULLIF(TRIM(anio::text),'')::int
+                    ELSE NULL
+                  END AS anio_int,
+                  CASE
+                    WHEN NULLIF(TRIM(mes::text),'') ~ '^-?[0-9]+$' THEN NULLIF(TRIM(mes::text),'')::int
+                    ELSE NULL
+                  END AS mes_int,
+                  saldo_c14,
+                  saldo_c21
+                FROM indicadores.indicadores_comparativa
+            )
+            SELECT
+              b.codigo,
+              b.nombre,
+              b.anio,
+              b.mes,
+              b.fecha,
+              b.asociados,
+              b.entidades,
+              b.poblacion,
+              COALESCE(ic.saldo_c14, 0)::numeric AS saldo_c14,
+              COALESCE(ic.saldo_c21, 0)::numeric AS saldo_c21
+            FROM base b
+            LEFT JOIN ic_data ic
+              ON ic.codigo = b.codigo_num
+             AND ic.anio_int = b.anio
+             AND ic.mes_int = b.mes
         """
         with connections['default'].cursor() as c:
             c.execute(sql, params)
@@ -1537,6 +2014,8 @@ class OficinaView(APIView):
             cols = [col[0] for col in c.description]
             r = dict(zip(cols, row))
         r['id'] = r.get('codigo')
-        r['cta_puc_14'] = ''
-        r['cta_puc_21'] = ''
+        r['saldo_c14'] = r.get('saldo_c14') or 0
+        r['saldo_c21'] = r.get('saldo_c21') or 0
+        r['ctaPuc14'] = r['saldo_c14']
+        r['ctaPuc21'] = r['saldo_c21']
         return Response(r)

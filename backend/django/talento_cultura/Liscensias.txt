@@ -1,0 +1,1105 @@
+Empleado - Número de Documento;Empleado - Nombre Completo;Novedades - Nombre Tipo de Permiso;Novedades - Tipo de Licencia;Novedades - Fecha Inicio;Novedades - Fecha de Término;Novedades - Total de licencias
+1.003.808.069;Ardila Rojas Juan David;Incapacidad;Incapacidad por enfermedad general;2024-04-22;2024-04-24;0
+36.287.872;Cordoba Gonzalez Dora Marledy;Incapacidad;Incapacidad por enfermedad general;2024-04-23;2024-04-23;3
+1.105.678.685;Oliveros Granados Leydi Yineth;Licencia;Remunerada;2023-07-19;2023-07-19;1
+36.312.915;Lozano Rey Nataly Tatiana;Incapacidad;Incapacidad por enfermedad general;2023-07-13;2023-07-14;1
+12.020.915;Cossio Rengifo Hainner Estivinson;Incapacidad;Incapacidad por enfermedad general;2023-07-06;2023-07-07;6
+1.003.893.188;Gonzalez  Carlos Fernando;Incapacidad;Incapacidad por enfermedad general;2023-07-05;2023-07-06;3
+1.077.875.722;Cerquera Cabrera Karen Dayanna;Incapacidad;Incapacidad por enfermedad general;2023-07-13;2023-07-14;6
+1.077.875.722;Cerquera Cabrera Karen Dayanna;Incapacidad;Incapacidad por enfermedad general;2023-07-17;2023-07-26;6
+36.286.922;Molina Peña Doris;Incapacidad;Incapacidad por enfermedad general;2023-07-17;2023-07-18;5
+36.312.915;Lozano Rey Nataly Tatiana;Incapacidad;Incapacidad por enfermedad general;2023-07-25;2023-07-26;1
+1.082.127.400;Alarcon Cabrera Diana Alexandra;Licencia;Remunerada;2024-04-22;2024-04-22;3
+12.194.863;Cerquera  Harol;Licencia;Suspensión;2024-04-18;2024-05-02;3
+7.713.345;Buendia Chicue Gerardo;Licencia;Remunerada;2024-04-05;2024-04-05;3
+55.070.574;Sterling Santofimio Liliana;Incapacidad;Incapacidad por enfermedad general;2024-11-12;2024-11-14;6
+1.010.198.521;Leon Montaño Cristian Geovanny;Licencia;Luto;2023-07-14;2023-07-19;3
+26.542.017;Joven Osorio Amparo;Licencia;Suspensión;2023-07-05;2023-07-12;1
+1.080.260.159;Lugo Guacari Loresledy;Licencia;Remunerada;2023-07-12;2023-07-12;6
+26.515.235;Osso Andrade Esperanza;Licencia;Remunerada;2023-07-18;2023-07-18;12
+26.510.426;Talero Cuellar Astrid;Incapacidad;Incapacidad por enfermedad general;2023-07-17;2023-07-21;4
+1.080.362.443;Silva Cabrera Keyla Daniela;Licencia;Remunerada;2023-07-10;2023-07-10;4
+1.080.260.159;Lugo Guacari Loresledy;Incapacidad;Incapacidad por enfermedad general;2023-07-06;2023-07-08;6
+12.020.915;Cossio Rengifo Hainner Estivinson;Incapacidad;Incapacidad por enfermedad general;2023-07-04;2023-07-05;6
+12.020.915;Cossio Rengifo Hainner Estivinson;Incapacidad;Incapacidad por enfermedad general;2023-07-11;2023-07-13;6
+12.325.164;Perez Yunda Hollman Yamid;Incapacidad;Incapacidad por enfermedad general;2023-07-10;2023-07-11;6
+1.077.875.722;Cerquera Cabrera Karen Dayanna;Incapacidad;Incapacidad por enfermedad general;2023-07-08;2023-07-12;6
+1.077.875.722;Cerquera Cabrera Karen Dayanna;Incapacidad;Incapacidad por enfermedad general;2023-07-15;2023-07-15;6
+26.575.125;Otalora Clavijo Liliana;Incapacidad;Incapacidad por enfermedad general;2023-07-17;2023-07-19;8
+1.081.152.752;Penagos Ibarra Nazli Yolercy;Incapacidad;Incapacidad por enfermedad general;2023-07-22;2023-07-28;1
+1.081.152.752;Penagos Ibarra Nazli Yolercy;Incapacidad;Incapacidad por enfermedad general;2023-07-01;2023-07-03;1
+1.108.929.229;Ayala Betancourt Juan Jose;Licencia;Suspensión;2023-07-01;2023-07-08;1
+1.014.306.346;Velandia Alzate Jhon Sebastian;Licencia;Suspensión;2023-07-01;2023-07-08;1
+1.080.363.088;Parra Mora Mauricio;Licencia;Remunerada;2024-04-22;2024-04-22;5
+1.077.873.796;Rojas Nuñez Luis Angel;Licencia;Suspensión;2023-07-12;2023-07-14;1
+1.080.363.088;Parra Mora Mauricio;Licencia;Maternidad/Paternidad;2023-07-28;2023-08-10;5
+1.077.865.025;Bonelo Rodriguez Hector Elias;Incapacidad;Incapacidad por enfermedad general;2023-07-11;2023-07-30;0
+1.003.994.816;Ramirez Bermeo Veronica Licet;Incapacidad;Incapacidad por enfermedad general;2023-08-02;2023-08-04;1
+36.068.868;Gaona Perdomo Alexa;Incapacidad;Incapacidad por enfermedad general;2023-08-09;2023-08-11;0
+12.020.915;Cossio Rengifo Hainner Estivinson;Incapacidad;Incapacidad por enfermedad general;2023-08-17;2023-09-06;6
+83.252.389;Naranjo Joven Exnehider;Incapacidad;Incapacidad por enfermedad laboral o accidente;2023-08-23;2023-08-23;0
+1.081.416.279;Muñoz Medina Nathalia Andrea;Incapacidad;Incapacidad por enfermedad general;2023-08-24;2023-08-25;15
+1.070.594.133;Garzon Leyton Ana Paola;Incapacidad;Incapacidad por enfermedad general;2023-08-17;2023-08-19;2
+55.068.441;Rodriguez Suarez Adriana Marcela;Incapacidad;Incapacidad por enfermedad general;2023-08-17;2023-08-19;5
+1.083.894.260;Sapuyes Muñoz Eduard Hernan;Licencia;Remunerada;2024-04-03;2024-04-04;9
+1.024.510.003;Orjuela Torres Veronica Julieth;Incapacidad;Incapacidad por enfermedad general;2023-08-25;2023-08-29;2
+1.080.365.383;Higuita Cardona Soraya;Incapacidad;Incapacidad por enfermedad general;2023-08-18;2023-08-19;4
+65.557.185;Olave Lozano Judy Carolina;Incapacidad;Incapacidad por enfermedad general;2023-08-07;2023-08-09;1
+1.077.865.025;Bonelo Rodriguez Hector Elias;Incapacidad;Incapacidad por enfermedad general;2023-08-01;2023-08-08;0
+1.077.865.025;Bonelo Rodriguez Hector Elias;Incapacidad;Incapacidad por enfermedad general;2023-08-09;2023-08-15;0
+1.077.865.025;Bonelo Rodriguez Hector Elias;Incapacidad;Incapacidad por enfermedad general;2023-08-16;2023-09-14;0
+1.077.848.902;Perdomo Barahona Jamer;Licencia;Remunerada;2024-04-23;2024-04-23;2
+83.058.256;Franco Penagos Diego Mauricio;Incapacidad;Incapacidad por enfermedad general;2024-04-23;2024-04-24;3
+55.064.864;Montes Rodriguez Claudia Patricia;Licencia;Remunerada;2023-08-02;2023-08-02;6
+55.064.864;Montes Rodriguez Claudia Patricia;Licencia;Remunerada;2023-08-05;2023-08-05;6
+1.076.903.810;Henao Silva David Felipe;Incapacidad;Incapacidad por enfermedad general;2024-04-23;2024-04-27;1
+26.510.426;Talero Cuellar Astrid;Licencia;Remunerada;2023-08-10;2023-08-10;4
+1.080.365.383;Higuita Cardona Soraya;Licencia;Calamidad Doméstica;2023-08-28;2023-08-30;4
+65.831.738;Mosquera Cruz Yudi Luz Karime;Incapacidad;Incapacidad por enfermedad general;2023-08-29;2023-09-02;0
+1.077.875.287;Peña Valencia Jose Alexis;Licencia;Suspensión;2023-09-16;2023-09-23;10
+1.082.127.582;Robayo Camacho Seidy Marcela;Licencia;Suspensión;2023-09-22;2023-09-29;2
+1.081.409.834;Campo Andrade Jose Arned;Licencia;Suspensión;2023-09-01;2023-09-08;8
+1.077.875.722;Cerquera Cabrera Karen Dayanna;Incapacidad;Incapacidad por enfermedad general;2023-09-20;2023-09-20;6
+1.117.519.270;Mesa Fuentes Nayla Katherine;Incapacidad;Incapacidad por enfermedad general;2023-09-20;2023-09-22;3
+1.081.416.279;Muñoz Medina Nathalia Andrea;Licencia;Luto;2023-09-25;2023-09-29;15
+36.068.868;Gaona Perdomo Alexa;Incapacidad;Incapacidad por enfermedad general;2023-09-18;2023-09-18;0
+1.077.849.513;Trujillo Perez Diana Karolina;Incapacidad;Incapacidad por enfermedad general;2023-09-20;2023-09-21;7
+1.105.678.685;Oliveros Granados Leydi Yineth;Incapacidad;Incapacidad por enfermedad general;2023-09-05;2023-09-06;1
+12.189.067;Varon Pineda Alvaro;Incapacidad;Incapacidad por enfermedad general;2023-09-03;2023-09-04;0
+55.068.441;Rodriguez Suarez Adriana Marcela;Incapacidad;Incapacidad por enfermedad general;2023-09-15;2023-09-19;5
+1.081.420.957;Mejia Ipia Paola Alexandra;Licencia;Luto;2023-09-04;2023-09-08;2
+1.078.246.915;Vargas Trujillo Otoniel Alberto;Incapacidad;Incapacidad por enfermedad general;2023-09-07;2023-09-09;3
+1.077.870.304;Vanegas Chavez Jhon Alexander;Licencia;Remunerada;2023-09-25;2023-09-25;4
+1.081.514.856;Torres Betancourt Enrrique;Licencia;Remunerada;2023-09-13;2023-09-13;4
+1.054.682.978;Sánchez Diaz Brayan Mauricio;Licencia;Remunerada;2023-09-09;2023-09-09;3
+1.077.849.513;Trujillo Perez Diana Karolina;Licencia;Remunerada;2023-09-09;2023-09-09;7
+1.077.849.030;Polo Quesada Soraya Maria;Licencia;Remunerada;2023-09-09;2023-09-09;6
+1.077.871.911;Jimenez Trujillo Francy Yanixa;Licencia;Remunerada;2023-09-20;2023-09-20;5
+1.075.258.958;Cedeño Villegas Luisa Fernanda;Licencia;Remunerada;2023-09-28;2023-09-28;4
+1.077.865.025;Bonelo Rodriguez Hector Elias;Incapacidad;Incapacidad por enfermedad general;2023-09-15;2023-10-14;0
+1.080.365.383;Higuita Cardona Soraya;Licencia;No remunerada;2023-09-01;2023-09-02;4
+1.077.840.653;Bonilla Luna Yeni Paola;Incapacidad;Incapacidad por enfermedad general;2023-09-25;2023-09-26;3
+1.077.845.779;Losada Torres Yury Carolina;Incapacidad;Incapacidad por enfermedad general;2023-09-27;2023-09-29;3
+52.284.617;Fernandez Cediel Claudia Patricia;Incapacidad;Incapacidad por enfermedad general;2023-09-28;2023-09-30;1
+1.081.409.834;Campo Andrade Jose Arned;Licencia;Maternidad/Paternidad;2023-09-26;2023-10-09;8
+1.080.260.469;Medina Cabrera Diana Jimena;Incapacidad;Incapacidad por enfermedad general;2023-10-17;2023-10-18;4
+1.080.361.725;Zambrano Rojas Bibiana Constanza;Incapacidad;Incapacidad por enfermedad general;2023-10-12;2023-10-13;4
+1.080.361.725;Zambrano Rojas Bibiana Constanza;Licencia;Remunerada;2023-10-23;2023-10-23;4
+83.029.763;Rojas Claros Wilfredy;Licencia;Remunerada;2023-10-23;2023-10-23;1
+12.194.863;Cerquera  Harol;Licencia;Remunerada;2023-10-19;2023-10-19;3
+1.007.897.591;Alvarez Burbano Laura Valentina;Licencia;Remunerada;2023-10-21;2023-10-21;7
+1.070.594.133;Garzon Leyton Ana Paola;Licencia;Remunerada;2023-10-14;2023-10-14;2
+36.302.836;Almario Santos Nini Yohana;Licencia;Remunerada;2023-10-14;2023-10-14;3
+1.081.409.834;Campo Andrade Jose Arned;Licencia;Calamidad Doméstica;2023-10-12;2023-10-14;8
+1.081.731.969;Hoyos Medina Viviana;Licencia;Remunerada;2023-10-13;2023-10-13;4
+1.077.849.030;Polo Quesada Soraya Maria;Licencia;Remunerada;2023-10-11;2023-10-11;6
+1.077.871.911;Jimenez Trujillo Francy Yanixa;Licencia;Remunerada;2023-10-09;2023-10-09;5
+1.075.273.013;Ñañez Diaz Yessica Alejandra;Licencia;Remunerada;2023-10-06;2023-10-06;3
+1.081.407.862;Gomez Vargas Jose David;Licencia;Remunerada;2023-10-02;2023-10-02;11
+83.165.616;Tovar Sterling Rodolfo;Licencia;Remunerada;2023-10-14;2023-10-14;4
+1.081.513.864;Guarnizo Trujillo Milton Alexis;Licencia;Remunerada;2023-10-21;2023-10-21;5
+55.068.441;Rodriguez Suarez Adriana Marcela;Licencia;Remunerada;2023-10-14;2023-10-14;5
+1.077.012.471;Cuellar Casallas Norma Constanza;Licencia;Remunerada;2023-10-14;2023-10-14;1
+36.312.915;Lozano Rey Nataly Tatiana;Licencia;Remunerada;2023-10-14;2023-10-14;1
+1.003.803.489;Motta Escobar Maria Alejandra;Incapacidad;Incapacidad por enfermedad general;2023-10-18;2023-10-20;2
+1.077.865.025;Bonelo Rodriguez Hector Elias;Incapacidad;Incapacidad por enfermedad general;2023-10-15;2023-11-13;0
+83.252.389;Naranjo Joven Exnehider;Incapacidad;Incapacidad por enfermedad general;2023-10-04;2023-10-08;0
+1.143.963.105;Mora Parra Lenis Hernando;Licencia;Maternidad/Paternidad;2023-10-20;2023-11-02;1
+36.068.868;Gaona Perdomo Alexa;Incapacidad;Incapacidad por enfermedad general;2023-10-05;2023-10-05;0
+36.287.872;Cordoba Gonzalez Dora Marledy;Incapacidad;Incapacidad por enfermedad general;2023-10-24;2023-11-02;3
+1.003.803.489;Motta Escobar Maria Alejandra;Incapacidad;Incapacidad por enfermedad general;2023-10-22;2023-10-23;2
+55.069.034;Parra Vargas Lina Ximena;Incapacidad;Incapacidad por enfermedad general;2023-10-20;2023-11-18;5
+1.077.863.489;Buendia Tovar Jonathan;Incapacidad;Incapacidad por enfermedad general;2023-10-10;2023-10-14;1
+1.080.362.443;Silva Cabrera Keyla Daniela;Incapacidad;Incapacidad por enfermedad general;2023-10-23;2023-10-24;4
+1.054.682.978;Sánchez Diaz Brayan Mauricio;Incapacidad;Incapacidad por enfermedad general;2023-10-10;2023-10-11;3
+26.529.705;Perez Duran Yolima;Incapacidad;Incapacidad por enfermedad general;2023-10-24;2023-10-31;4
+1.004.158.659;Muñoz Ramirez Lucia;Licencia;Remunerada;2023-10-23;2023-10-24;1
+1.077.840.653;Bonilla Luna Yeni Paola;Incapacidad;Incapacidad por enfermedad general;2023-10-30;2023-11-01;3
+55.064.864;Montes Rodriguez Claudia Patricia;Licencia;Suspensión;2023-10-25;2023-10-28;6
+1.081.733.761;Bermeo Navia Cristhian David;Incapacidad;Incapacidad por enfermedad general;2023-11-02;2023-11-16;0
+55.068.441;Rodriguez Suarez Adriana Marcela;Licencia;Remunerada;2024-04-17;2024-04-17;5
+1.075.286.667;Tovar Sierra Andrea Del Pilar;Licencia;Remunerada;2023-11-07;2023-11-07;5
+1.007.447.056;Carmona Melgar Liseth Alejandra;Incapacidad;Incapacidad por enfermedad general;2023-11-07;2023-11-10;0
+1.077.865.025;Bonelo Rodriguez Hector Elias;Incapacidad;Incapacidad por enfermedad general;2023-11-14;2023-12-13;0
+26.529.705;Perez Duran Yolima;Incapacidad;Incapacidad por enfermedad general;2023-11-09;2023-11-16;4
+26.529.705;Perez Duran Yolima;Incapacidad;Incapacidad por enfermedad general;2023-11-17;2023-11-26;4
+1.080.363.088;Parra Mora Mauricio;Incapacidad;Incapacidad por enfermedad general;2023-11-03;2023-11-03;5
+1.004.302.849;Ramírez Chacón Karen Alejandra;Licencia;Luto;2023-11-14;2023-11-16;1
+1.081.731.969;Hoyos Medina Viviana;Licencia;Remunerada;2023-11-22;2023-11-22;4
+1.024.510.003;Orjuela Torres Veronica Julieth;Incapacidad;Incapacidad por enfermedad general;2023-11-01;2023-11-14;2
+1.024.510.003;Orjuela Torres Veronica Julieth;Incapacidad;Incapacidad por enfermedad general;2023-11-15;2023-11-24;2
+1.003.994.816;Ramirez Bermeo Veronica Licet;Licencia;Remunerada;2023-11-24;2023-11-24;1
+1.082.780.446;Erazo Ñañez Brayan Felipe;Licencia;Remunerada;2023-11-28;2023-11-28;5
+1.077.872.590;Delgado Montilla Daniela Victoria;Licencia;Remunerada;2023-11-16;2023-11-16;2
+1.083.879.202;Moreno Yaguara Geovanny;Licencia;Calamidad Doméstica;2023-11-14;2023-11-16;2
+1.081.409.834;Campo Andrade Jose Arned;Licencia;Remunerada;2023-11-07;2023-11-07;8
+1.080.260.159;Lugo Guacari Loresledy;Licencia;Remunerada;2023-11-07;2023-11-07;6
+1.106.782.780;Castaño Escobar Merly Zareth;Licencia;Remunerada;2023-11-03;2023-11-03;3
+1.081.409.834;Campo Andrade Jose Arned;Licencia;Remunerada;2023-11-03;2023-11-03;8
+1.077.877.872;Vargas Mogollon Natalia;Licencia;Remunerada;2023-11-24;2023-11-24;1
+1.007.391.926;Murcia Silva Maria Jose;Licencia;Remunerada;2023-11-24;2023-11-24;2
+1.007.391.926;Murcia Silva Maria Jose;Licencia;Remunerada;2023-11-03;2023-11-04;2
+55.068.441;Rodriguez Suarez Adriana Marcela;Licencia;Remunerada;2023-11-11;2023-11-11;5
+83.165.616;Tovar Sterling Rodolfo;Licencia;Remunerada;2023-11-20;2023-11-20;4
+1.080.189.359;Botello Mancipe Jhoan Sebastian;Licencia;Remunerada;2023-11-11;2023-11-11;2
+1.070.594.133;Garzon Leyton Ana Paola;Licencia;Remunerada;2023-11-22;2023-11-22;2
+1.081.514.856;Torres Betancourt Enrrique;Licencia;Remunerada;2023-11-21;2023-11-21;4
+1.077.840.653;Bonilla Luna Yeni Paola;Licencia;Remunerada;2023-11-18;2023-11-18;3
+55.130.105;Candela Molano Lina Maritza;Licencia;Remunerada;2023-11-17;2023-11-17;4
+1.081.416.279;Muñoz Medina Nathalia Andrea;Licencia;Remunerada;2023-11-11;2023-11-11;15
+1.077.864.672;Salcedo Alvarez Bernardo;Licencia;Remunerada;2023-11-11;2023-11-11;1
+1.081.513.864;Guarnizo Trujillo Milton Alexis;Licencia;Remunerada;2023-11-14;2023-11-14;5
+1.010.198.521;Leon Montaño Cristian Geovanny;Licencia;Remunerada;2023-11-14;2023-11-14;3
+36.308.988;Perez Ospina Claudia Paola;Licencia;Remunerada;2023-11-25;2023-11-25;2
+1.077.849.030;Polo Quesada Soraya Maria;Licencia;Remunerada;2023-11-08;2023-11-08;6
+1.083.871.690;Mosquera Mosquera Lida Sofia;Licencia;Remunerada;2023-11-18;2023-11-18;4
+1.077.877.560;Gonzalez Elizalde Estella Andrea;Licencia;Remunerada;2023-11-14;2023-11-14;3
+1.077.855.297;Camacho Manjarres Ferney;Licencia;Remunerada;2023-11-03;2023-11-03;4
+26.512.315;Usma Arevalo Luz Beida;Licencia;Remunerada;2023-11-24;2023-11-24;3
+36.287.872;Cordoba Gonzalez Dora Marledy;Incapacidad;Incapacidad por enfermedad general;2023-11-09;2023-11-16;3
+1.083.897.878;Rueda Rodriguez Sandra;Incapacidad;Incapacidad por enfermedad general;2023-11-23;2023-11-25;2
+26.529.705;Perez Duran Yolima;Licencia;No remunerada;2023-11-02;2023-11-04;4
+26.529.705;Perez Duran Yolima;Licencia;No remunerada;2023-11-07;2023-11-08;4
+26.529.705;Perez Duran Yolima;Incapacidad;Incapacidad por enfermedad general;2023-11-28;2023-11-30;4
+55.064.864;Montes Rodriguez Claudia Patricia;Licencia;Suspensión;2023-11-30;2023-12-03;6
+1.077.866.781;Cabrera Urriago Carlos Andres;Incapacidad;Incapacidad por enfermedad general;2023-11-28;2023-11-29;4
+1.024.510.003;Orjuela Torres Veronica Julieth;Licencia;Maternidad/Paternidad;2023-11-29;2024-04-02;2
+1.083.902.610;Aguilar Muñoz Claudia Maryori;Licencia;Suspensión;2023-12-01;2023-12-08;1
+1.082.155.519;Pineda Parra Yudy Arcelia;Licencia;Remunerada;2023-12-01;2023-12-02;2
+1.006.528.004;Claros Romero Jein;Incapacidad;Incapacidad por enfermedad general;2023-12-06;2023-12-08;3
+1.007.364.319;Cuaran Claros Duberney;Licencia;Remunerada;2023-12-06;2023-12-06;1
+1.077.870.480;Valderrama Joven Ingrid Galiria;Licencia;Remunerada;2023-12-09;2023-12-09;1
+1.077.863.308;Oliveros Lozano Carlos Fernando;Licencia;Remunerada;2023-12-09;2023-12-09;1
+1.082.158.672;Vega Olis Yurany;Licencia;Remunerada;2023-12-06;2023-12-06;3
+1.110.575.674;Arias Hincapie Luis Fernado;Licencia;Remunerada;2023-12-09;2023-12-09;1
+1.003.864.240;Roa Ospitia Maria Paula;Licencia;Remunerada;2023-12-09;2023-12-09;3
+12.325.164;Perez Yunda Hollman Yamid;Licencia;Remunerada;2023-12-04;2023-12-04;6
+1.077.849.513;Trujillo Perez Diana Karolina;Licencia;Remunerada;2023-12-21;2023-12-21;7
+55.068.771;Mejia Gonzalez Martha Ximena;Licencia;Remunerada;2023-12-11;2023-12-11;8
+1.080.365.383;Higuita Cardona Soraya;Licencia;Remunerada;2023-12-09;2023-12-09;4
+1.077.876.738;Sanchez Tovar Deiver Andres;Licencia;Remunerada;2023-12-04;2023-12-04;6
+1.081.152.752;Penagos Ibarra Nazli Yolercy;Licencia;Remunerada;2023-12-07;2023-12-07;1
+1.081.407.862;Gomez Vargas Jose David;Licencia;Remunerada;2023-12-04;2023-12-04;11
+1.077.845.779;Losada Torres Yury Carolina;Licencia;Remunerada;2023-12-07;2023-12-07;3
+26.493.681;Cuellar Tovar Marbelis;Licencia;Remunerada;2023-12-04;2023-12-04;2
+83.058.256;Franco Penagos Diego Mauricio;Licencia;Remunerada;2023-12-07;2023-12-07;3
+1.077.848.902;Perdomo Barahona Jamer;Licencia;Remunerada;2023-12-01;2023-12-01;2
+1.004.300.389;Joven Motta Paubla Valentina;Licencia;Remunerada;2023-12-09;2023-12-09;3
+12.265.011;Duran Muñoz Jaime Andres;Licencia;Remunerada;2024-04-13;2024-04-13;1
+1.080.264.278;Diaz Sambony Yolanda;Licencia;Remunerada;2023-12-11;2023-12-11;3
+83.183.505;Ospina Lugo Carlos Augusto;Licencia;Remunerada;2023-12-09;2023-12-10;2
+1.080.361.725;Zambrano Rojas Bibiana Constanza;Licencia;Remunerada;2023-12-02;2023-12-02;4
+55.070.574;Sterling Santofimio Liliana;Licencia;Remunerada;2023-12-05;2023-12-05;6
+1.081.416.279;Muñoz Medina Nathalia Andrea;Licencia;Remunerada;2023-12-07;2023-12-07;15
+1.083.875.155;Camargo Paredes Martha Liliana;Licencia;Remunerada;2023-12-11;2023-12-11;3
+1.075.300.181;Ortiz Mendoza Francy Lupita;Licencia;Remunerada;2023-12-09;2023-12-09;2
+1.077.871.911;Jimenez Trujillo Francy Yanixa;Licencia;Remunerada;2023-12-09;2023-12-09;5
+1.083.838.335;Motta Cuellar Yenny Fernanda;Licencia;Remunerada;2023-12-09;2023-12-09;7
+1.144.131.318;Cano Sanchez Sindi Yulieth;Licencia;Remunerada;2023-12-07;2023-12-07;12
+1.077.877.560;Gonzalez Elizalde Estella Andrea;Incapacidad;Incapacidad por enfermedad general;2023-12-06;2023-12-07;3
+1.144.131.318;Cano Sanchez Sindi Yulieth;Licencia;Luto;2023-12-12;2023-12-16;12
+1.077.877.560;Gonzalez Elizalde Estella Andrea;Licencia;Remunerada;2024-04-02;2024-04-02;3
+1.081.409.834;Campo Andrade Jose Arned;Licencia;Remunerada;2023-12-06;2023-12-06;8
+1.080.260.469;Medina Cabrera Diana Jimena;Incapacidad;Incapacidad por enfermedad general;2023-12-02;2023-12-10;4
+1.083.877.039;Carvajal Ramos Ismael;Incapacidad;Incapacidad por enfermedad general;2023-12-03;2024-01-01;5
+1.077.865.025;Bonelo Rodriguez Hector Elias;Incapacidad;Incapacidad por enfermedad general;2023-12-14;2024-01-12;0
+1.082.127.582;Robayo Camacho Seidy Marcela;Incapacidad;Incapacidad por enfermedad laboral o accidente;2023-12-13;2023-12-14;2
+1.054.682.978;Sánchez Diaz Brayan Mauricio;Incapacidad;Incapacidad por enfermedad general;2023-12-21;2023-12-21;3
+1.075.238.428;Cediel Peña Jeisson Javier;Incapacidad;Incapacidad por enfermedad general;2023-12-17;2023-12-18;3
+1.075.238.428;Cediel Peña Jeisson Javier;Incapacidad;Incapacidad por enfermedad general;2023-12-19;2023-12-21;3
+65.557.185;Olave Lozano Judy Carolina;Incapacidad;Incapacidad por enfermedad general;2023-12-19;2023-12-22;1
+83.165.616;Tovar Sterling Rodolfo;Incapacidad;Incapacidad por enfermedad general;2023-12-19;2023-12-19;4
+1.007.349.671;Losada Camacho Angee Yojanna;Licencia;Remunerada;2023-12-22;2023-12-22;4
+1.080.264.459;Sanchez Londoño Geralldine;Licencia;Remunerada;2023-12-11;2023-12-11;5
+1.077.871.911;Jimenez Trujillo Francy Yanixa;Licencia;Remunerada;2023-12-16;2023-12-16;5
+26.515.235;Osso Andrade Esperanza;Licencia;Remunerada;2023-12-29;2023-12-29;12
+1.109.421.903;Polania Camacho Akerles Steven;Licencia;Remunerada;2023-12-12;2023-12-12;1
+1.081.407.862;Gomez Vargas Jose David;Licencia;Remunerada;2024-04-06;2024-04-06;11
+1.080.361.725;Zambrano Rojas Bibiana Constanza;Incapacidad;Incapacidad por enfermedad general;2023-12-27;2023-12-28;4
+36.286.922;Molina Peña Doris;Incapacidad;Incapacidad por enfermedad general;2024-01-03;2024-01-04;5
+1.075.286.945;Garzon Hermosa Elkin Giovanni;Incapacidad;Incapacidad por enfermedad general;2024-01-05;2024-01-24;3
+1.080.365.383;Higuita Cardona Soraya;Incapacidad;Incapacidad por enfermedad general;2024-01-03;2024-01-04;4
+1.004.300.389;Joven Motta Paubla Valentina;Incapacidad;Incapacidad por enfermedad general;2024-01-17;2024-01-18;3
+1.083.877.039;Carvajal Ramos Ismael;Incapacidad;Incapacidad por enfermedad general;2024-01-02;2024-01-11;5
+1.083.877.039;Carvajal Ramos Ismael;Incapacidad;Incapacidad por enfermedad general;2024-01-12;2024-02-10;5
+55.064.864;Montes Rodriguez Claudia Patricia;Incapacidad;Incapacidad por enfermedad general;2024-01-20;2024-01-20;6
+1.077.848.902;Perdomo Barahona Jamer;Incapacidad;Incapacidad por enfermedad general;2024-01-12;2024-01-13;2
+36.068.868;Gaona Perdomo Alexa;Incapacidad;Incapacidad por enfermedad general;2024-01-09;2024-01-13;0
+36.068.868;Gaona Perdomo Alexa;Incapacidad;Incapacidad por enfermedad general;2024-01-15;2024-01-21;0
+55.064.864;Montes Rodriguez Claudia Patricia;Incapacidad;Incapacidad por enfermedad general;2024-01-21;2024-01-23;6
+1.080.363.948;Paredes Navia Alexandra Maria;Incapacidad;Incapacidad por enfermedad general;2024-01-17;2024-01-18;1
+55.070.574;Sterling Santofimio Liliana;Incapacidad;Incapacidad por enfermedad general;2024-01-16;2024-01-18;6
+55.068.960;Pedreros Ramon Joalber;Incapacidad;Incapacidad por enfermedad general;2024-01-18;2024-01-20;3
+1.078.753.106;Cueltan Barrera Juan David;Incapacidad;Incapacidad por enfermedad general;2024-01-19;2024-01-20;2
+1.082.154.767;Camero Triana Faiber;Incapacidad;Incapacidad por enfermedad general;2024-01-03;2024-01-05;4
+1.083.891.797;Jimenez Ferreira Varlis Andrey;Licencia;Luto;2024-01-20;2024-01-24;3
+52.826.636;Cifuentes Ramiréz Alejandra;Licencia;Luto;2024-01-06;2024-01-10;1
+1.078.246.749;Morales Aroca Jhonatan Arley;Licencia;Remunerada;2024-01-02;2024-01-04;7
+1.078.246.749;Morales Aroca Jhonatan Arley;Licencia;No remunerada;2024-01-05;2024-01-06;7
+1.078.246.749;Morales Aroca Jhonatan Arley;Licencia;Luto;2024-01-08;2024-01-12;7
+1.081.417.678;Falla Caicedo Anlly Zuleima;Licencia;Luto;2024-01-03;2024-01-07;2
+1.007.897.591;Alvarez Burbano Laura Valentina;Licencia;Remunerada;2024-01-20;2024-01-20;7
+1.077.876.738;Sanchez Tovar Deiver Andres;Licencia;Remunerada;2024-01-19;2024-01-19;6
+52.832.524;Paredes Arguello Luz Enith;Licencia;Suspensión;2024-01-13;2024-01-16;8
+55.070.574;Sterling Santofimio Liliana;Incapacidad;Incapacidad por enfermedad general;2024-01-24;2024-02-12;6
+26.510.300;Penagos Munar Lucy Abaned;Licencia;Remunerada;2024-01-26;2024-01-27;4
+1.007.349.671;Losada Camacho Angee Yojanna;Licencia;Remunerada;2024-01-06;2024-01-06;4
+1.077.877.872;Vargas Mogollon Natalia;Licencia;Remunerada;2024-01-23;2024-01-24;1
+83.183.505;Ospina Lugo Carlos Augusto;Incapacidad;Incapacidad por enfermedad general;2024-01-25;2024-01-26;2
+1.077.865.025;Bonelo Rodriguez Hector Elias;Incapacidad;Incapacidad por enfermedad general;2024-01-13;2024-02-11;0
+1.075.300.181;Ortiz Mendoza Francy Lupita;Incapacidad;Incapacidad por enfermedad general;2024-01-26;2024-01-29;2
+1.077.845.779;Losada Torres Yury Carolina;Incapacidad;Incapacidad por enfermedad general;2024-01-24;2024-02-02;3
+1.075.300.181;Ortiz Mendoza Francy Lupita;Incapacidad;Incapacidad por enfermedad general;2024-01-30;2024-02-03;2
+1.007.349.671;Losada Camacho Angee Yojanna;Incapacidad;Incapacidad por enfermedad general;2024-02-05;2024-02-07;4
+1.077.875.722;Cerquera Cabrera Karen Dayanna;Incapacidad;Incapacidad por enfermedad general;2024-02-05;2024-02-07;6
+1.077.877.560;Gonzalez Elizalde Estella Andrea;Incapacidad;Incapacidad por enfermedad general;2024-02-01;2024-02-04;3
+1.007.349.671;Losada Camacho Angee Yojanna;Licencia;Remunerada;2024-02-03;2024-02-03;4
+55.070.574;Sterling Santofimio Liliana;Licencia;Luto;2024-02-13;2024-02-17;6
+36.287.872;Cordoba Gonzalez Dora Marledy;Incapacidad;Incapacidad por enfermedad general;2024-02-13;2024-02-15;3
+1.077.851.605;Cediel Blasquez Yeny Alexandra;Licencia;Remunerada;2024-02-10;2024-02-10;4
+1.083.877.039;Carvajal Ramos Ismael;Incapacidad;Incapacidad por enfermedad general;2024-02-11;2024-02-25;5
+1.075.238.428;Cediel Peña Jeisson Javier;Incapacidad;Incapacidad por enfermedad general;2024-02-05;2024-02-05;3
+1.077.869.915;Ceballes Perdomo Viviana;Incapacidad;Incapacidad por enfermedad general;2024-02-16;2024-02-17;0
+55.068.441;Rodriguez Suarez Adriana Marcela;Incapacidad;Incapacidad por enfermedad general;2024-02-19;2024-02-19;5
+52.826.636;Cifuentes Ramiréz Alejandra;Incapacidad;Incapacidad por enfermedad general;2024-02-08;2024-02-10;1
+1.083.879.202;Moreno Yaguara Geovanny;Licencia;No remunerada;2024-02-02;2024-05-01;2
+1.082.780.446;Erazo Ñañez Brayan Felipe;Incapacidad;Incapacidad por enfermedad general;2025-03-09;2025-03-10;5
+1.054.682.978;Sánchez Diaz Brayan Mauricio;Licencia;Suspensión;2024-02-05;2024-02-12;3
+1.080.264.459;Sanchez Londoño Geralldine;Incapacidad;Incapacidad por enfermedad laboral o accidente;2024-02-21;2024-02-27;5
+1.076.987.623;Muñoz Vargas Jhon Fredi;Incapacidad;Incapacidad por enfermedad general;2024-02-22;2024-02-24;2
+1.082.127.582;Robayo Camacho Seidy Marcela;Licencia;Luto;2024-02-20;2024-02-24;2
+12.190.303;Ramirez Vargas Hector;Incapacidad;Incapacidad por enfermedad general;2024-02-22;2024-02-22;2
+55.130.105;Candela Molano Lina Maritza;Licencia;Suspensión;2024-02-01;2024-02-08;4
+12.280.531;Puyo Forero Eyder Alejandro;Licencia;Suspensión;2024-02-19;2024-02-26;1
+1.083.898.993;Ruiz Uni Yurany;Licencia;Remunerada;2024-02-21;2024-02-21;4
+1.106.782.780;Castaño Escobar Merly Zareth;Licencia;Remunerada;2024-02-12;2024-02-14;3
+1.106.782.780;Castaño Escobar Merly Zareth;Licencia;No remunerada;2024-02-15;2024-02-17;3
+1.083.838.335;Motta Cuellar Yenny Fernanda;Licencia;Remunerada;2024-02-22;2024-02-22;7
+1.077.849.513;Trujillo Perez Diana Karolina;Licencia;Remunerada;2024-02-22;2024-02-22;7
+55.070.574;Sterling Santofimio Liliana;Incapacidad;Incapacidad por enfermedad general;2024-02-23;2024-02-24;6
+1.077.849.684;Gutierrez Perdomo Leidy Johana;Licencia;No remunerada;2024-02-23;2024-02-24;4
+1.077.876.738;Sanchez Tovar Deiver Andres;Licencia;Remunerada;2024-02-23;2024-02-23;6
+36.309.237;Martinez Osorio Ivonne Ximena;Licencia;Remunerada;2024-02-14;2024-02-14;7
+1.077.876.368;Sanchez Bustos Daniela;Licencia;Remunerada;2024-02-12;2024-02-12;3
+1.082.155.519;Pineda Parra Yudy Arcelia;Licencia;Remunerada;2024-02-08;2024-02-09;2
+1.077.873.236;Betancourt Ramos Orlando;Licencia;Remunerada;2024-02-17;2024-02-18;3
+1.081.409.834;Campo Andrade Jose Arned;Licencia;Remunerada;2024-02-26;2024-02-26;8
+26.510.426;Talero Cuellar Astrid;Incapacidad;Incapacidad por enfermedad general;2024-02-26;2024-02-27;4
+55.060.661;Trejos Murcia Vianney;Incapacidad;Incapacidad por enfermedad general;2024-02-19;2024-02-22;4
+1.080.264.459;Sanchez Londoño Geralldine;Incapacidad;Incapacidad por enfermedad laboral o accidente;2024-02-28;2024-03-03;5
+1.077.840.653;Bonilla Luna Yeni Paola;Licencia;Remunerada;2024-02-28;2024-02-28;3
+26.510.426;Talero Cuellar Astrid;Incapacidad;Incapacidad por enfermedad general;2024-02-29;2024-03-02;4
+1.077.865.025;Bonelo Rodriguez Hector Elias;Incapacidad;Incapacidad por enfermedad general;2024-02-12;2024-03-12;0
+1.077.865.025;Bonelo Rodriguez Hector Elias;Incapacidad;Incapacidad por enfermedad general;2024-03-13;2024-04-11;0
+1.080.264.459;Sanchez Londoño Geralldine;Incapacidad;Incapacidad por enfermedad laboral o accidente;2024-03-06;2024-03-10;5
+55.070.574;Sterling Santofimio Liliana;Incapacidad;Incapacidad por enfermedad general;2024-03-05;2024-03-09;6
+26.510.300;Penagos Munar Lucy Abaned;Incapacidad;Incapacidad por enfermedad general;2024-03-06;2024-03-08;4
+1.077.868.657;Fajardo Parra Edna Ximena;Incapacidad;Incapacidad por enfermedad general;2024-03-08;2024-03-14;3
+1.075.274.402;Fierro Useche Edwin Alfredo;Incapacidad;Incapacidad por enfermedad general;2024-03-09;2024-03-09;0
+1.077.849.684;Gutierrez Perdomo Leidy Johana;Licencia;Maternidad/Paternidad;2024-11-04;2025-03-09;4
+36.287.872;Cordoba Gonzalez Dora Marledy;Incapacidad;Incapacidad por enfermedad general;2024-04-12;2024-04-17;3
+36.287.872;Cordoba Gonzalez Dora Marledy;Incapacidad;Incapacidad por enfermedad general;2024-03-06;2024-04-04;3
+1.077.876.738;Sanchez Tovar Deiver Andres;Incapacidad;Incapacidad por enfermedad general;2024-03-15;2024-03-16;6
+55.063.760;Rojas Paladinez Melva;Incapacidad;Incapacidad por enfermedad general;2024-03-15;2024-03-29;0
+1.081.407.862;Gomez Vargas Jose David;Licencia;Remunerada;2024-03-16;2024-03-16;11
+1.054.682.978;Sánchez Diaz Brayan Mauricio;Licencia;Remunerada;2024-03-16;2024-03-16;3
+1.081.407.862;Gomez Vargas Jose David;Licencia;Remunerada;2024-03-14;2024-03-14;11
+52.832.524;Paredes Arguello Luz Enith;Licencia;Remunerada;2024-03-11;2024-03-12;8
+55.068.771;Mejia Gonzalez Martha Ximena;Licencia;Remunerada;2024-03-05;2024-03-05;8
+1.077.877.695;Polo Arias Martin Camilo;Licencia;Remunerada;2024-03-05;2024-03-05;2
+1.004.250.524;Andrade Guevara Juan Manuel;Licencia;Remunerada;2024-03-01;2024-03-01;3
+1.075.258.958;Cedeño Villegas Luisa Fernanda;Licencia;Remunerada;2024-03-21;2024-03-21;4
+1.077.873.236;Betancourt Ramos Orlando;Licencia;Remunerada;2024-03-02;2024-03-05;3
+12.190.303;Ramirez Vargas Hector;Incapacidad;Incapacidad por enfermedad general;2024-03-19;2024-04-17;2
+1.077.851.605;Cediel Blasquez Yeny Alexandra;Licencia;Maternidad/Paternidad;2024-03-19;2024-07-22;4
+1.077.869.915;Ceballes Perdomo Viviana;Licencia;No remunerada;2024-03-22;2024-03-22;1
+12.370.775;Polania Ruiz Wilber Aleixer;Licencia;Remunerada;2024-03-22;2024-03-22;3
+1.054.682.978;Sánchez Diaz Brayan Mauricio;Incapacidad;Incapacidad por enfermedad general;2024-03-01;2024-03-01;3
+1.054.682.978;Sánchez Diaz Brayan Mauricio;Incapacidad;Incapacidad por enfermedad general;2024-03-18;2024-03-18;3
+1.024.510.003;Orjuela Torres Veronica Julieth;Licencia;Remunerada;2024-11-30;2024-11-30;2
+1.077.872.151;Ardila Tumbo Yenny Fernanda;Incapacidad;Incapacidad por enfermedad general;2024-03-18;2024-03-18;0
+1.075.219.262;Montoya Silva Carolina;Incapacidad;Incapacidad por enfermedad general;2024-03-26;2024-03-27;0
+1.077.865.025;Bonelo Rodriguez Hector Elias;Incapacidad;Incapacidad por enfermedad general;2024-04-12;2024-05-11;0
+1.078.246.915;Vargas Trujillo Otoniel Alberto;Incapacidad;Incapacidad por enfermedad general;2024-04-01;2024-04-03;3
+1.077.873.236;Betancourt Ramos Orlando;Licencia;Remunerada;2024-04-04;2024-04-05;3
+1.077.848.902;Perdomo Barahona Jamer;Incapacidad;Incapacidad por enfermedad general;2024-03-30;2024-04-05;2
+1.083.877.039;Carvajal Ramos Ismael;Incapacidad;Incapacidad por enfermedad general;2024-04-05;2024-04-08;5
+55.070.574;Sterling Santofimio Liliana;Incapacidad;Incapacidad por enfermedad general;2024-04-03;2024-04-17;6
+36.287.872;Cordoba Gonzalez Dora Marledy;Incapacidad;Incapacidad por enfermedad general;2024-04-05;2024-04-11;3
+1.081.409.834;Campo Andrade Jose Arned;Incapacidad;Incapacidad por enfermedad general;2024-04-10;2024-04-12;8
+1.077.845.779;Losada Torres Yury Carolina;Incapacidad;Incapacidad por enfermedad general;2024-04-09;2024-04-11;3
+1.082.128.836;Elizalde Villanueva Yeiler Osnaider;Incapacidad;Incapacidad por enfermedad general;2024-04-15;2024-04-16;0
+12.190.303;Ramirez Vargas Hector;Incapacidad;Incapacidad por enfermedad general;2024-04-18;2024-05-02;2
+1.082.158.672;Vega Olis Yurany;Licencia;Suspensión;2024-04-22;2024-04-28;3
+1.003.762.635;Castro Aguirre Jerson Danilo;Licencia;Luto;2024-04-13;2024-04-17;1
+36.287.872;Cordoba Gonzalez Dora Marledy;Incapacidad;Incapacidad por enfermedad general;2024-04-18;2024-04-22;3
+1.077.875.722;Cerquera Cabrera Karen Dayanna;Incapacidad;Incapacidad por enfermedad general;2024-04-22;2024-04-29;6
+1.083.869.937;Medina Chavarro Ruben Dario;Incapacidad;Incapacidad por enfermedad general;2024-04-25;2024-04-26;0
+36.287.872;Cordoba Gonzalez Dora Marledy;Incapacidad;Incapacidad por enfermedad general;2024-04-24;2024-04-30;3
+1.077.848.048;Lopez Rivera Alvaro;Licencia;Maternidad/Paternidad;2024-11-16;2024-11-29;8
+1.083.895.843;Hurtado Castillo Angelica Maria;Licencia;Remunerada;2024-04-06;2024-04-08;3
+1.076.903.810;Henao Silva David Felipe;Incapacidad;Incapacidad por enfermedad general;2024-04-28;2024-04-29;1
+1.082.158.633;Monroy Fernández Alexandra;Licencia;Luto;2024-04-20;2024-04-25;3
+1.083.912.848;Suarez Llanos Daniela Yineth;Incapacidad;Incapacidad por enfermedad general;2024-04-29;2024-04-30;0
+1.003.808.069;Ardila Rojas Juan David;Incapacidad;Incapacidad por enfermedad general;2024-04-30;2024-05-01;0
+1.077.872.590;Delgado Montilla Daniela Victoria;Incapacidad;Incapacidad por enfermedad general;2024-05-07;2024-05-09;2
+12.020.915;Cossio Rengifo Hainner Estivinson;Incapacidad;Incapacidad por enfermedad general;2024-05-13;2024-05-16;6
+12.020.915;Cossio Rengifo Hainner Estivinson;Incapacidad;Incapacidad por enfermedad general;2024-05-17;2024-05-31;6
+36.308.988;Perez Ospina Claudia Paola;Incapacidad;Incapacidad por enfermedad general;2024-05-18;2024-05-20;2
+1.082.158.672;Vega Olis Yurany;Licencia;Suspensión;2024-05-02;2024-05-02;3
+1.075.286.667;Tovar Sierra Andrea Del Pilar;Licencia;Suspensión;2024-05-03;2024-05-10;5
+1.082.154.767;Camero Triana Faiber;Licencia;Suspensión;2024-05-02;2024-05-09;4
+1.081.409.834;Campo Andrade Jose Arned;Licencia;Suspensión;2024-05-11;2024-05-18;8
+1.081.407.862;Gomez Vargas Jose David;Licencia;Suspensión;2024-05-23;2024-05-30;11
+26.529.705;Perez Duran Yolima;Licencia;Suspensión;2024-05-14;2024-05-15;4
+26.575.125;Otalora Clavijo Liliana;Licencia;Suspensión;2024-05-13;2024-05-20;8
+1.080.264.278;Diaz Sambony Yolanda;Licencia;Suspensión;2024-05-17;2024-05-18;3
+1.004.034.475;Castillo Vargas Laura Nataly;Licencia;Remunerada;2024-05-06;2024-05-06;1
+1.077.870.304;Vanegas Chavez Jhon Alexander;Licencia;Remunerada;2024-05-21;2024-05-21;4
+1.081.731.969;Hoyos Medina Viviana;Licencia;Remunerada;2024-05-20;2024-05-20;4
+1.077.872.079;Monje Fierro Cristian Daniel;Licencia;Remunerada;2024-05-04;2024-05-05;2
+1.082.780.446;Erazo Ñañez Brayan Felipe;Licencia;Remunerada;2024-05-16;2024-05-18;5
+36.308.988;Perez Ospina Claudia Paola;Incapacidad;Incapacidad por enfermedad general;2024-05-21;2024-05-22;2
+1.084.258.262;Muñoz Navia Ivan Ernesto;Licencia;Remunerada;2024-05-04;2024-05-07;2
+1.083.895.843;Hurtado Castillo Angelica Maria;Incapacidad;Incapacidad por enfermedad general;2024-05-17;2024-05-18;3
+1.080.260.159;Lugo Guacari Loresledy;Licencia;Remunerada;2024-05-03;2024-05-03;6
+1.080.264.459;Sanchez Londoño Geralldine;Licencia;Remunerada;2024-05-03;2024-05-03;5
+1.076.903.810;Henao Silva David Felipe;Licencia;Luto;2024-05-04;2024-05-08;1
+1.077.849.030;Polo Quesada Soraya Maria;Incapacidad;Incapacidad por enfermedad general;2024-05-25;2024-05-27;6
+1.076.903.810;Henao Silva David Felipe;Incapacidad;Incapacidad por enfermedad general;2024-05-25;2024-05-27;1
+1.003.893.188;Gonzalez  Carlos Fernando;Incapacidad;Incapacidad por enfermedad general;2024-05-24;2024-05-31;3
+1.083.895.843;Hurtado Castillo Angelica Maria;Licencia;Remunerada;2024-05-04;2024-05-06;3
+52.832.524;Paredes Arguello Luz Enith;Incapacidad;Incapacidad por enfermedad general;2024-05-24;2024-05-27;8
+28.719.226;Valdes Carvajal Diana Lorena;Incapacidad;Incapacidad por enfermedad general;2024-05-27;2024-05-29;0
+1.077.875.722;Cerquera Cabrera Karen Dayanna;Licencia;Maternidad/Paternidad;2024-05-24;2024-09-26;6
+1.077.870.304;Vanegas Chavez Jhon Alexander;Incapacidad;Incapacidad por enfermedad general;2024-06-04;2024-06-11;4
+1.075.273.013;Ñañez Diaz Yessica Alejandra;Licencia;Luto;2024-06-06;2024-06-10;3
+52.832.524;Paredes Arguello Luz Enith;Incapacidad;Incapacidad por enfermedad general;2024-05-28;2024-05-30;8
+26.575.125;Otalora Clavijo Liliana;Incapacidad;Incapacidad por enfermedad general;2024-06-06;2024-06-07;8
+1.077.877.560;Gonzalez Elizalde Estella Andrea;Incapacidad;Incapacidad por enfermedad general;2024-06-07;2024-06-08;3
+1.030.621.725;Rojas Plaza Wilson;Incapacidad;Incapacidad por enfermedad general;2024-11-21;2024-11-22;1
+1.076.987.623;Muñoz Vargas Jhon Fredi;Incapacidad;Incapacidad por enfermedad laboral o accidente;2024-06-05;2024-07-04;2
+1.030.621.725;Rojas Plaza Wilson;Incapacidad;Incapacidad por enfermedad general;2024-06-07;2024-06-08;1
+1.077.872.079;Monje Fierro Cristian Daniel;Incapacidad;Incapacidad por enfermedad general;2024-06-12;2024-06-14;2
+26.430.660;Tirado Gomez Yeny Lindsay;Incapacidad;Incapacidad por enfermedad general;2024-06-12;2024-06-14;2
+1.083.912.848;Suarez Llanos Daniela Yineth;Incapacidad;Incapacidad por enfermedad general;2024-06-07;2024-06-13;0
+1.117.533.593;Murcia Molano Yineide Paola;Incapacidad;Incapacidad por enfermedad general;2024-06-13;2024-06-15;0
+36.313.674;Jaramillo Muñoz Emna Constanza;Licencia;Remunerada;2024-06-24;2024-06-29;3
+1.077.858.870;Borrero Suarez Luis Felipe;Licencia;Remunerada;2024-06-13;2024-06-19;2
+55.179.862;Suaza Ramirez Sandra Patricia;Licencia;Remunerada;2024-06-24;2024-06-29;4
+7.687.420;Tello Perdomo Jorge Eduardo;Licencia;Suspensión;2024-06-17;2024-06-19;2
+36.302.836;Almario Santos Nini Yohana;Licencia;Luto;2024-06-17;2024-06-21;3
+55.070.574;Sterling Santofimio Liliana;Incapacidad;Incapacidad por enfermedad general;2024-06-03;2024-06-05;6
+74.184.944;Melo Gil Yonny Samir;Incapacidad;Incapacidad por enfermedad general;2024-06-17;2024-06-19;3
+1.084.900.982;Molina Molina Jasbleidy;Licencia;Remunerada;2024-06-05;2024-06-05;1
+1.077.849.513;Trujillo Perez Diana Karolina;Licencia;Remunerada;2024-06-15;2024-06-15;7
+1.083.877.039;Carvajal Ramos Ismael;Licencia;Remunerada;2024-06-08;2024-06-08;5
+1.078.246.915;Vargas Trujillo Otoniel Alberto;Licencia;Remunerada;2024-06-14;2024-06-14;3
+36.314.568;Montenegro Fandiño Silvia;Licencia;Remunerada;2024-06-01;2024-06-01;4
+1.083.895.843;Hurtado Castillo Angelica Maria;Licencia;Remunerada;2024-06-08;2024-06-08;3
+1.081.513.864;Guarnizo Trujillo Milton Alexis;Licencia;Remunerada;2024-06-08;2024-06-10;5
+83.058.256;Franco Penagos Diego Mauricio;Incapacidad;Incapacidad por enfermedad general;2024-07-01;2024-07-03;3
+55.130.105;Candela Molano Lina Maritza;Incapacidad;Incapacidad por enfermedad general;2024-07-03;2024-07-04;4
+1.076.987.623;Muñoz Vargas Jhon Fredi;Incapacidad;Incapacidad por enfermedad laboral o accidente;2024-07-05;2024-08-03;2
+1.077.845.779;Losada Torres Yury Carolina;Incapacidad;Incapacidad por enfermedad general;2024-07-04;2024-07-06;3
+1.084.866.809;Andrade Diaz Victor Alfonso;Incapacidad;Incapacidad por enfermedad general;2024-07-05;2024-07-06;3
+1.082.158.895;Quimbay Cardenas Yulieth Tatiana;Incapacidad;Incapacidad por enfermedad general;2024-07-11;2024-07-13;0
+1.077.849.513;Trujillo Perez Diana Karolina;Incapacidad;Incapacidad por enfermedad general;2024-07-16;2024-07-17;7
+52.832.524;Paredes Arguello Luz Enith;Incapacidad;Incapacidad por enfermedad general;2024-07-19;2024-07-20;8
+12.020.915;Cossio Rengifo Hainner Estivinson;Incapacidad;Incapacidad por enfermedad general;2024-07-20;2024-07-23;6
+1.075.273.013;Ñañez Diaz Yessica Alejandra;Incapacidad;Incapacidad por enfermedad general;2024-07-19;2024-07-23;3
+1.077.867.688;Alba Bahamon Diana Miled;Licencia;Remunerada;2024-07-24;2024-07-24;2
+1.083.894.260;Sapuyes Muñoz Eduard Hernan;Licencia;Remunerada;2024-07-24;2024-07-24;9
+1.108.452.507;Gomez Rojas Diana Marcela;Licencia;Remunerada;2024-07-15;2024-07-15;3
+1.004.303.037;Quigua Cuaji Tatiana;Licencia;Remunerada;2024-07-11;2024-07-11;3
+1.081.416.279;Muñoz Medina Nathalia Andrea;Licencia;Remunerada;2024-07-11;2024-07-11;15
+1.075.286.945;Garzon Hermosa Elkin Giovanni;Licencia;Remunerada;2024-07-10;2024-07-10;3
+1.110.175.863;Prada Malambo Hernan;Licencia;Remunerada;2024-07-09;2024-07-09;1
+1.007.897.591;Alvarez Burbano Laura Valentina;Licencia;Remunerada;2024-07-06;2024-07-06;7
+1.144.131.318;Cano Sanchez Sindi Yulieth;Licencia;Remunerada;2024-07-05;2024-07-05;12
+1.077.870.304;Vanegas Chavez Jhon Alexander;Licencia;Remunerada;2024-07-02;2024-07-02;4
+65.557.185;Olave Lozano Judy Carolina;Incapacidad;Incapacidad por enfermedad general;2024-11-06;2024-11-07;1
+1.077.872.627;Castro Marin Karla Vanessa;Incapacidad;Incapacidad por enfermedad general;2025-03-17;2025-03-19;0
+52.832.524;Paredes Arguello Luz Enith;Licencia;Suspensión;2024-07-30;2024-08-02;8
+1.075.286.945;Garzon Hermosa Elkin Giovanni;Licencia;Luto;2024-07-11;2024-07-15;3
+1.080.260.469;Medina Cabrera Diana Jimena;Licencia;Luto;2024-07-08;2024-07-12;4
+1.075.238.428;Cediel Peña Jeisson Javier;Licencia;Remunerada;2024-07-02;2024-07-08;3
+55.066.499;Martinez Agudelo Luz Angela;Licencia;Remunerada;2024-07-02;2024-07-08;3
+55.063.322;Jimenez Fierro Lyda Fernanda;Licencia;Remunerada;2024-07-22;2024-07-27;1
+26.515.235;Osso Andrade Esperanza;Licencia;Remunerada;2024-11-05;2024-11-06;12
+1.077.876.903;Garcia Mendez Leidy Camila;Licencia;Remunerada;2024-07-15;2024-07-16;4
+1.030.540.053;Quiroga Mora Monica Cristina;Incapacidad;Incapacidad por enfermedad general;2024-07-18;2024-07-22;1
+1.075.273.013;Ñañez Diaz Yessica Alejandra;Incapacidad;Incapacidad por enfermedad general;2024-07-24;2024-07-27;3
+1.144.131.318;Cano Sanchez Sindi Yulieth;Incapacidad;Incapacidad por enfermedad general;2024-07-21;2024-07-23;12
+52.284.617;Fernandez Cediel Claudia Patricia;Licencia;Remunerada;2024-07-08;2024-07-09;1
+1.080.264.459;Sanchez Londoño Geralldine;Licencia;Remunerada;2024-07-16;2024-07-16;5
+1.004.158.659;Muñoz Ramirez Lucia;Licencia;Remunerada;2024-07-15;2024-07-16;2
+36.313.674;Jaramillo Muñoz Emna Constanza;Incapacidad;Incapacidad por enfermedad general;2024-07-30;2024-07-31;3
+55.070.574;Sterling Santofimio Liliana;Incapacidad;Incapacidad por enfermedad general;2024-08-09;2024-08-10;6
+1.003.864.240;Roa Ospitia Maria Paula;Incapacidad;Incapacidad por enfermedad general;2024-08-09;2024-08-10;3
+1.077.870.045;Cortes Gaitan Karol Tatiana;Incapacidad;Incapacidad por enfermedad general;2024-08-12;2024-08-12;2
+52.832.524;Paredes Arguello Luz Enith;Licencia;Remunerada;2024-11-25;2024-11-25;8
+1.077.875.287;Peña Valencia Jose Alexis;Licencia;Remunerada;2024-11-18;2024-11-18;10
+1.077.845.779;Losada Torres Yury Carolina;Licencia;Remunerada;2024-11-13;2024-11-13;3
+1.082.155.519;Pineda Parra Yudy Arcelia;Licencia;Remunerada;2024-11-30;2024-11-30;4
+36.309.237;Martinez Osorio Ivonne Ximena;Licencia;Remunerada;2024-11-09;2024-11-09;7
+65.831.738;Mosquera Cruz Yudi Luz Karime;Licencia;Remunerada;2024-11-06;2024-11-06;4
+36.314.568;Montenegro Fandiño Silvia;Licencia;Remunerada;2024-11-07;2024-11-07;4
+12.189.017;Lizcano Quevedo Javier;Licencia;Remunerada;2024-11-02;2024-11-02;4
+26.575.125;Otalora Clavijo Liliana;Licencia;Remunerada;2024-11-01;2024-11-01;8
+1.077.843.830;Galindo Paladines Yeimy Carolina;Licencia;Remunerada;2024-11-08;2024-11-09;2
+36.308.988;Perez Ospina Claudia Paola;Incapacidad;Incapacidad por enfermedad general;2024-11-26;2024-12-02;2
+1.003.814.457;Rojas Ninco Isabel Cristina;Incapacidad;Incapacidad por enfermedad general;2024-11-29;2024-11-30;1
+1.076.903.810;Henao Silva David Felipe;Incapacidad;Incapacidad por enfermedad general;2024-12-01;2024-12-04;1
+1.193.082.753;Collazos Claros Wilmer Eduardo;Incapacidad;Incapacidad por enfermedad general;2024-12-04;2024-12-08;0
+1.005.853.159;Rodriguez  Victor Alfonso;Licencia;Remunerada;2024-12-12;2024-12-12;1
+1.012.372.339;Almario Gutierrez Sandra Constanza;Licencia;Remunerada;2024-12-11;2024-12-11;6
+36.314.568;Montenegro Fandiño Silvia;Licencia;Remunerada;2024-12-06;2024-12-06;4
+1.117.519.270;Mesa Fuentes Nayla Katherine;Licencia;Remunerada;2024-12-09;2024-12-09;3
+26.515.235;Osso Andrade Esperanza;Licencia;Remunerada;2024-12-04;2024-12-04;12
+1.109.421.903;Polania Camacho Akerles Steven;Incapacidad;Incapacidad por enfermedad general;2024-12-13;2024-12-17;1
+1.076.987.623;Muñoz Vargas Jhon Fredi;Licencia;Remunerada;2024-12-14;2024-12-14;2
+1.077.866.781;Cabrera Urriago Carlos Andres;Licencia;Remunerada;2024-12-14;2024-12-14;4
+1.082.158.633;Monroy Fernández Alexandra;Licencia;Remunerada;2024-08-14;2024-08-14;3
+55.068.771;Mejia Gonzalez Martha Ximena;Licencia;Remunerada;2024-08-14;2024-08-14;8
+1.108.452.507;Gomez Rojas Diana Marcela;Licencia;Luto;2024-08-12;2024-08-16;3
+1.004.158.659;Muñoz Ramirez Lucia;Licencia;Remunerada;2024-08-20;2024-08-20;2
+1.077.875.287;Peña Valencia Jose Alexis;Licencia;Remunerada;2024-08-24;2024-08-24;10
+55.060.661;Trejos Murcia Vianney;Licencia;Remunerada;2024-08-12;2024-08-12;4
+1.077.855.297;Camacho Manjarres Ferney;Licencia;Remunerada;2024-08-24;2024-08-24;4
+1.080.362.443;Silva Cabrera Keyla Daniela;Licencia;Remunerada;2024-08-03;2024-08-03;4
+1.083.894.260;Sapuyes Muñoz Eduard Hernan;Licencia;Remunerada;2024-08-16;2024-08-17;9
+1.083.894.260;Sapuyes Muñoz Eduard Hernan;Licencia;Remunerada;2024-08-20;2024-08-20;9
+1.077.877.695;Polo Arias Martin Camilo;Licencia;Remunerada;2024-08-17;2024-08-17;2
+26.510.300;Penagos Munar Lucy Abaned;Incapacidad;Incapacidad por enfermedad general;2024-08-18;2024-08-22;4
+12.325.164;Perez Yunda Hollman Yamid;Incapacidad;Incapacidad por enfermedad general;2024-08-23;2024-08-27;6
+1.075.286.667;Tovar Sierra Andrea Del Pilar;Licencia;Remunerada;2024-08-23;2024-08-23;5
+1.081.155.883;Puentes Mendez Maria Camila;Licencia;Remunerada;2024-08-26;2024-08-26;4
+1.083.875.155;Camargo Paredes Martha Liliana;Incapacidad;Incapacidad por enfermedad general;2024-08-21;2024-09-19;3
+12.020.915;Cossio Rengifo Hainner Estivinson;Licencia;Remunerada;2024-08-09;2024-08-10;6
+1.080.264.459;Sanchez Londoño Geralldine;Licencia;Remunerada;2024-08-22;2024-08-22;5
+1.003.803.489;Motta Escobar Maria Alejandra;Licencia;Remunerada;2024-08-24;2024-08-24;2
+1.077.849.513;Trujillo Perez Diana Karolina;Licencia;Remunerada;2024-08-24;2024-08-24;7
+1.077.849.513;Trujillo Perez Diana Karolina;Licencia;Remunerada;2024-08-26;2024-08-26;7
+1.080.362.443;Silva Cabrera Keyla Daniela;Incapacidad;Incapacidad por enfermedad general;2024-08-22;2024-08-26;4
+1.083.878.109;Perilla Capera Marinela;Licencia;Remunerada;2024-08-02;2024-08-09;5
+1.030.621.725;Rojas Plaza Wilson;Licencia;Maternidad/Paternidad;2024-08-18;2024-08-31;1
+1.075.273.013;Ñañez Diaz Yessica Alejandra;Incapacidad;Incapacidad por enfermedad general;2024-08-21;2024-08-23;3
+1.007.897.591;Alvarez Burbano Laura Valentina;Licencia;Remunerada;2024-08-23;2024-08-23;7
+26.510.300;Penagos Munar Lucy Abaned;Incapacidad;Incapacidad por enfermedad general;2024-08-23;2024-09-01;4
+1.076.987.623;Muñoz Vargas Jhon Fredi;Incapacidad;Incapacidad por enfermedad laboral o accidente;2024-08-04;2024-09-02;2
+1.193.136.134;Calderon Gomez Karla Yessenia;Licencia;Remunerada;2024-08-30;2024-08-30;1
+26.515.235;Osso Andrade Esperanza;Incapacidad;Incapacidad por enfermedad general;2024-08-09;2024-09-06;12
+1.003.864.240;Roa Ospitia Maria Paula;Incapacidad;Incapacidad por enfermedad general;2024-08-30;2024-08-31;3
+1.144.131.318;Cano Sanchez Sindi Yulieth;Incapacidad;Incapacidad por enfermedad laboral o accidente;2024-08-30;2024-09-13;12
+26.510.300;Penagos Munar Lucy Abaned;Incapacidad;Incapacidad por enfermedad general;2024-09-02;2024-09-14;4
+26.515.235;Osso Andrade Esperanza;Incapacidad;Incapacidad por enfermedad general;2024-09-07;2024-09-15;12
+26.515.235;Osso Andrade Esperanza;Incapacidad;Incapacidad por enfermedad general;2024-09-16;2024-09-25;12
+55.068.441;Rodriguez Suarez Adriana Marcela;Incapacidad;Incapacidad por enfermedad general;2024-09-09;2024-09-11;5
+1.082.128.836;Elizalde Villanueva Yeiler Osnaider;Incapacidad;Incapacidad por enfermedad general;2024-09-09;2024-09-11;0
+55.068.960;Pedreros Ramon Joalber;Incapacidad;Incapacidad por enfermedad general;2024-09-13;2024-09-14;3
+1.081.416.279;Muñoz Medina Nathalia Andrea;Incapacidad;Incapacidad por enfermedad laboral o accidente;2024-09-12;2024-09-14;15
+1.083.838.335;Motta Cuellar Yenny Fernanda;Incapacidad;Incapacidad por enfermedad general;2024-09-09;2024-09-11;7
+52.832.524;Paredes Arguello Luz Enith;Incapacidad;Incapacidad por enfermedad general;2024-09-17;2024-09-17;8
+55.068.960;Pedreros Ramon Joalber;Licencia;Remunerada;2024-09-21;2024-09-21;3
+12.370.775;Polania Ruiz Wilber Aleixer;Licencia;Remunerada;2024-09-21;2024-09-21;3
+36.286.922;Molina Peña Doris;Licencia;Remunerada;2024-09-23;2024-09-23;5
+36.314.568;Montenegro Fandiño Silvia;Licencia;Remunerada;2024-09-19;2024-09-19;4
+1.077.848.048;Lopez Rivera Alvaro;Licencia;Remunerada;2024-09-18;2024-09-19;8
+1.082.780.446;Erazo Ñañez Brayan Felipe;Licencia;Remunerada;2024-09-13;2024-09-14;5
+55.070.574;Sterling Santofimio Liliana;Licencia;Remunerada;2024-11-28;2024-11-29;6
+1.079.389.568;Mesa Trujillo Carolina;Licencia;Remunerada;2024-11-16;2024-11-16;3
+1.007.897.591;Alvarez Burbano Laura Valentina;Licencia;Remunerada;2024-11-12;2024-11-12;7
+1.012.372.339;Almario Gutierrez Sandra Constanza;Licencia;Remunerada;2024-11-07;2024-11-07;6
+55.060.661;Trejos Murcia Vianney;Licencia;Remunerada;2024-11-05;2024-11-05;4
+1.083.875.155;Camargo Paredes Martha Liliana;Licencia;Remunerada;2024-11-20;2024-11-20;3
+1.075.263.168;Ramirez Yunda Lorena;Licencia;Remunerada;2024-11-08;2024-11-09;5
+1.081.407.862;Gomez Vargas Jose David;Incapacidad;Incapacidad por enfermedad general;2024-11-29;2024-12-13;11
+1.003.814.457;Rojas Ninco Isabel Cristina;Incapacidad;Incapacidad por enfermedad general;2024-12-02;2024-12-03;1
+1.081.518.273;Fiesco Trujillo Maria Paula;Incapacidad;Incapacidad por enfermedad laboral o accidente;2024-11-30;2024-11-30;1
+1.076.903.810;Henao Silva David Felipe;Incapacidad;Incapacidad por enfermedad general;2024-12-05;2024-12-10;1
+1.080.365.383;Higuita Cardona Soraya;Incapacidad;Incapacidad por enfermedad general;2024-12-03;2024-12-04;4
+26.433.392;Caviedes Rojas Sandra Patricia;Incapacidad;Incapacidad por enfermedad general;2024-12-04;2024-12-05;3
+55.066.499;Martinez Agudelo Luz Angela;Licencia;Remunerada;2024-12-11;2024-12-11;3
+1.077.875.287;Peña Valencia Jose Alexis;Licencia;Remunerada;2024-12-14;2024-12-14;10
+1.083.897.878;Rueda Rodriguez Sandra;Licencia;Remunerada;2024-12-07;2024-12-07;2
+65.557.185;Olave Lozano Judy Carolina;Licencia;Remunerada;2024-12-05;2024-12-05;1
+1.080.264.278;Diaz Sambony Yolanda;Licencia;Suspensión;2024-12-02;2024-12-04;3
+36.293.834;Bolaños Burbano Magnolia Lucia;Licencia;Suspensión;2024-12-09;2024-12-16;3
+1.077.849.030;Polo Quesada Soraya Maria;Licencia;Remunerada;2024-12-04;2024-12-04;6
+7.687.420;Tello Perdomo Jorge Eduardo;Incapacidad;Incapacidad por enfermedad general;2024-12-10;2024-12-11;2
+1.083.875.155;Camargo Paredes Martha Liliana;Licencia;Remunerada;2024-12-18;2024-12-18;3
+36.286.922;Molina Peña Doris;Licencia;Remunerada;2024-12-05;2024-12-05;5
+55.130.105;Candela Molano Lina Maritza;Licencia;Remunerada;2024-12-02;2024-12-02;4
+65.557.185;Olave Lozano Judy Carolina;Incapacidad;Incapacidad por enfermedad general;2024-12-11;2024-12-13;1
+1.075.286.667;Tovar Sierra Andrea Del Pilar;Incapacidad;Incapacidad por enfermedad general;2024-12-07;2024-12-09;5
+1.080.365.383;Higuita Cardona Soraya;Incapacidad;Incapacidad por enfermedad general;2024-12-07;2024-12-17;4
+26.575.125;Otalora Clavijo Liliana;Incapacidad;Incapacidad por enfermedad general;2024-12-16;2024-12-16;8
+1.077.851.605;Cediel Blasquez Yeny Alexandra;Licencia;Remunerada;2024-12-17;2024-12-17;4
+1.083.877.039;Carvajal Ramos Ismael;Licencia;Remunerada;2024-12-20;2024-12-20;5
+1.075.303.329;Cadena Solarte Esteban Andres;Licencia;Remunerada;2024-12-23;2024-12-23;2
+1.075.223.074;Rojas Vargas Erik Fernando;Licencia;Remunerada;2024-12-14;2024-12-14;3
+1.077.878.397;Rubiano Guillermo Laura Victoria;Licencia;Remunerada;2024-12-14;2024-12-14;1
+1.077.848.048;Lopez Rivera Alvaro;Licencia;Remunerada;2024-12-11;2024-12-11;8
+1.077.848.048;Lopez Rivera Alvaro;Licencia;Remunerada;2024-12-27;2024-12-27;8
+1.082.780.446;Erazo Ñañez Brayan Felipe;Licencia;Remunerada;2024-09-17;2024-09-18;5
+83.058.256;Franco Penagos Diego Mauricio;Licencia;Remunerada;2024-09-12;2024-09-12;3
+65.645.071;Murillo Leal Leidy Viviana;Licencia;Remunerada;2024-09-09;2024-09-11;1
+1.003.814.457;Rojas Ninco Isabel Cristina;Licencia;Remunerada;2024-09-07;2024-09-07;1
+1.007.349.671;Losada Camacho Angee Yojanna;Licencia;Remunerada;2024-09-07;2024-09-07;4
+1.077.870.045;Cortes Gaitan Karol Tatiana;Licencia;Remunerada;2024-09-07;2024-09-07;2
+52.832.524;Paredes Arguello Luz Enith;Licencia;Remunerada;2024-09-03;2024-09-03;8
+1.075.273.013;Ñañez Diaz Yessica Alejandra;Licencia;Remunerada;2024-09-07;2024-09-07;3
+1.078.246.749;Morales Aroca Jhonatan Arley;Licencia;Remunerada;2024-09-02;2024-09-02;7
+1.004.303.037;Quigua Cuaji Tatiana;Licencia;Remunerada;2024-09-02;2024-09-02;3
+1.083.894.260;Sapuyes Muñoz Eduard Hernan;Licencia;Luto;2024-09-10;2024-09-14;9
+55.060.661;Trejos Murcia Vianney;Licencia;Luto;2024-09-10;2024-09-14;4
+26.515.235;Osso Andrade Esperanza;Incapacidad;Incapacidad por enfermedad general;2024-09-26;2024-10-25;12
+1.083.894.260;Sapuyes Muñoz Eduard Hernan;Licencia;Remunerada;2024-09-07;2024-09-09;9
+1.030.540.053;Quiroga Mora Monica Cristina;Licencia;Remunerada;2024-09-02;2024-09-02;1
+1.003.864.240;Roa Ospitia Maria Paula;Licencia;Remunerada;2024-09-21;2024-09-21;3
+1.077.849.030;Polo Quesada Soraya Maria;Incapacidad;Incapacidad por enfermedad general;2024-09-27;2024-09-28;6
+55.068.771;Mejia Gonzalez Martha Ximena;Incapacidad;Incapacidad por enfermedad general;2024-09-28;2024-09-30;8
+83.058.256;Franco Penagos Diego Mauricio;Incapacidad;Incapacidad por enfermedad general;2024-10-03;2024-10-03;3
+65.557.185;Olave Lozano Judy Carolina;Incapacidad;Incapacidad por enfermedad general;2024-10-03;2024-10-05;1
+1.003.803.489;Motta Escobar Maria Alejandra;Incapacidad;Incapacidad por enfermedad general;2024-10-15;2024-10-16;2
+36.314.568;Montenegro Fandiño Silvia;Incapacidad;Incapacidad por enfermedad general;2024-10-03;2024-10-05;4
+1.077.843.830;Galindo Paladines Yeimy Carolina;Incapacidad;Incapacidad por enfermedad general;2024-10-19;2024-10-19;2
+1.077.867.688;Alba Bahamon Diana Miled;Incapacidad;Incapacidad por enfermedad general;2024-10-17;2024-10-19;2
+1.077.868.657;Fajardo Parra Edna Ximena;Licencia;Maternidad/Paternidad;2024-10-15;2025-02-17;3
+1.077.840.717;Losada Lugo Lina Fernanda;Incapacidad;Incapacidad por enfermedad general;2024-10-09;2024-10-11;0
+1.007.897.591;Alvarez Burbano Laura Valentina;Licencia;Luto;2024-10-04;2024-10-09;7
+1.117.527.415;Castro Ortiz Evely;Licencia;Luto;2024-10-08;2024-10-12;2
+1.004.300.389;Joven Motta Paubla Valentina;Licencia;Remunerada;2024-10-26;2024-10-26;3
+36.309.237;Martinez Osorio Ivonne Ximena;Licencia;Remunerada;2024-10-23;2024-10-23;7
+12.020.915;Cossio Rengifo Hainner Estivinson;Licencia;Remunerada;2024-10-18;2024-10-18;6
+12.754.215;Jurado Vodniza Juan Manuel;Licencia;Remunerada;2024-10-25;2024-10-26;1
+1.077.876.903;Garcia Mendez Leidy Camila;Licencia;Remunerada;2024-10-23;2024-10-23;4
+1.003.864.240;Roa Ospitia Maria Paula;Licencia;Remunerada;2024-10-12;2024-10-12;3
+1.077.868.657;Fajardo Parra Edna Ximena;Licencia;Remunerada;2024-10-11;2024-10-12;3
+1.075.263.168;Ramirez Yunda Lorena;Licencia;Remunerada;2024-10-11;2024-10-12;5
+1.077.849.030;Polo Quesada Soraya Maria;Licencia;Remunerada;2024-10-11;2024-10-11;6
+1.075.286.945;Garzon Hermosa Elkin Giovanni;Licencia;Remunerada;2024-10-08;2024-10-08;3
+1.077.875.287;Peña Valencia Jose Alexis;Licencia;Remunerada;2024-10-08;2024-10-08;10
+1.078.246.915;Vargas Trujillo Otoniel Alberto;Licencia;Remunerada;2024-10-25;2024-10-28;3
+1.081.407.862;Gomez Vargas Jose David;Licencia;Remunerada;2024-10-09;2024-10-11;11
+1.081.407.862;Gomez Vargas Jose David;Licencia;Remunerada;2024-10-03;2024-10-03;11
+55.069.034;Parra Vargas Lina Ximena;Licencia;Remunerada;2024-11-25;2024-11-25;5
+1.081.518.273;Fiesco Trujillo Maria Paula;Licencia;Remunerada;2024-10-07;2024-10-07;1
+1.077.858.870;Borrero Suarez Luis Felipe;Licencia;Remunerada;2024-10-05;2024-10-07;2
+26.575.125;Otalora Clavijo Liliana;Licencia;Remunerada;2024-10-01;2024-10-01;8
+1.004.416.108;Losada Javela Cristian;Licencia;Remunerada;2024-10-12;2024-10-13;3
+1.081.417.678;Falla Caicedo Anlly Zuleima;Licencia;Remunerada;2024-10-05;2024-10-08;2
+1.083.894.260;Sapuyes Muñoz Eduard Hernan;Licencia;Remunerada;2024-10-07;2024-10-07;9
+1.144.131.318;Cano Sanchez Sindi Yulieth;Licencia;Remunerada;2024-10-17;2024-10-17;12
+83.165.616;Tovar Sterling Rodolfo;Licencia;Remunerada;2024-10-05;2024-10-05;4
+7.723.872;Santos Zuñiga Diego Mauricio;Licencia;Remunerada;2024-11-20;2024-11-20;2
+1.083.898.993;Ruiz Uni Yurany;Incapacidad;Incapacidad por enfermedad general;2024-10-21;2024-10-23;4
+1.077.875.287;Peña Valencia Jose Alexis;Licencia;Luto;2024-10-25;2024-10-30;10
+55.068.083;Alvarez Mora Lorena;Licencia;Remunerada;2024-10-26;2024-10-26;1
+1.007.790.079;Cruz Rayo Yennifer;Licencia;Remunerada;2024-10-28;2024-10-29;1
+26.579.392;Tovar Serrano Maria Mildred;Licencia;Remunerada;2024-10-28;2024-10-28;3
+1.077.847.116;Sterling Achipiz Wilson Durley;Incapacidad;Incapacidad por enfermedad general;2024-10-28;2024-11-01;0
+1.077.847.116;Sterling Achipiz Wilson Durley;Incapacidad;Incapacidad por enfermedad general;2024-11-02;2024-11-10;0
+12.190.303;Ramirez Vargas Hector;Incapacidad;Incapacidad por enfermedad general;2024-11-05;2024-11-07;2
+36.312.915;Lozano Rey Nataly Tatiana;Incapacidad;Incapacidad por enfermedad general;2024-11-08;2024-11-09;1
+55.070.574;Sterling Santofimio Liliana;Incapacidad;Incapacidad por enfermedad general;2024-11-08;2024-11-10;6
+36.308.988;Perez Ospina Claudia Paola;Incapacidad;Incapacidad por enfermedad general;2024-11-07;2024-11-08;2
+55.063.760;Rojas Paladinez Melva;Incapacidad;Incapacidad por enfermedad general;2024-11-11;2024-11-13;0
+1.077.843.830;Galindo Paladines Yeimy Carolina;Licencia;Remunerada;2024-11-13;2024-11-13;2
+1.108.452.507;Gomez Rojas Diana Marcela;Licencia;Remunerada;2024-11-16;2024-11-17;3
+36.293.834;Bolaños Burbano Magnolia Lucia;Licencia;Remunerada;2024-11-07;2024-11-07;3
+1.081.420.957;Mejia Ipia Paola Alexandra;Licencia;Remunerada;2024-11-06;2024-11-06;2
+1.144.131.318;Cano Sanchez Sindi Yulieth;Licencia;Remunerada;2024-11-07;2024-11-07;12
+1.081.416.279;Muñoz Medina Nathalia Andrea;Licencia;Remunerada;2024-11-01;2024-11-01;15
+26.160.242;Diaz Ariza Lucy Del Socorro;Licencia;Luto;2024-11-04;2024-11-08;2
+1.082.780.239;Imbachi Samboni Diego Fernando;Licencia;Remunerada;2024-11-23;2024-11-23;1
+12.325.164;Perez Yunda Hollman Yamid;Licencia;Remunerada;2024-11-23;2024-11-23;6
+1.117.531.815;Ramos Palacios Jenier Alexis;Licencia;Remunerada;2024-11-06;2024-11-07;1
+26.430.660;Tirado Gomez Yeny Lindsay;Incapacidad;Incapacidad por enfermedad general;2024-11-28;2024-11-30;2
+1.003.814.457;Rojas Ninco Isabel Cristina;Licencia;Remunerada;2024-11-28;2024-11-28;1
+74.184.944;Melo Gil Yonny Samir;Licencia;Remunerada;2024-12-23;2024-12-23;3
+1.077.849.030;Polo Quesada Soraya Maria;Licencia;Maternidad/Paternidad;2024-12-14;2025-04-18;6
+1.077.875.287;Peña Valencia Jose Alexis;Licencia;Suspensión;2024-12-26;2024-12-27;10
+1.117.519.270;Mesa Fuentes Nayla Katherine;Licencia;Suspensión;2024-12-13;2024-12-19;3
+26.430.660;Tirado Gomez Yeny Lindsay;Incapacidad;Incapacidad por enfermedad general;2024-12-21;2024-12-26;2
+1.003.864.240;Roa Ospitia Maria Paula;Incapacidad;Incapacidad por enfermedad general;2024-12-22;2024-12-23;3
+65.831.738;Mosquera Cruz Yudi Luz Karime;Licencia;Remunerada;2024-12-23;2024-12-23;4
+1.080.260.159;Lugo Guacari Loresledy;Licencia;Remunerada;2024-12-20;2024-12-20;6
+1.082.127.400;Alarcon Cabrera Diana Alexandra;Incapacidad;Incapacidad por enfermedad general;2024-12-22;2024-12-23;3
+12.020.915;Cossio Rengifo Hainner Estivinson;Licencia;Remunerada;2025-01-29;2025-01-29;6
+1.004.250.524;Andrade Guevara Juan Manuel;Licencia;No remunerada;2024-02-29;2024-02-29;3
+1.077.874.629;Navarro Garzon Ingrid Julieth;Incapacidad;Incapacidad por enfermedad general;2025-01-02;2025-01-04;1
+1.012.372.339;Almario Gutierrez Sandra Constanza;Incapacidad;Incapacidad por enfermedad general;2025-01-02;2025-01-04;6
+1.075.303.329;Cadena Solarte Esteban Andres;Incapacidad;Incapacidad por enfermedad general;2025-01-09;2025-01-15;2
+1.081.731.969;Hoyos Medina Viviana;Incapacidad;Incapacidad por enfermedad general;2025-01-17;2025-01-21;4
+1.075.245.382;Trujillo Cabrera Lizet Johanna;Licencia;Luto;2025-01-15;2025-01-19;3
+12.325.164;Perez Yunda Hollman Yamid;Licencia;Luto;2025-01-19;2025-01-20;6
+12.325.164;Perez Yunda Hollman Yamid;Licencia;Luto;2025-01-22;2025-01-24;6
+26.493.681;Cuellar Tovar Marbelis;Incapacidad;Incapacidad por enfermedad general;2025-01-17;2025-01-21;2
+1.079.389.568;Mesa Trujillo Carolina;Incapacidad;Incapacidad por enfermedad general;2025-01-14;2025-01-15;3
+1.112.760.517;Gonzalez Triana Alexandra;Incapacidad;Incapacidad por enfermedad general;2025-01-16;2025-01-18;0
+52.284.617;Fernandez Cediel Claudia Patricia;Incapacidad;Incapacidad por enfermedad general;2025-01-17;2025-01-31;1
+1.078.753.106;Cueltan Barrera Juan David;Licencia;Remunerada;2025-01-04;2025-01-04;2
+1.083.894.260;Sapuyes Muñoz Eduard Hernan;Licencia;Remunerada;2025-01-21;2025-01-23;9
+1.081.731.969;Hoyos Medina Viviana;Licencia;Remunerada;2025-01-13;2025-01-13;4
+1.077.876.903;Garcia Mendez Leidy Camila;Licencia;Remunerada;2025-01-17;2025-01-18;4
+1.077.845.779;Losada Torres Yury Carolina;Incapacidad;Incapacidad por enfermedad general;2025-01-09;2025-01-10;3
+12.325.164;Perez Yunda Hollman Yamid;Licencia;Remunerada;2025-01-04;2025-01-04;6
+1.144.131.318;Cano Sanchez Sindi Yulieth;Licencia;Remunerada;2025-01-28;2025-01-28;12
+26.512.315;Usma Arevalo Luz Beida;Licencia;Remunerada;2025-01-08;2025-01-08;3
+1.084.866.809;Andrade Diaz Victor Alfonso;Licencia;Remunerada;2025-01-28;2025-01-28;3
+1.082.127.400;Alarcon Cabrera Diana Alexandra;Licencia;Remunerada;2025-01-22;2025-01-22;3
+1.078.246.915;Vargas Trujillo Otoniel Alberto;Incapacidad;Incapacidad por enfermedad general;2025-01-13;2025-01-13;3
+1.077.864.380;Artunduaga Vargas Neira Fernanda;Licencia;Remunerada;2025-01-02;2025-01-02;1
+1.080.363.948;Paredes Navia Alexandra Maria;Incapacidad;Incapacidad por enfermedad general;2025-03-11;2025-03-12;1
+55.068.771;Mejia Gonzalez Martha Ximena;Licencia;Remunerada;2025-01-25;2025-01-25;8
+12.189.017;Lizcano Quevedo Javier;Licencia;Remunerada;2025-01-18;2025-01-18;4
+26.515.235;Osso Andrade Esperanza;Licencia;Remunerada;2025-01-25;2025-01-25;12
+1.075.300.181;Ortiz Mendoza Francy Lupita;Licencia;No remunerada;2025-01-20;2025-01-20;2
+12.190.303;Ramirez Vargas Hector;Licencia;Remunerada;2025-01-15;2025-01-15;2
+1.077.876.738;Sanchez Tovar Deiver Andres;Licencia;Remunerada;2025-01-20;2025-01-20;6
+1.075.258.958;Cedeño Villegas Luisa Fernanda;Licencia;Remunerada;2025-01-13;2025-01-13;4
+1.077.875.287;Peña Valencia Jose Alexis;Licencia;Remunerada;2025-01-07;2025-01-07;10
+55.070.574;Sterling Santofimio Liliana;Licencia;Remunerada;2025-01-07;2025-01-07;6
+1.082.155.519;Pineda Parra Yudy Arcelia;Licencia;Remunerada;2025-01-27;2025-01-27;4
+1.081.416.279;Muñoz Medina Nathalia Andrea;Incapacidad;Incapacidad por enfermedad general;2025-01-28;2025-01-29;15
+1.077.843.372;Cupitra Cadena Paula Andrea;Incapacidad;Incapacidad por enfermedad general;2025-01-28;2025-01-28;0
+1.077.876.802;Sierra Fierro Daniela;Licencia;Luto;2025-03-08;2025-03-12;2
+36.286.922;Molina Peña Doris;Incapacidad;Incapacidad por enfermedad general;2025-01-27;2025-01-28;5
+1.077.851.605;Cediel Blasquez Yeny Alexandra;Licencia;Luto;2025-02-22;2025-02-26;4
+26.510.426;Talero Cuellar Astrid;Incapacidad;Incapacidad por enfermedad general;2025-03-04;2025-03-05;4
+1.077.873.665;Suarez Vieda Angie Katherine;Incapacidad;Incapacidad por enfermedad general;2025-01-26;2025-02-08;0
+1.075.263.168;Ramirez Yunda Lorena;Incapacidad;Incapacidad por enfermedad general;2025-02-17;2025-02-18;5
+1.077.870.310;Losada Vargas Fabio Alejandro;Incapacidad;Incapacidad por enfermedad general;2025-02-01;2025-02-02;2
+26.433.392;Caviedes Rojas Sandra Patricia;Incapacidad;Incapacidad por enfermedad general;2025-02-11;2025-02-12;3
+1.106.783.316;Gutierrez Perdomo Maria Alejandra;Incapacidad;Incapacidad por enfermedad general;2025-02-22;2025-02-25;1
+1.003.893.188;Gonzalez  Carlos Fernando;Incapacidad;Incapacidad por enfermedad general;2025-02-03;2025-02-05;3
+1.007.897.591;Alvarez Burbano Laura Valentina;Incapacidad;Incapacidad por enfermedad general;2025-02-17;2025-02-18;7
+1.106.783.316;Gutierrez Perdomo Maria Alejandra;Licencia;Remunerada;2025-02-01;2025-02-01;1
+1.079.411.976;Bonilla Gonzalez Nancy Alejandra;Incapacidad;Incapacidad por enfermedad general;2025-02-11;2025-02-12;1
+1.004.252.361;Hernandez Ramirez Maria Juliana;Incapacidad;Incapacidad por enfermedad general;2025-02-11;2025-02-11;1
+1.083.871.690;Mosquera Mosquera Lida Sofia;Licencia;Remunerada;2025-02-07;2025-02-07;4
+1.083.891.797;Jimenez Ferreira Varlis Andrey;Licencia;Remunerada;2025-02-10;2025-02-10;3
+12.325.164;Perez Yunda Hollman Yamid;Licencia;Remunerada;2025-02-07;2025-02-07;6
+1.081.416.279;Muñoz Medina Nathalia Andrea;Licencia;Remunerada;2025-03-01;2025-03-01;15
+1.081.416.279;Muñoz Medina Nathalia Andrea;Licencia;Remunerada;2025-03-15;2025-03-15;15
+1.006.031.083;Machin Guaraca Didier;Licencia;Remunerada;2025-02-17;2025-02-17;2
+55.130.105;Candela Molano Lina Maritza;Incapacidad;Incapacidad por enfermedad laboral o accidente;2025-02-24;2025-02-25;4
+1.077.872.038;Osorio Pupiales Leydi Marcela;Incapacidad;Incapacidad por enfermedad general;2025-02-17;2025-02-19;2
+12.020.915;Cossio Rengifo Hainner Estivinson;Licencia;Remunerada;2025-02-27;2025-02-27;6
+36.302.836;Almario Santos Nini Yohana;Licencia;Remunerada;2025-02-20;2025-02-21;3
+1.081.416.279;Muñoz Medina Nathalia Andrea;Licencia;Remunerada;2025-03-28;2025-03-29;15
+1.144.131.318;Cano Sanchez Sindi Yulieth;Licencia;Remunerada;2025-02-24;2025-02-24;12
+36.308.988;Perez Ospina Claudia Paola;Licencia;Remunerada;2025-02-15;2025-02-15;2
+55.069.034;Parra Vargas Lina Ximena;Licencia;Remunerada;2025-02-10;2025-02-10;5
+1.004.416.108;Losada Javela Cristian;Licencia;Remunerada;2025-02-10;2025-02-10;3
+26.433.392;Caviedes Rojas Sandra Patricia;Licencia;Remunerada;2025-02-06;2025-02-06;3
+1.077.874.629;Navarro Garzon Ingrid Julieth;Licencia;Remunerada;2025-02-03;2025-02-03;1
+55.070.574;Sterling Santofimio Liliana;Licencia;Remunerada;2025-02-24;2025-02-24;6
+26.430.660;Tirado Gomez Yeny Lindsay;Licencia;Remunerada;2025-02-03;2025-02-08;2
+26.430.660;Tirado Gomez Yeny Lindsay;Licencia;Remunerada;2025-02-12;2025-02-12;2
+26.515.235;Osso Andrade Esperanza;Licencia;Remunerada;2025-02-17;2025-02-17;12
+12.020.915;Cossio Rengifo Hainner Estivinson;Licencia;Remunerada;2025-03-19;2025-03-19;6
+26.515.235;Osso Andrade Esperanza;Licencia;Remunerada;2025-03-06;2025-03-06;12
+1.082.780.446;Erazo Ñañez Brayan Felipe;Incapacidad;Incapacidad por enfermedad laboral o accidente;2025-03-04;2025-03-06;5
+1.004.303.248;Melgar Cuaji Kerly Dayana;Incapacidad;Incapacidad por enfermedad general;2025-03-12;2025-03-12;0
+83.165.616;Tovar Sterling Rodolfo;Incapacidad;Incapacidad por enfermedad general;2025-03-14;2025-03-16;4
+1.083.838.335;Motta Cuellar Yenny Fernanda;Licencia;Remunerada;2025-03-22;2025-03-22;7
+1.144.131.318;Cano Sanchez Sindi Yulieth;Licencia;Remunerada;2025-03-14;2025-03-14;12
+1.144.131.318;Cano Sanchez Sindi Yulieth;Licencia;Remunerada;2025-03-20;2025-03-20;12
+1.144.131.318;Cano Sanchez Sindi Yulieth;Licencia;Remunerada;2025-03-25;2025-03-25;12
+26.575.125;Otalora Clavijo Liliana;Incapacidad;Incapacidad por enfermedad general;2025-03-17;2025-03-21;8
+1.075.274.402;Fierro Useche Edwin Alfredo;Incapacidad;Incapacidad por enfermedad general;2025-03-11;2025-03-14;0
+83.058.256;Franco Penagos Diego Mauricio;Incapacidad;Incapacidad por enfermedad general;2025-03-21;2025-03-23;3
+36.312.915;Lozano Rey Nataly Tatiana;Incapacidad;Incapacidad por enfermedad general;2025-03-11;2025-03-25;1
+1.083.898.993;Ruiz Uni Yurany;Licencia;Remunerada;2025-03-20;2025-03-20;4
+1.003.893.188;Gonzalez  Carlos Fernando;Licencia;Suspensión;2025-03-01;2025-03-10;3
+1.077.876.903;Garcia Mendez Leidy Camila;Licencia;Remunerada;2025-03-22;2025-03-22;4
+1.077.876.802;Sierra Fierro Daniela;Licencia;Remunerada;2025-03-14;2025-03-15;2
+1.075.263.168;Ramirez Yunda Lorena;Licencia;Remunerada;2025-03-20;2025-03-22;5
+1.075.238.428;Cediel Peña Jeisson Javier;Licencia;Remunerada;2025-03-21;2025-03-22;3
+36.287.872;Cordoba Gonzalez Dora Marledy;Licencia;Remunerada;2025-03-27;2025-03-28;3
+1.077.876.738;Sanchez Tovar Deiver Andres;Licencia;Remunerada;2025-03-29;2025-03-29;6
+1.083.894.260;Sapuyes Muñoz Eduard Hernan;Licencia;Remunerada;2025-03-27;2025-03-27;9
+1.080.260.469;Medina Cabrera Diana Jimena;Licencia;Remunerada;2025-03-27;2025-03-28;4
+1.080.363.088;Parra Mora Mauricio;Licencia;Remunerada;2025-03-22;2025-03-22;5
+1.078.246.749;Morales Aroca Jhonatan Arley;Licencia;Remunerada;2025-03-01;2025-03-01;7
+1.077.866.781;Cabrera Urriago Carlos Andres;Licencia;Remunerada;2025-03-15;2025-03-15;4
+1.077.868.657;Fajardo Parra Edna Ximena;Licencia;Remunerada;2025-03-14;2025-03-14;3
+26.510.426;Talero Cuellar Astrid;Licencia;Remunerada;2025-03-19;2025-03-19;4
+26.510.300;Penagos Munar Lucy Abaned;Licencia;Remunerada;2025-03-10;2025-03-10;4
+1.080.363.948;Paredes Navia Alexandra Maria;Licencia;Remunerada;2025-03-01;2025-03-01;1
+1.144.131.318;Cano Sanchez Sindi Yulieth;Licencia;Remunerada;2025-03-07;2025-03-07;12
+36.312.915;Lozano Rey Nataly Tatiana;Incapacidad;Incapacidad por enfermedad general;2025-03-03;2025-03-04;1
+83.183.505;Ospina Lugo Carlos Augusto;Incapacidad;Incapacidad por enfermedad general;2025-03-28;2025-03-28;2
+55.064.864;Montes Rodriguez Claudia Patricia;Licencia;Remunerada;2025-03-28;2025-03-28;6
+1.075.286.667;Tovar Sierra Andrea Del Pilar;Incapacidad;Incapacidad por enfermedad general;2025-03-28;2025-03-29;5
+55.068.771;Mejia Gonzalez Martha Ximena;Licencia;Remunerada;2025-03-27;2025-03-27;8
+1.003.893.188;Gonzalez  Carlos Fernando;Incapacidad;Incapacidad por enfermedad laboral o accidente;2025-03-28;2025-04-03;3
+26.430.280;Castellanos Camargo Yolanda;Incapacidad;Incapacidad por enfermedad general;2025-03-31;2025-04-01;0
+1.115.940.580;Yate Rubio Lina Marcela;Incapacidad;Incapacidad por enfermedad general;2025-04-02;2025-04-03;0
+1.007.447.056;Carmona Melgar Liseth Alejandra;Incapacidad;Incapacidad por enfermedad general;2025-04-04;2025-04-05;0
+1.007.386.199;Rincon Lasso Yury Marcela;Incapacidad;Incapacidad por enfermedad general;2025-04-15;2025-04-16;1
+1.075.223.074;Rojas Vargas Erik Fernando;Licencia;Luto;2025-04-28;2025-04-30;3
+1.075.223.074;Rojas Vargas Erik Fernando;Licencia;Luto;2025-05-02;2025-05-03;3
+36.309.237;Martinez Osorio Ivonne Ximena;Incapacidad;Incapacidad por enfermedad general;2025-04-10;2025-04-14;7
+1.081.155.883;Puentes Mendez Maria Camila;Incapacidad;Incapacidad por enfermedad general;2025-04-05;2025-04-07;4
+1.080.189.359;Botello Mancipe Jhoan Sebastian;Licencia;Remunerada;2025-04-23;2025-04-23;2
+1.081.155.883;Puentes Mendez Maria Camila;Licencia;Remunerada;2025-04-11;2025-04-12;4
+1.004.301.542;Molina Avila Lucy Adriana;Licencia;Remunerada;2025-04-05;2025-04-05;3
+1.077.872.079;Monje Fierro Cristian Daniel;Incapacidad;Incapacidad por enfermedad general;2025-04-02;2025-04-04;2
+1.081.159.634;Leiva Trujillo Maricela;Incapacidad;Incapacidad por enfermedad general;2025-04-16;2025-04-20;0
+1.007.349.671;Losada Camacho Angee Yojanna;Incapacidad;Incapacidad por enfermedad general;2025-04-02;2025-04-04;4
+1.077.875.287;Peña Valencia Jose Alexis;Licencia;Suspensión;2025-04-07;2025-04-12;10
+55.064.864;Montes Rodriguez Claudia Patricia;Licencia;Remunerada;2025-04-22;2025-04-22;6
+1.081.407.862;Gomez Vargas Jose David;Licencia;Remunerada;2025-04-22;2025-04-22;11
+26.160.242;Diaz Ariza Lucy Del Socorro;Incapacidad;Incapacidad por enfermedad general;2025-04-01;2025-04-05;2
+1.080.260.469;Medina Cabrera Diana Jimena;Licencia;Remunerada;2025-04-01;2025-04-02;4
+7.713.345;Buendia Chicue Gerardo;Licencia;Remunerada;2025-04-04;2025-04-05;3
+1.081.156.921;Rincon Triana Victor Alfonso;Licencia;Maternidad/Paternidad;2025-04-12;2025-04-26;2
+1.080.264.459;Sanchez Londoño Geralldine;Licencia;Remunerada;2025-04-11;2025-04-13;5
+1.081.407.862;Gomez Vargas Jose David;Licencia;Remunerada;2025-04-04;2025-04-04;11
+1.081.407.862;Gomez Vargas Jose David;Licencia;Remunerada;2025-04-25;2025-04-26;11
+1.077.875.722;Cerquera Cabrera Karen Dayanna;Licencia;Remunerada;2025-04-16;2025-04-16;6
+1.077.849.684;Gutierrez Perdomo Leidy Johana;Licencia;Remunerada;2025-04-21;2025-04-21;4
+1.077.875.722;Cerquera Cabrera Karen Dayanna;Licencia;Remunerada;2025-04-11;2025-04-11;6
+1.082.127.400;Alarcon Cabrera Diana Alexandra;Licencia;Remunerada;2025-04-07;2025-04-07;3
+26.510.300;Penagos Munar Lucy Abaned;Licencia;Remunerada;2025-04-03;2025-04-03;4
+1.077.872.038;Osorio Pupiales Leydi Marcela;Licencia;Remunerada;2025-04-21;2025-04-21;2
+1.079.389.568;Mesa Trujillo Carolina;Licencia;Remunerada;2025-04-07;2025-04-07;3
+36.286.922;Molina Peña Doris;Licencia;Remunerada;2025-04-21;2025-04-22;5
+83.183.505;Ospina Lugo Carlos Augusto;Licencia;Remunerada;2025-04-04;2025-04-04;2
+1.117.519.270;Mesa Fuentes Nayla Katherine;Licencia;Remunerada;2025-04-16;2025-04-16;3
+1.004.252.361;Hernandez Ramirez Maria Juliana;Licencia;Remunerada;2025-04-03;2025-04-03;1
+36.309.237;Martinez Osorio Ivonne Ximena;Licencia;Remunerada;2025-04-16;2025-04-16;7
+36.309.237;Martinez Osorio Ivonne Ximena;Licencia;Remunerada;2025-04-15;2025-04-15;7
+1.077.866.781;Cabrera Urriago Carlos Andres;Licencia;Remunerada;2025-04-01;2025-04-01;4
+1.077.866.781;Cabrera Urriago Carlos Andres;Licencia;No remunerada;2025-04-03;2025-04-04;4
+1.077.866.781;Cabrera Urriago Carlos Andres;Incapacidad;Incapacidad por enfermedad general;2025-04-02;2025-04-02;4
+1.004.250.524;Andrade Guevara Juan Manuel;Licencia;Remunerada;2025-04-16;2025-04-16;3
+1.079.411.976;Bonilla Gonzalez Nancy Alejandra;Licencia;Remunerada;2025-04-26;2025-04-26;1
+12.020.915;Cossio Rengifo Hainner Estivinson;Licencia;Remunerada;2025-04-21;2025-04-21;6
+1.081.416.279;Muñoz Medina Nathalia Andrea;Licencia;Remunerada;2025-04-11;2025-04-12;15
+1.081.416.279;Muñoz Medina Nathalia Andrea;Licencia;Remunerada;2025-04-25;2025-04-25;15
+55.130.105;Candela Molano Lina Maritza;Licencia;Remunerada;2025-04-03;2025-04-03;4
+1.083.897.878;Rueda Rodriguez Sandra;Licencia;Remunerada;2025-04-15;2025-04-15;2
+1.080.361.725;Zambrano Rojas Bibiana Constanza;Licencia;Remunerada;2025-04-08;2025-04-08;4
+1.080.361.725;Zambrano Rojas Bibiana Constanza;Licencia;Remunerada;2025-04-28;2025-04-28;4
+26.575.125;Otalora Clavijo Liliana;Licencia;Remunerada;2025-04-30;2025-04-30;8
+1.076.987.623;Muñoz Vargas Jhon Fredi;Licencia;Remunerada;2025-04-28;2025-04-28;2
+36.287.872;Cordoba Gonzalez Dora Marledy;Licencia;Remunerada;2025-04-02;2025-04-04;3
+36.287.872;Cordoba Gonzalez Dora Marledy;Licencia;Remunerada;2025-04-10;2025-04-10;3
+1.077.871.911;Jimenez Trujillo Francy Yanixa;Licencia;Remunerada;2025-04-05;2025-04-05;5
+55.068.771;Mejia Gonzalez Martha Ximena;Incapacidad;Incapacidad por enfermedad general;2025-04-21;2025-05-14;8
+1.105.681.140;Gomez Suarez Andres Camilo;Licencia;Remunerada;2025-04-12;2025-04-12;1
+1.006.528.004;Claros Romero Jein;Licencia;No remunerada;2025-04-21;2025-04-21;3
+1.006.528.004;Claros Romero Jein;Licencia;Remunerada;2025-04-22;2025-04-22;3
+1.082.158.633;Monroy Fernández Alexandra;Licencia;Remunerada;2025-04-10;2025-04-10;3
+1.083.878.109;Perilla Capera Marinela;Licencia;Remunerada;2025-04-23;2025-04-23;5
+36.313.674;Jaramillo Muñoz Emna Constanza;Licencia;Remunerada;2025-04-22;2025-04-22;3
+1.077.848.048;Lopez Rivera Alvaro;Licencia;Remunerada;2025-04-03;2025-04-03;8
+1.077.848.048;Lopez Rivera Alvaro;Licencia;Remunerada;2025-04-25;2025-04-25;8
+1.075.303.329;Cadena Solarte Esteban Andres;Licencia;Remunerada;2025-04-14;2025-04-16;2
+1.079.181.739;Salgado Suaza Yesica Yulie;Licencia;Remunerada;2025-04-21;2025-04-21;1
+74.184.944;Melo Gil Yonny Samir;Licencia;Remunerada;2025-04-16;2025-04-16;3
+1.077.867.688;Alba Bahamon Diana Miled;Licencia;Remunerada;2025-04-16;2025-04-16;2
+55.060.661;Trejos Murcia Vianney;Licencia;Remunerada;2025-04-15;2025-04-15;4
+1.077.876.368;Sanchez Bustos Daniela;Licencia;Remunerada;2025-04-05;2025-04-05;3
+26.515.235;Osso Andrade Esperanza;Licencia;Remunerada;2025-04-25;2025-04-25;12
+1.144.131.318;Cano Sanchez Sindi Yulieth;Licencia;Maternidad/Paternidad;2025-04-21;2025-08-24;12
+1.084.258.262;Muñoz Navia Ivan Ernesto;Licencia;Maternidad/Paternidad;2025-05-04;2025-05-18;2
+1.082.127.400;Alarcon Cabrera Diana Alexandra;Incapacidad;Incapacidad por enfermedad general;2025-05-02;2025-05-03;3
+26.430.280;Castellanos Camargo Yolanda;Incapacidad;Incapacidad por enfermedad general;2025-05-09;2025-05-10;0
+1.080.365.383;Higuita Cardona Soraya;Incapacidad;Incapacidad por enfermedad general;2025-05-11;2025-05-13;4
+55.068.771;Mejia Gonzalez Martha Ximena;Incapacidad;Incapacidad por enfermedad general;2025-05-16;2025-05-24;8
+36.309.237;Martinez Osorio Ivonne Ximena;Incapacidad;Incapacidad por enfermedad general;2025-05-11;2025-05-13;7
+26.430.280;Castellanos Camargo Yolanda;Incapacidad;Incapacidad por enfermedad general;2025-05-22;2025-05-22;0
+1.004.250.524;Andrade Guevara Juan Manuel;Incapacidad;Incapacidad por enfermedad general;2025-05-21;2025-05-22;3
+1.077.843.830;Galindo Paladines Yeimy Carolina;Incapacidad;Incapacidad por enfermedad general;2025-05-22;2025-05-23;0
+1.012.372.339;Almario Gutierrez Sandra Constanza;Licencia;Remunerada;2025-05-13;2025-05-13;6
+1.083.877.039;Carvajal Ramos Ismael;Licencia;Remunerada;2025-05-09;2025-05-09;5
+1.083.877.039;Carvajal Ramos Ismael;Licencia;Remunerada;2025-05-14;2025-05-14;5
+52.832.524;Paredes Arguello Luz Enith;Incapacidad;Incapacidad por enfermedad general;2025-05-23;2025-05-24;8
+26.430.280;Castellanos Camargo Yolanda;Incapacidad;Incapacidad por enfermedad general;2025-05-12;2025-05-14;0
+1.078.753.106;Cueltan Barrera Juan David;Incapacidad;Incapacidad por enfermedad general;2025-05-23;2025-05-25;2
+1.077.875.722;Cerquera Cabrera Karen Dayanna;Licencia;Remunerada;2025-05-23;2025-05-23;6
+26.529.705;Perez Duran Yolima;Licencia;Remunerada;2025-05-08;2025-05-08;4
+1.081.416.279;Muñoz Medina Nathalia Andrea;Licencia;Remunerada;2025-05-09;2025-05-09;15
+1.081.416.279;Muñoz Medina Nathalia Andrea;Licencia;Remunerada;2025-05-23;2025-05-23;15
+26.515.235;Osso Andrade Esperanza;Licencia;Remunerada;2025-05-24;2025-05-24;12
+26.515.235;Osso Andrade Esperanza;Licencia;Remunerada;2025-05-27;2025-05-27;12
+1.084.866.809;Andrade Diaz Victor Alfonso;Licencia;Remunerada;2025-05-22;2025-05-22;3
+1.077.845.779;Losada Torres Yury Carolina;Incapacidad;Incapacidad por enfermedad general;2025-05-22;2025-05-26;3
+1.007.741.156;Puentes Olaya Wilder;Licencia;Remunerada;2025-05-22;2025-05-23;1
+1.003.762.635;Castro Aguirre Jerson Danilo;Incapacidad;Incapacidad por enfermedad general;2025-05-22;2025-05-24;1
+1.003.762.635;Castro Aguirre Jerson Danilo;Incapacidad;Incapacidad por enfermedad general;2025-05-26;2025-06-01;1
+1.083.875.155;Camargo Paredes Martha Liliana;Compensatorio Cumplimiento de Metas;;2025-05-12;2025-05-12;3
+1.083.897.878;Rueda Rodriguez Sandra;Compensatorio Cumplimiento de Metas;;2025-05-12;2025-05-12;2
+1.083.897.878;Rueda Rodriguez Sandra;Compensatorio Cumplimiento de Metas;;2025-05-26;2025-05-26;2
+1.083.871.690;Mosquera Mosquera Lida Sofia;Licencia Cumpleaños;Remunerada;2025-05-19;2025-05-19;4
+1.083.894.260;Sapuyes Muñoz Eduard Hernan;Compensatorio Cumplimiento de Metas;;2025-05-12;2025-05-12;9
+1.083.894.260;Sapuyes Muñoz Eduard Hernan;Compensatorio Cumplimiento de Metas;;2025-05-23;2025-05-23;9
+1.083.897.878;Rueda Rodriguez Sandra;Compensatorio Cumplimiento de Metas;;2025-05-19;2025-05-19;2
+1.083.891.797;Jimenez Ferreira Varlis Andrey;Compensatorio Cumplimiento de Metas;;2025-05-19;2025-05-19;3
+1.083.891.797;Jimenez Ferreira Varlis Andrey;Compensatorio Cumplimiento de Metas;;2025-05-26;2025-05-26;3
+1.082.780.239;Imbachi Samboni Diego Fernando;Compensatorio Cumplimiento de Metas;;2025-05-17;2025-05-17;1
+1.082.127.582;Robayo Camacho Seidy Marcela;Compensatorio Cumplimiento de Metas;;2025-05-12;2025-05-12;2
+1.082.127.582;Robayo Camacho Seidy Marcela;Compensatorio Cumplimiento de Metas;;2025-05-22;2025-05-22;2
+1.003.762.635;Castro Aguirre Jerson Danilo;Compensatorio Cumplimiento de Metas;;2025-05-06;2025-05-06;1
+1.003.762.635;Castro Aguirre Jerson Danilo;Compensatorio Cumplimiento de Metas;;2025-05-20;2025-05-20;1
+1.004.301.542;Molina Avila Lucy Adriana;Licencia Matrimonial;Remunerada;2025-05-23;2025-05-24;3
+1.004.301.542;Molina Avila Lucy Adriana;Licencia Matrimonial;Remunerada;2025-05-26;2025-05-26;3
+36.293.834;Bolaños Burbano Magnolia Lucia;Licencia Cumpleaños;Remunerada;2025-05-29;2025-05-29;3
+1.083.838.335;Motta Cuellar Yenny Fernanda;Licencia;Remunerada;2025-05-15;2025-05-15;7
+1.082.154.767;Camero Triana Faiber;Licencia;Remunerada;2025-05-12;2025-05-12;4
+83.183.505;Ospina Lugo Carlos Augusto;Compensatorio Cumplimiento de Metas;;2025-05-26;2025-05-26;2
+1.004.300.389;Joven Motta Paubla Valentina;Licencia Cumpleaños;Remunerada;2025-05-09;2025-05-09;3
+1.080.363.948;Paredes Navia Alexandra Maria;Compensatorio Cumplimiento de Metas;;2025-05-26;2025-05-26;1
+1.007.364.319;Cuaran Claros Duberney;Compensatorio Cumplimiento de Metas;;2025-05-26;2025-05-26;1
+1.007.364.319;Cuaran Claros Duberney;Compensatorio Cumplimiento de Metas;;2025-05-20;2025-05-20;1
+1.080.363.948;Paredes Navia Alexandra Maria;Compensatorio Cumplimiento de Metas;;2025-05-12;2025-05-12;1
+83.183.505;Ospina Lugo Carlos Augusto;Compensatorio Cumplimiento de Metas;;2025-05-19;2025-05-19;2
+36.286.922;Molina Peña Doris;Licencia;Remunerada;2025-05-17;2025-05-17;5
+26.579.392;Tovar Serrano Maria Mildred;Licencia;Remunerada;2025-05-28;2025-05-28;3
+1.081.513.864;Guarnizo Trujillo Milton Alexis;Compensatorio Cumplimiento de Metas;;2025-05-12;2025-05-12;5
+1.081.513.864;Guarnizo Trujillo Milton Alexis;Compensatorio Cumplimiento de Metas;;2025-05-22;2025-05-22;5
+1.081.514.856;Torres Betancourt Enrrique;Compensatorio Cumplimiento de Metas;;2025-05-05;2025-05-05;4
+1.083.894.260;Sapuyes Muñoz Eduard Hernan;Compensatorio Cumplimiento de Metas;;2025-05-27;2025-05-27;9
+26.575.125;Otalora Clavijo Liliana;Licencia;Remunerada;2025-05-28;2025-05-28;8
+26.575.125;Otalora Clavijo Liliana;Licencia;Remunerada;2025-05-12;2025-05-12;8
+26.510.426;Talero Cuellar Astrid;Licencia;Remunerada;2025-05-26;2025-05-26;4
+1.004.416.108;Losada Javela Cristian;Licencia;Remunerada;2025-05-22;2025-05-22;3
+1.080.260.469;Medina Cabrera Diana Jimena;Licencia;Remunerada;2025-05-17;2025-05-17;4
+1.075.274.402;Fierro Useche Edwin Alfredo;Compensatorio Cumplimiento de Metas;;2025-05-12;2025-05-12;0
+1.077.871.911;Jimenez Trujillo Francy Yanixa;Compensatorio Cumplimiento de Metas;;2025-05-02;2025-05-03;5
+1.077.849.513;Trujillo Perez Diana Karolina;Licencia Cumpleaños;Remunerada;2025-05-21;2025-05-21;7
+7.723.872;Santos Zuñiga Diego Mauricio;Licencia Cumpleaños;Remunerada;2025-05-19;2025-05-19;2
+1.117.527.415;Castro Ortiz Evely;Compensatorio Cumplimiento de Metas;;2025-05-26;2025-05-26;2
+1.117.527.415;Castro Ortiz Evely;Licencia Cumpleaños;Remunerada;2025-05-19;2025-05-19;2
+1.080.362.443;Silva Cabrera Keyla Daniela;Compensatorio Cumplimiento de Metas;;2025-05-10;2025-05-10;4
+55.068.771;Mejia Gonzalez Martha Ximena;Licencia;Remunerada;2025-05-28;2025-05-29;8
+55.064.864;Montes Rodriguez Claudia Patricia;Incapacidad;Incapacidad por enfermedad general;2025-05-28;2025-07-02;6
+55.070.574;Sterling Santofimio Liliana;Licencia Cumpleaños;Remunerada;2025-05-19;2025-05-19;6
+1.077.877.560;Gonzalez Elizalde Estella Andrea;Licencia;Remunerada;2025-05-13;2025-05-13;3
+55.067.467;Roa Casanova Kety Dayana;Licencia;Remunerada;2025-05-30;2025-05-31;1
+1.117.533.593;Murcia Molano Yineide Paola;Compensatorio Cumplimiento de Metas;;2025-06-13;2025-06-13;0
+1.077.876.368;Sanchez Bustos Daniela;Licencia;Remunerada;2025-05-05;2025-05-05;3
+55.069.034;Parra Vargas Lina Ximena;Licencia;Remunerada;2025-05-19;2025-05-19;5
+1.077.872.590;Delgado Montilla Daniela Victoria;Licencia;Remunerada;2025-05-10;2025-05-10;2
+1.077.870.310;Losada Vargas Fabio Alejandro;Licencia;Remunerada;2025-05-06;2025-05-06;2
+1.003.893.188;Gonzalez  Carlos Fernando;Licencia Cumpleaños;Remunerada;2025-05-22;2025-05-22;3
+1.078.751.159;Plazas Diaz Jorge Eduardo;Licencia Cumpleaños;Remunerada;2025-05-17;2025-05-17;1
+1.077.863.489;Buendia Tovar Jonathan;Licencia Cumpleaños;Remunerada;2025-05-02;2025-05-02;1
+55.068.441;Rodriguez Suarez Adriana Marcela;Licencia Cumpleaños;Remunerada;2025-05-20;2025-05-20;5
+1.077.845.779;Losada Torres Yury Carolina;Licencia Cumpleaños;Remunerada;2025-05-12;2025-05-12;3
+55.179.862;Suaza Ramirez Sandra Patricia;Licencia;Remunerada;2025-05-02;2025-05-02;4
+55.068.960;Pedreros Ramon Joalber;Licencia;Remunerada;2025-05-05;2025-05-05;3
+1.075.263.168;Ramirez Yunda Lorena;Licencia;Remunerada;2025-05-03;2025-05-03;5
+1.004.300.389;Joven Motta Paubla Valentina;Compensatorio Cumplimiento de Metas;;2025-05-26;2025-05-26;3
+1.007.568.870;Rodriguez Tovar Leny Yohana;Licencia;Remunerada;2025-05-27;2025-05-28;1
+1.080.260.469;Medina Cabrera Diana Jimena;Incapacidad;Incapacidad por enfermedad general;2025-05-28;2025-05-29;4
+1.007.289.593;Cardona Lozano Fabian Eduardo;Incapacidad;Incapacidad por enfermedad general;2025-05-29;2025-05-31;0
+55.066.499;Martinez Agudelo Luz Angela;Incapacidad;Incapacidad por enfermedad general;2025-06-05;2025-06-07;3
+1.070.594.133;Garzon Leyton Ana Paola;Incapacidad;Incapacidad por enfermedad general;2025-06-05;2025-06-07;2
+1.075.263.168;Ramirez Yunda Lorena;Licencia;Remunerada;2025-06-09;2025-06-09;5
+1.007.289.593;Cardona Lozano Fabian Eduardo;Compensatorio Cumplimiento de Metas;;2025-06-07;2025-06-07;0
+7.713.345;Buendia Chicue Gerardo;Licencia;No remunerada;2025-06-04;2025-06-28;3
+1.070.594.133;Garzon Leyton Ana Paola;Incapacidad;Incapacidad por enfermedad general;2025-06-10;2025-06-11;2
+1.007.364.319;Cuaran Claros Duberney;Incapacidad;Incapacidad por enfermedad general;2025-06-10;2025-06-12;1
+83.058.256;Franco Penagos Diego Mauricio;Licencia Cumpleaños;Remunerada;2025-06-18;2025-06-18;3
+26.160.242;Diaz Ariza Lucy Del Socorro;Licencia Cumpleaños;Remunerada;2025-06-09;2025-06-09;2
+1.083.838.335;Motta Cuellar Yenny Fernanda;Licencia;Remunerada;2025-06-07;2025-06-07;7
+55.068.441;Rodriguez Suarez Adriana Marcela;Licencia;Remunerada;2025-06-10;2025-06-10;5
+1.077.846.480;Vargas Gutierrez Laura Camila;Licencia;Remunerada;2025-06-12;2025-06-12;1
+1.075.258.958;Cedeño Villegas Luisa Fernanda;Licencia;Remunerada;2025-06-12;2025-06-12;4
+1.080.362.443;Silva Cabrera Keyla Daniela;Licencia;Luto;2025-06-07;2025-06-07;4
+1.080.362.443;Silva Cabrera Keyla Daniela;Licencia;Luto;2025-06-09;2025-06-12;4
+1.081.155.883;Puentes Mendez Maria Camila;Licencia;Remunerada;2025-06-20;2025-06-20;4
+1.077.855.297;Camacho Manjarres Ferney;Licencia;Remunerada;2025-06-13;2025-06-13;4
+1.077.855.297;Camacho Manjarres Ferney;Licencia;Remunerada;2025-06-10;2025-06-10;4
+55.066.499;Martinez Agudelo Luz Angela;Licencia;Remunerada;2025-06-13;2025-06-13;3
+1.077.872.038;Osorio Pupiales Leydi Marcela;Licencia;Remunerada;2025-06-10;2025-06-10;2
+1.082.154.767;Camero Triana Faiber;Licencia Cumpleaños;Remunerada;2025-06-05;2025-06-05;4
+12.020.915;Cossio Rengifo Hainner Estivinson;Incapacidad;Incapacidad por enfermedad general;2025-06-08;2025-06-13;6
+1.075.286.667;Tovar Sierra Andrea Del Pilar;Licencia;Remunerada;2025-06-04;2025-06-04;5
+55.069.034;Parra Vargas Lina Ximena;Incapacidad;Incapacidad por enfermedad general;2025-06-09;2025-06-18;5
+1.077.870.304;Vanegas Chavez Jhon Alexander;Licencia Cumpleaños;Remunerada;2025-06-16;2025-06-16;4
+1.075.263.168;Ramirez Yunda Lorena;Incapacidad;Incapacidad por enfermedad general;2025-06-10;2025-06-14;5
+26.510.300;Penagos Munar Lucy Abaned;Licencia;Luto;2025-06-09;2025-06-13;4
+1.004.300.389;Joven Motta Paubla Valentina;Compensatorio Cumplimiento de Metas;;2025-06-14;2025-06-14;3
+1.004.300.389;Joven Motta Paubla Valentina;Compensatorio Cumplimiento de Metas;;2025-06-19;2025-06-19;3
+1.003.762.635;Castro Aguirre Jerson Danilo;Compensatorio Cumplimiento de Metas;;2025-06-21;2025-06-21;1
+1.082.127.582;Robayo Camacho Seidy Marcela;Compensatorio Cumplimiento de Metas;;2025-06-16;2025-06-16;2
+1.077.840.653;Bonilla Luna Yeni Paola;Licencia;Remunerada;2025-06-14;2025-06-14;3
+36.313.674;Jaramillo Muñoz Emna Constanza;Licencia;Remunerada;2025-06-07;2025-06-07;3
+1.012.372.339;Almario Gutierrez Sandra Constanza;Licencia;Remunerada;2025-06-07;2025-06-07;6
+1.075.245.382;Trujillo Cabrera Lizet Johanna;Licencia;Remunerada;2025-06-21;2025-06-21;3
+1.077.847.116;Sterling Achipiz Wilson Durley;Compensatorio Cumplimiento de Metas;;2025-06-03;2025-06-03;0
+1.077.847.116;Sterling Achipiz Wilson Durley;Compensatorio Cumplimiento de Metas;;2025-06-13;2025-06-13;0
+1.077.847.116;Sterling Achipiz Wilson Durley;Compensatorio Cumplimiento de Metas;;2025-06-16;2025-06-16;0
+1.077.875.722;Cerquera Cabrera Karen Dayanna;Compensatorio Cumplimiento de Metas;;2025-06-13;2025-06-13;6
+1.077.875.722;Cerquera Cabrera Karen Dayanna;Licencia;Remunerada;2025-06-14;2025-06-14;6
+65.831.738;Mosquera Cruz Yudi Luz Karime;Licencia;Remunerada;2025-06-06;2025-06-06;4
+12.190.303;Ramirez Vargas Hector;Licencia Cumpleaños;Remunerada;2025-06-09;2025-06-09;2
+1.077.870.045;Cortes Gaitan Karol Tatiana;Licencia;Remunerada;2025-06-18;2025-06-18;2
+1.083.878.109;Perilla Capera Marinela;Licencia;Remunerada;2025-06-17;2025-06-17;5
+1.083.878.109;Perilla Capera Marinela;Licencia;Remunerada;2025-06-19;2025-06-19;5
+1.083.878.109;Perilla Capera Marinela;Licencia;Remunerada;2025-06-27;2025-06-27;5
+55.179.862;Suaza Ramirez Sandra Patricia;Licencia Cumpleaños;Remunerada;2025-06-17;2025-06-17;4
+55.179.862;Suaza Ramirez Sandra Patricia;Licencia Cumpleaños;Remunerada;2025-06-19;2025-06-19;4
+83.058.256;Franco Penagos Diego Mauricio;Incapacidad;Incapacidad por enfermedad general;2025-06-03;2025-06-06;3
+1.081.416.279;Muñoz Medina Nathalia Andrea;Licencia;Remunerada;2025-06-06;2025-06-06;15
+1.081.416.279;Muñoz Medina Nathalia Andrea;Licencia;Remunerada;2025-06-07;2025-06-07;15
+1.081.416.279;Muñoz Medina Nathalia Andrea;Licencia;Remunerada;2025-06-14;2025-06-14;15
+1.081.420.957;Mejia Ipia Paola Alexandra;Compensatorio Cumplimiento de Metas;;2025-06-16;2025-06-16;2
+1.004.158.659;Muñoz Ramirez Lucia;Licencia;Remunerada;2025-06-04;2025-06-04;1
+1.080.264.459;Sanchez Londoño Geralldine;Compensatorio Cumplimiento de Metas;;2025-06-13;2025-06-13;5
+1.080.260.159;Lugo Guacari Loresledy;Licencia;Remunerada;2025-06-21;2025-06-21;6
+1.006.031.083;Machin Guaraca Didier;Licencia Cumpleaños;Remunerada;2025-06-03;2025-06-03;2
+1.083.877.039;Carvajal Ramos Ismael;Licencia;Remunerada;2025-06-03;2025-06-09;5
+1.083.895.843;Hurtado Castillo Angelica Maria;Compensatorio Cumplimiento de Metas;;2025-06-05;2025-06-05;3
+1.083.871.690;Mosquera Mosquera Lida Sofia;Licencia;Remunerada;2025-06-12;2025-06-12;4
+1.082.127.582;Robayo Camacho Seidy Marcela;Compensatorio Cumplimiento de Metas;;2025-07-07;2025-07-07;2
+1.082.127.582;Robayo Camacho Seidy Marcela;Compensatorio Cumplimiento de Metas;;2025-06-24;2025-06-24;2
+1.081.513.864;Guarnizo Trujillo Milton Alexis;Compensatorio Cumplimiento de Metas;;2025-06-03;2025-06-03;5
+1.081.513.864;Guarnizo Trujillo Milton Alexis;Compensatorio Cumplimiento de Metas;;2025-06-12;2025-06-12;5
+1.081.513.864;Guarnizo Trujillo Milton Alexis;Licencia;Remunerada;2025-06-10;2025-06-10;5
+1.081.514.856;Torres Betancourt Enrrique;Licencia;Remunerada;2025-06-16;2025-06-16;4
+36.309.237;Martinez Osorio Ivonne Ximena;Licencia;Remunerada;2025-06-18;2025-06-18;7
+26.493.681;Cuellar Tovar Marbelis;Licencia Cumpleaños;Remunerada;2025-06-19;2025-06-19;2
+1.077.843.372;Cupitra Cadena Paula Andrea;Incapacidad;Incapacidad por enfermedad general;2025-06-02;2025-06-08;0
+1.004.303.037;Quigua Cuaji Tatiana;Compensatorio Cumplimiento de Metas;;2025-06-05;2025-06-05;3
+1.007.364.319;Cuaran Claros Duberney;Compensatorio Cumplimiento de Metas;;2025-06-13;2025-06-14;1
+1.007.364.319;Cuaran Claros Duberney;Compensatorio Cumplimiento de Metas;;2025-06-07;2025-06-07;1
+1.080.363.948;Paredes Navia Alexandra Maria;Compensatorio Cumplimiento de Metas;;2025-06-03;2025-06-03;1
+1.080.363.948;Paredes Navia Alexandra Maria;Compensatorio Cumplimiento de Metas;;2025-06-10;2025-06-10;1
+1.080.363.948;Paredes Navia Alexandra Maria;Compensatorio Cumplimiento de Metas;;2025-06-13;2025-06-13;1
+83.183.505;Ospina Lugo Carlos Augusto;Compensatorio Cumplimiento de Metas;;2025-06-09;2025-06-09;2
+1.083.891.797;Jimenez Ferreira Varlis Andrey;Licencia Cumpleaños;Remunerada;2025-06-16;2025-06-16;3
+1.083.894.260;Sapuyes Muñoz Eduard Hernan;Compensatorio Cumplimiento de Metas;;2025-06-16;2025-06-16;9
+1.080.363.088;Parra Mora Mauricio;Compensatorio Cumplimiento de Metas;;2025-06-18;2025-06-18;5
+7.687.420;Tello Perdomo Jorge Eduardo;Licencia;Remunerada;2025-06-14;2025-06-14;2
+1.083.838.335;Motta Cuellar Yenny Fernanda;Licencia;Remunerada;2025-06-13;2025-06-13;7
+1.076.903.810;Henao Silva David Felipe;Compensatorio Cumplimiento de Metas;;2025-06-27;2025-06-27;0
+1.076.987.623;Muñoz Vargas Jhon Fredi;Compensatorio Cumplimiento de Metas;;2025-06-27;2025-06-27;2
+1.117.531.815;Ramos Palacios Jenier Alexis;Compensatorio Cumplimiento de Metas;;2025-06-12;2025-06-12;1
+1.077.853.203;Cano Silva Nubia Adriana;Licencia;Remunerada;2025-06-12;2025-06-12;1
+55.067.467;Roa Casanova Kety Dayana;Compensatorio Cumplimiento de Metas;;2025-06-21;2025-06-21;1
+55.068.960;Pedreros Ramon Joalber;Compensatorio Cumplimiento de Metas;;2025-06-19;2025-06-19;3
+55.070.574;Sterling Santofimio Liliana;Compensatorio Cumplimiento de Metas;;2025-06-10;2025-06-10;6
+1.078.246.749;Morales Aroca Jhonatan Arley;Licencia;Remunerada;2025-06-06;2025-06-06;7
+55.069.034;Parra Vargas Lina Ximena;Licencia;Remunerada;2025-06-03;2025-06-03;5
+36.308.988;Perez Ospina Claudia Paola;Incapacidad;Incapacidad por enfermedad laboral o accidente;2025-06-13;2025-06-17;2
+1.004.034.475;Castillo Vargas Laura Nataly;Licencia;Remunerada;2025-06-17;2025-06-17;1
+1.004.303.037;Quigua Cuaji Tatiana;Licencia;Remunerada;2025-06-16;2025-06-16;3
+1.003.803.489;Motta Escobar Maria Alejandra;Licencia;Remunerada;2025-06-07;2025-06-07;2
+1.070.594.133;Garzon Leyton Ana Paola;Incapacidad;Incapacidad por enfermedad general;2025-06-17;2025-06-18;2
+65.831.738;Mosquera Cruz Yudi Luz Karime;Licencia;Remunerada;2025-06-18;2025-06-18;4
+1.075.286.667;Tovar Sierra Andrea Del Pilar;Licencia;Remunerada;2025-06-20;2025-06-20;5
+1.003.762.635;Castro Aguirre Jerson Danilo;Incapacidad;Incapacidad por enfermedad general;2025-06-17;2025-06-19;1
+12.194.863;Cerquera  Harol;Licencia;Remunerada;2025-06-20;2025-06-20;3
+1.077.870.310;Losada Vargas Fabio Alejandro;Licencia Cumpleaños;Remunerada;2025-07-01;2025-07-01;2
+1.077.874.629;Navarro Garzon Ingrid Julieth;Compensatorio Cumplimiento de Metas;;2025-07-03;2025-07-03;1
+55.068.771;Mejia Gonzalez Martha Ximena;Compensatorio Cumplimiento de Metas;;2025-07-28;2025-07-28;8
+1.012.372.339;Almario Gutierrez Sandra Constanza;Licencia;Remunerada;2025-07-31;2025-07-31;6
+1.080.365.383;Higuita Cardona Soraya;Licencia;Remunerada;2025-07-02;2025-07-05;4
+55.068.771;Mejia Gonzalez Martha Ximena;Licencia;Remunerada;2025-07-19;2025-07-19;8
+52.832.524;Paredes Arguello Luz Enith;Licencia;Remunerada;2025-06-17;2025-06-17;8
+52.832.524;Paredes Arguello Luz Enith;Licencia;Remunerada;2025-06-26;2025-06-26;8
+1.081.513.864;Guarnizo Trujillo Milton Alexis;Licencia;Remunerada;2025-06-24;2025-06-24;5
+1.083.895.843;Hurtado Castillo Angelica Maria;Compensatorio Cumplimiento de Metas;;2025-06-26;2025-06-26;3
+1.082.154.767;Camero Triana Faiber;Licencia;Remunerada;2025-06-20;2025-06-20;4
+26.575.125;Otalora Clavijo Liliana;Licencia;Remunerada;2025-06-16;2025-06-16;8
+1.081.156.921;Rincon Triana Victor Alfonso;Licencia;Remunerada;2025-06-17;2025-06-17;2
+1.084.866.809;Andrade Diaz Victor Alfonso;Licencia;Remunerada;2025-06-17;2025-06-17;3
+1.081.514.856;Torres Betancourt Enrrique;Licencia;Remunerada;2025-06-18;2025-06-18;4
+26.575.125;Otalora Clavijo Liliana;Licencia;Remunerada;2025-06-18;2025-06-18;8
+1.012.372.339;Almario Gutierrez Sandra Constanza;Licencia;Remunerada;2025-06-18;2025-06-18;6
+1.077.872.079;Monje Fierro Cristian Daniel;Licencia;Remunerada;2025-06-19;2025-06-19;2
+12.370.775;Polania Ruiz Wilber Aleixer;Licencia;Remunerada;2025-06-19;2025-06-19;3
+74.184.944;Melo Gil Yonny Samir;Licencia;Remunerada;2025-06-21;2025-06-21;3
+1.080.363.088;Parra Mora Mauricio;Compensatorio Cumplimiento de Metas;;2025-06-20;2025-06-20;5
+12.189.017;Lizcano Quevedo Javier;Licencia;Remunerada;2025-06-21;2025-06-21;4
+1.077.848.048;Lopez Rivera Alvaro;Licencia;Remunerada;2025-06-24;2025-06-24;8
+1.083.894.260;Sapuyes Muñoz Eduard Hernan;Compensatorio Cumplimiento de Metas;;2025-06-24;2025-06-24;9
+1.007.897.591;Alvarez Burbano Laura Valentina;Licencia;Remunerada;2025-06-27;2025-06-27;7
+55.068.960;Pedreros Ramon Joalber;Incapacidad;Incapacidad por enfermedad general;2025-06-12;2025-06-13;3
+36.312.915;Lozano Rey Nataly Tatiana;Incapacidad;Incapacidad por enfermedad general;2025-06-26;2025-06-27;1
+1.081.155.883;Puentes Mendez Maria Camila;Licencia;Remunerada;2025-07-07;2025-07-07;4
+83.165.616;Tovar Sterling Rodolfo;Licencia;Remunerada;2025-07-26;2025-07-26;4
+1.193.136.134;Calderon Gomez Karla Yessenia;Incapacidad;Incapacidad por enfermedad laboral o accidente;2025-06-29;2025-07-05;1
+1.007.897.591;Alvarez Burbano Laura Valentina;Incapacidad;Incapacidad por enfermedad general;2025-07-03;2025-07-04;7
+26.433.392;Caviedes Rojas Sandra Patricia;Incapacidad;Incapacidad por enfermedad general;2025-07-11;2025-07-12;3
+55.060.661;Trejos Murcia Vianney;Incapacidad;Incapacidad por enfermedad general;2025-07-02;2025-07-03;4
+12.370.775;Polania Ruiz Wilber Aleixer;Incapacidad;Incapacidad por enfermedad general;2025-07-04;2025-07-05;3
+1.075.303.329;Cadena Solarte Esteban Andres;Incapacidad;Incapacidad por enfermedad general;2025-07-15;2025-07-17;2
+1.077.875.287;Peña Valencia Jose Alexis;Licencia;Remunerada;2025-07-11;2025-07-11;10
+1.077.877.695;Polo Arias Martin Camilo;Licencia;Remunerada;2025-07-12;2025-07-12;1
+1.075.286.667;Tovar Sierra Andrea Del Pilar;Incapacidad;Incapacidad por enfermedad general;2025-07-13;2025-07-21;5
+1.075.286.667;Tovar Sierra Andrea Del Pilar;Incapacidad;Incapacidad por enfermedad general;2025-07-26;2025-08-04;5
+1.080.260.159;Lugo Guacari Loresledy;Licencia;Remunerada;2025-07-12;2025-07-12;6
+36.293.834;Bolaños Burbano Magnolia Lucia;Compensatorio Cumplimiento de Metas;;2025-07-18;2025-07-18;3
+52.832.524;Paredes Arguello Luz Enith;Licencia;Remunerada;2025-07-25;2025-07-25;8
+36.286.922;Molina Peña Doris;Licencia;Remunerada;2025-07-11;2025-07-11;5
+1.082.780.446;Erazo Ñañez Brayan Felipe;Licencia;Remunerada;2025-07-28;2025-07-28;5
+7.723.872;Santos Zuñiga Diego Mauricio;Compensatorio Cumplimiento de Metas;;2025-07-14;2025-07-14;2
+1.010.198.521;Leon Montaño Cristian Geovanny;Licencia Cumpleaños;Remunerada;2025-07-26;2025-07-26;3
+1.075.245.382;Trujillo Cabrera Lizet Johanna;Licencia Cumpleaños;Remunerada;2025-07-19;2025-07-19;3
+1.081.513.864;Guarnizo Trujillo Milton Alexis;Incapacidad;Incapacidad por enfermedad general;2025-07-11;2025-07-25;5
+36.309.237;Martinez Osorio Ivonne Ximena;Compensatorio Cumplimiento de Metas;;2025-07-05;2025-07-05;7
+36.309.237;Martinez Osorio Ivonne Ximena;Licencia Cumpleaños;Remunerada;2025-07-25;2025-07-25;7
+26.579.392;Tovar Serrano Maria Mildred;Licencia Cumpleaños;Remunerada;2025-07-21;2025-07-21;3
+26.515.235;Osso Andrade Esperanza;Licencia;Remunerada;2025-07-23;2025-07-23;12
+1.083.838.335;Motta Cuellar Yenny Fernanda;Licencia Cumpleaños;Remunerada;2025-07-24;2025-07-24;7
+26.512.315;Usma Arevalo Luz Beida;Licencia Cumpleaños;Remunerada;2025-07-22;2025-07-22;3
+1.081.420.957;Mejia Ipia Paola Alexandra;Compensatorio Cumplimiento de Metas;;2025-07-14;2025-07-14;2
+26.515.235;Osso Andrade Esperanza;Licencia;Remunerada;2025-07-29;2025-07-29;12
+1.077.875.722;Cerquera Cabrera Karen Dayanna;Licencia;Remunerada;2025-07-17;2025-07-19;6
+1.077.849.684;Gutierrez Perdomo Leidy Johana;Licencia;Remunerada;2025-07-25;2025-07-25;4
+1.193.136.134;Calderon Gomez Karla Yessenia;Licencia;Remunerada;2025-07-10;2025-07-10;1
+1.079.389.568;Mesa Trujillo Carolina;Licencia;Remunerada;2025-07-26;2025-07-26;3
+1.078.753.106;Cueltan Barrera Juan David;Licencia;Remunerada;2025-07-28;2025-07-28;2
+83.183.505;Ospina Lugo Carlos Augusto;Compensatorio Cumplimiento de Metas;;2025-07-25;2025-07-25;2
+1.080.363.948;Paredes Navia Alexandra Maria;Compensatorio Cumplimiento de Metas;;2025-07-28;2025-07-28;1
+1.080.363.948;Paredes Navia Alexandra Maria;Compensatorio Cumplimiento de Metas;;2025-07-21;2025-07-21;1
+83.183.505;Ospina Lugo Carlos Augusto;Compensatorio Cumplimiento de Metas;;2025-07-11;2025-07-11;2
+1.004.300.389;Joven Motta Paubla Valentina;Compensatorio Cumplimiento de Metas;;2025-07-01;2025-07-01;3
+1.083.897.878;Rueda Rodriguez Sandra;Compensatorio Cumplimiento de Metas;;2025-07-29;2025-07-29;2
+1.083.894.260;Sapuyes Muñoz Eduard Hernan;Compensatorio Cumplimiento de Metas;;2025-07-28;2025-07-28;9
+1.007.897.591;Alvarez Burbano Laura Valentina;Compensatorio Cumplimiento de Metas;;2025-07-28;2025-07-28;7
+1.083.894.260;Sapuyes Muñoz Eduard Hernan;Compensatorio Cumplimiento de Metas;;2025-07-15;2025-07-15;9
+1.083.898.993;Ruiz Uni Yurany;Licencia;Remunerada;2025-07-12;2025-07-12;4
+1.083.898.993;Ruiz Uni Yurany;Licencia;Remunerada;2025-07-14;2025-07-14;4
+1.080.363.088;Parra Mora Mauricio;Licencia;Remunerada;2025-07-21;2025-07-21;5
+26.510.426;Talero Cuellar Astrid;Licencia;Remunerada;2025-07-22;2025-07-22;4
+1.080.363.088;Parra Mora Mauricio;Licencia Cumpleaños;Remunerada;2025-07-04;2025-07-04;5
+1.004.416.108;Losada Javela Cristian;Compensatorio Cumplimiento de Metas;;2025-07-07;2025-07-07;3
+7.687.420;Tello Perdomo Jorge Eduardo;Compensatorio Cumplimiento de Metas;;2025-07-07;2025-07-07;2
+1.081.156.921;Rincon Triana Victor Alfonso;Compensatorio Cumplimiento de Metas;;2025-07-17;2025-07-17;2
+1.109.421.903;Polania Camacho Akerles Steven;Compensatorio Cumplimiento de Metas;;2025-07-09;2025-07-09;1
+1.084.866.809;Andrade Diaz Victor Alfonso;Compensatorio Cumplimiento de Metas;;2025-07-04;2025-07-04;3
+1.077.863.489;Buendia Tovar Jonathan;Compensatorio Cumplimiento de Metas;;2025-07-21;2025-07-21;1
+1.006.528.004;Claros Romero Jein;Licencia;Remunerada;2025-07-01;2025-07-01;3
+1.078.246.749;Morales Aroca Jhonatan Arley;Licencia;Remunerada;2025-07-24;2025-07-24;7
+1.077.876.738;Sanchez Tovar Deiver Andres;Licencia;Remunerada;2025-07-19;2025-07-19;6
+1.077.848.048;Lopez Rivera Alvaro;Licencia;Remunerada;2025-07-16;2025-07-16;8
+1.078.246.915;Vargas Trujillo Otoniel Alberto;Licencia Cumpleaños;Remunerada;2025-07-07;2025-07-07;3
+26.433.392;Caviedes Rojas Sandra Patricia;Licencia Cumpleaños;Remunerada;2025-07-05;2025-07-05;3
+1.077.840.717;Losada Lugo Lina Fernanda;Compensatorio Cumplimiento de Metas;;2025-07-19;2025-07-19;0
+55.068.960;Pedreros Ramon Joalber;Licencia;Remunerada;2025-07-03;2025-07-03;3
+1.003.893.188;Gonzalez  Carlos Fernando;Licencia;Remunerada;2025-07-17;2025-07-17;3
+12.189.017;Lizcano Quevedo Javier;Licencia;Remunerada;2025-07-08;2025-07-08;4
+55.069.034;Parra Vargas Lina Ximena;Licencia;Remunerada;2025-07-03;2025-07-03;5
+1.007.386.199;Rincon Lasso Yury Marcela;Licencia;Remunerada;2025-07-03;2025-07-03;1
+1.007.790.079;Cruz Rayo Yennifer;Compensatorio Cumplimiento de Metas;;2025-07-22;2025-07-22;1
+1.109.422.482;Andrade Devia Yulieth Tatiana;Compensatorio Cumplimiento de Metas;;2025-07-21;2025-07-21;0
+26.433.392;Caviedes Rojas Sandra Patricia;Licencia;Remunerada;2025-07-29;2025-07-30;3
+1.082.155.519;Pineda Parra Yudy Arcelia;Licencia;Remunerada;2025-07-01;2025-07-01;4
+1.082.155.519;Pineda Parra Yudy Arcelia;Licencia Cumpleaños;Remunerada;2025-07-30;2025-07-30;4
+1.143.963.105;Mora Parra Lenis Hernando;Compensatorio Cumplimiento de Metas;;2025-07-30;2025-07-30;1
+1.075.238.428;Cediel Peña Jeisson Javier;Licencia Cumpleaños;Remunerada;2025-07-29;2025-07-29;3
+55.068.771;Mejia Gonzalez Martha Ximena;Licencia;Remunerada;2025-07-30;2025-07-30;8
+55.067.467;Roa Casanova Kety Dayana;Incapacidad;Incapacidad por enfermedad general;2025-07-29;2025-07-31;1
+55.070.574;Sterling Santofimio Liliana;Incapacidad;Incapacidad por enfermedad general;2025-07-30;2025-08-01;6
+1.077.878.397;Rubiano Guillermo Laura Victoria;Incapacidad;Incapacidad por enfermedad general;2025-07-31;2025-08-02;0

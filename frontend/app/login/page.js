@@ -32,22 +32,30 @@ export default function LoginPage() {
   }
 
   return (
-    <div style={{maxWidth: 420}}>
-      <h2>Iniciar sesión</h2>
-      <form onSubmit={onSubmit}>
-        <div style={{marginBottom: 8}}>
-          <label>Usuario</label>
-          <input value={username} onChange={e=>setUsername(e.target.value)} style={{width:'100%'}} />
+    <div className="login-wrap">
+      <div className="login-card">
+        <div className="login-logo">
+          {/* Coloca el archivo en frontend/public/logo-coofisam.png */}
+          <img src="/logo-coofisam.png" alt="Coofisam" onError={(e)=>{ e.currentTarget.style.display='none'; }}/>
         </div>
-        <div style={{marginBottom: 8}}>
-          <label>Contraseña</label>
-          <input type="password" value={password} onChange={e=>setPassword(e.target.value)} style={{width:'100%'}} />
-        </div>
-        <button type="submit">Ingresar</button>
-      </form>
-      {error && <p style={{color:'crimson'}}>{error}</p>}
-      <p style={{marginTop: 16, color:'#555'}}>Backend base: <code>{base || '(mismo origen)'}</code></p>
+        <h2 className="login-title">Bienvenido</h2>
+        <p className="login-subtitle">Inicia sesión para continuar</p>
+        <form onSubmit={onSubmit} className="login-form">
+          <div className="form-field">
+            <label htmlFor="username">Usuario</label>
+            <input id="username" value={username} onChange={e=>setUsername(e.target.value)} placeholder="tu.usuario" />
+          </div>
+          <div className="form-field">
+            <label htmlFor="password">Contraseña</label>
+            <input id="password" type="password" value={password} onChange={e=>setPassword(e.target.value)} placeholder="••••••••" />
+          </div>
+          {error && <div className="form-error" role="alert">{error}</div>}
+          <div className="login-actions">
+            <button type="submit" className="btn-primary">Ingresar</button>
+          </div>
+        </form>
+        <div className="login-meta">Backend: <code>{base || '(mismo origen)'}</code></div>
+      </div>
     </div>
   );
 }
-

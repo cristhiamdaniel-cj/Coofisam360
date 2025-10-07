@@ -26,6 +26,7 @@ urlpatterns = [
 
     # URLs de la API REST
     path('api/v1/', include('users.api_urls')),
+    path('api/v1/talento/', include('talento_cultura.api_urls')),
 
     # API de autenticación de DRF
     path('api-auth/', include('rest_framework.urls')),
