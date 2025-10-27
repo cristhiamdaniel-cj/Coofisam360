@@ -1,0 +1,21 @@
+# Dependencias de desarrollo para Coofisam360
+# Incluye las dependencias principales
+-r requirements.txt
+
+# Herramientas de desarrollo
+django-debug-toolbar==4.4.6
+django-extensions==3.2.3
+
+# Testing
+pytest==8.2.2
+pytest-django==4.8.0
+factory-boy==3.3.0
+
+# Linting y formateo
+black==24.4.2
+flake8==7.0.0
+isort==5.13.2
+
+# Documentación
+sphinx==7.3.7
+

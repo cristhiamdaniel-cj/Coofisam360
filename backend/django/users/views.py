@@ -228,6 +228,7 @@ import subprocess
 from datetime import datetime
 from pathlib import Path
 from django.conf import settings
+from django.db import connections, transaction
 
 # ====== Vistas generales ======
 
@@ -423,21 +424,226 @@ def finanzas_etl_stream(request):
     if not user_ok:
         from django.http import HttpResponseForbidden
         return HttpResponseForbidden('Auth requerida (sesión activa o token)')
+    # Parámetros de post-proceso
+    def _truthy(v):
+        return str(v).lower() in ('1', 'true', 'yes', 'on')
+    try:
+        y = int(request.GET.get('year')) if request.GET.get('year') else None
+        m = int(request.GET.get('month')) if request.GET.get('month') else None
+    except Exception:
+        y, m = None, None
+    # Defaults: si no se reciben banderas, asumimos true (oculto al usuario)
+    def _truthy_default_true(val):
+        if val is None:
+            return True
+        return _truthy(val)
+    pop_public = _truthy_default_true(request.GET.get('populate_public_saldos'))
+    pop_op = _truthy_default_true(request.GET.get('populate_op_saldo'))
+
     def event_stream():
+        final_m = m
         yield "data: 🚀 Iniciando ETL...\n\n"
+        # Pasar parámetros al script por variables de entorno
+        root_dir = getattr(settings, 'LIBRO_BALANCE_ROOT', "/home/desarrollo/Coofisam/data/Libro_de_Balance_x_Aanoo")
+        file_rel = request.GET.get('file') or request.GET.get('file_rel') or ''
+        try:
+            yield f"data: ℹ Parámetros: year={y or '-'} file={file_rel or '[none]'}\n\n"
+        except Exception:
+            pass
+        try:
+            # Si no viene mes, intentar derivarlo del nombre del archivo (Consolidado_<Mes>_<Año>)
+            if not final_m and file_rel:
+                import re
+                name = str(file_rel).split('/')[-1]
+                m_map = {
+                    'enero':1,'febrero':2,'marzo':3,'abril':4,'mayo':5,'junio':6,
+                    'julio':7,'agosto':8,'septiembre':9,'setiembre':9,
+                    'octubre':10,'noviembre':11,'diciembre':12
+                }
+                mm = None
+                try:
+                    rx = re.compile(r"consolidado[_\s-]*([A-Za-zÁÉÍÓÚáéíóúñÑ]+)", re.IGNORECASE)
+                    mname = rx.search(name)
+                    if mname:
+                        key = (
+                            ''.join(c for c in mname.group(1) if c.isalpha())
+                            .lower()
+                            .replace('á','a').replace('é','e').replace('í','i').replace('ó','o').replace('ú','u')
+                        )
+                        mm = m_map.get(key)
+                except Exception:
+                    mm = None
+                if mm:
+                    final_m = mm
+            env_parts = []
+            if y:
+                env_parts.append(f"ETL_YEAR={y}")
+            if final_m:
+                env_parts.append(f"ETL_MONTH={final_m}")
+            if file_rel:
+                # Sanitizar comillas
+                safe_file = file_rel.replace('"', '\\"')
+                env_parts.append(f"ETL_FILE_REL=\"{safe_file}\"")
+            if root_dir:
+                safe_root = str(root_dir).replace('"', '\\"')
+                env_parts.append(f"ETL_ROOT_DIR=\"{safe_root}\"")
+            # Forzar salida sin buffer del script Python
+            env_parts.append("PYTHONUNBUFFERED=1")
+            env_export = ' '.join(env_parts)
+            # Exponer mes final detectado
+            try:
+                yield f"data: ℹ Mes detectado: {final_m or '-'}\n\n"
+            except Exception:
+                pass
+        except Exception as e:
+            yield f"data: ❌ Error preparando entorno ETL: {str(e)}\\n\\n"
+            return
+        try:
+            yield f"data: ℹ Entorno: {env_export or '[vacío]'}\n\n"
+        except Exception:
+            pass
+
+        venv_py = '/home/desarrollo/Coofisam/.venv/bin/python'
         cmd = (
             'bash -lc "cd /home/desarrollo/Coofisam && '
-            'source .venv/bin/activate && '
-            'python cargue_balance_agencias_coreNuevo.py"'
+            f'{env_export} {venv_py} -u cargue_balance_agencias_coreNuevo.py"'
         )
-        proc = subprocess.Popen(
-            cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
-            shell=True, bufsize=1, universal_newlines=True
-        )
+        # Log de comando resumido (sin rutas completas) para diagnóstico en cliente
+        try:
+            fname = (file_rel or '').split('/')[-1]
+            yield f"data: ▶ Ejecutando archivo: {fname or '[sin archivo]'} | Año: {y or '-'}\\n\\n"
+        except Exception:
+            pass
+        try:
+            proc = subprocess.Popen(
+                cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
+                shell=True, bufsize=1, universal_newlines=True
+            )
+        except Exception as e:
+            yield f"data: ❌ Error iniciando proceso ETL: {str(e)}\\n\\n"
+            return
+        yield f"data: ▶ Proceso lanzado (pid={getattr(proc, 'pid', '-')})\\n\\n"
         for line in proc.stdout:
             yield f"data: {line.rstrip()}\n\n"
         proc.wait()
         yield f"data: 🏁 ETL finalizado (código {proc.returncode})\n\n"
+
+        # Post-procesamiento: poblar tablas si vienen parámetros válidos
+        if y and final_m and 1 <= int(final_m) <= 12:
+            try:
+                # Conteo en staging previo (debug)
+                try:
+                    with connections['default'].cursor() as dbg:
+                        dbg.execute(
+                            "SELECT COUNT(*) FROM staging.saldos_agencia WHERE anio=%s AND mes=%s",
+                            [y, final_m],
+                        )
+                        staging_cnt = dbg.fetchone()[0]
+                    yield f"data: 📦 staging.saldos_agencia (previo) periodo={y}-{int(final_m):02d}: {staging_cnt} filas\n\n"
+                except Exception as _e:
+                    yield f"data: ⚠️ staging count no disponible: {_e}\n\n"
+                yield f"data: 🔄 Población de tablas para {y}-{int(final_m):02d}...\n\n"
+                with transaction.atomic():
+                    with connections['default'].cursor() as cur:
+                        if pop_public:
+                            cur.execute("DELETE FROM public.saldos_agencia WHERE anio=%s AND mes=%s", [y, final_m])
+                            # ¿Existe staging.saldos_agencia?
+                            cur.execute("""
+                              SELECT EXISTS(
+                                SELECT 1 FROM information_schema.tables
+                                WHERE table_schema='staging' AND table_name='saldos_agencia'
+                              )
+                            """)
+                            has_staging = bool(cur.fetchone()[0])
+                            if has_staging:
+                                cur.execute(
+                                  """
+                                  INSERT INTO public.saldos_agencia
+                                    (cuenta, anio, mes, agencia_codigo, saldo_inicial, debito, credito, saldo_final)
+                                  SELECT
+                                    sa.cuenta::text, sa.anio::int, sa.mes::int, sa.agencia_codigo::int,
+                                    sa.saldo_inicial::numeric, sa.debito::numeric, sa.credito::numeric, sa.saldo_final::numeric
+                                  FROM staging.saldos_agencia sa
+                                  WHERE sa.anio=%s AND sa.mes=%s
+                                  ON CONFLICT (cuenta, anio, mes, agencia_codigo)
+                                  DO UPDATE SET
+                                    saldo_inicial=EXCLUDED.saldo_inicial,
+                                    debito=EXCLUDED.debito,
+                                    credito=EXCLUDED.credito,
+                                    saldo_final=EXCLUDED.saldo_final
+                                  """,
+                                  [y, final_m]
+                                )
+                                ins0 = cur.rowcount or 0
+                                yield f"data: ✅ public.saldos_agencia upsert (staging) filas={ins0}\n\n"
+                                if ins0 == 0:
+                                    # Fallback si staging no tiene filas del período
+                                    cur.execute(
+                                      """
+                                      INSERT INTO public.saldos_agencia
+                                        (cuenta, anio, mes, agencia_codigo, saldo_inicial, debito, credito, saldo_final)
+                                      SELECT '14', o.anio, o.mes, po.codigo, 0, 0, 0, COALESCE(NULLIF(o.cta_puc_14,''),'0')::numeric
+                                      FROM finanzas.oficinas o
+                                      JOIN public.oficinas po ON po.id=o.oficina_id
+                                      WHERE o.anio=%s AND o.mes=%s
+                                      ON CONFLICT (cuenta, anio, mes, agencia_codigo)
+                                      DO UPDATE SET saldo_final=EXCLUDED.saldo_final
+                                      """,
+                                      [y, final_m]
+                                    )
+                                    ins1 = cur.rowcount or 0
+                                    cur.execute(
+                                      """
+                                      INSERT INTO public.saldos_agencia
+                                        (cuenta, anio, mes, agencia_codigo, saldo_inicial, debito, credito, saldo_final)
+                                      SELECT '21', o.anio, o.mes, po.codigo, 0, 0, 0, COALESCE(NULLIF(o.cta_puc_21,''),'0')::numeric
+                                      FROM finanzas.oficinas o
+                                      JOIN public.oficinas po ON po.id=o.oficina_id
+                                      WHERE o.anio=%s AND o.mes=%s
+                                      ON CONFLICT (cuenta, anio, mes, agencia_codigo)
+                                      DO UPDATE SET saldo_final=EXCLUDED.saldo_final
+                                      """,
+                                      [y, final_m]
+                                    )
+                                    ins2 = cur.rowcount or 0
+                                    yield f"data: 🔁 Fallback 14/21 aplicado, filas={ins1+ins2}\n\n"
+                            else:
+                                # Fallback: 14/21 desde finanzas.oficinas
+                                cur.execute(
+                                  """
+                                  INSERT INTO public.saldos_agencia
+                                    (cuenta, anio, mes, agencia_codigo, saldo_inicial, debito, credito, saldo_final)
+                                  SELECT '14', o.anio, o.mes, po.codigo, 0, 0, 0, COALESCE(NULLIF(o.cta_puc_14,''),'0')::numeric
+                                  FROM finanzas.oficinas o
+                                  JOIN public.oficinas po ON po.id=o.oficina_id
+                                  WHERE o.anio=%s AND o.mes=%s
+                                  ON CONFLICT (cuenta, anio, mes, agencia_codigo)
+                                  DO UPDATE SET saldo_final=EXCLUDED.saldo_final
+                                  """,
+                                  [y, final_m]
+                                )
+                                ins1 = cur.rowcount or 0
+                                cur.execute(
+                                  """
+                                  INSERT INTO public.saldos_agencia
+                                    (cuenta, anio, mes, agencia_codigo, saldo_inicial, debito, credito, saldo_final)
+                                  SELECT '21', o.anio, o.mes, po.codigo, 0, 0, 0, COALESCE(NULLIF(o.cta_puc_21,''),'0')::numeric
+                                  FROM finanzas.oficinas o
+                                  JOIN public.oficinas po ON po.id=o.oficina_id
+                                  WHERE o.anio=%s AND o.mes=%s
+                                  ON CONFLICT (cuenta, anio, mes, agencia_codigo)
+                                  DO UPDATE SET saldo_final=EXCLUDED.saldo_final
+                                  """,
+                                  [y, final_m]
+                                )
+                                ins2 = cur.rowcount or 0
+                                yield f"data: ✅ public.saldos_agencia upsert (fallback 14/21) filas={ins1+ins2}\n\n"
+                        if pop_op:
+                            cur.execute("CALL finanzas.sp_apply_saldos_mes(%s, %s);", [y, final_m])
+                            yield f"data: ✅ finanzas.op_saldo_mensual consolidado para {y}-{final_m:02d}\n\n"
+                yield "data: 🟢 Población completada.\n\n"
+            except Exception as e:
+                yield f"data: ❌ Error poblando tablas: {str(e)}\n\n"
 
     resp = StreamingHttpResponse(event_stream(), content_type='text/event-stream')
     resp['Cache-Control'] = 'no-cache'

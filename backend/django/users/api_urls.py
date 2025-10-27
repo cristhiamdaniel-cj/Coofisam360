@@ -7,7 +7,7 @@ from django.urls import path
 from .api_views import mi_perfil, PerfilUsuarioListView
 
 urlpatterns = [
-    path("me/", mi_perfil, name="mi-perfil"),
+    path("me/", api_views.me, name="api-me"),
     path("perfiles/", PerfilUsuarioListView.as_view(), name="perfil-list"),
     path('status/', api_views.api_status, name='api-status'),
     path('test/', api_views.api_test_data, name='api-test'),
@@ -17,6 +17,15 @@ urlpatterns = [
 
     # Auth (token)
     path('auth/token/', obtain_auth_token, name='api-token-auth'),
+    
+    # Login personalizado con respuesta JSON completa
+    path('auth/login/', api_views.custom_login, name='api-custom-login'),
+    
+    # Alias para compatibilidad con el frontend actual
+    path('login/', api_views.custom_login, name='api-login'),
+    
+    # Endpoint específico para el frontend de Coofisam
+    path('auth/', api_views.custom_login, name='api-auth'),
 
     # Finanzas (módulo financiero)
     path('finanzas/tree/', api_views.finanzas_tree, name='api-finanzas-tree'),
@@ -33,14 +42,37 @@ urlpatterns = [
     path('finanzas/cupos-credito/spec/', api_views.finanzas_cupos_credito_spec, name='api-finanzas-cupos-credito-spec'),
     path('finanzas/cupos-credito/', api_views.CuposCreditoView.as_view(), name='api-finanzas-cupos-credito-list'),
     path('finanzas/presupuesto/spec/', api_views.finanzas_presupuesto_spec, name='api-finanzas-presupuesto-spec'),
-    path('finanzas/presupuesto/', api_views.PresupuestoView.as_view(), name='api-finanzas-presupuesto-list'),
+    # Rutas específicas deben ir antes de la ruta dinámica <str:id>/ para evitar colisiones
     path('finanzas/presupuesto/upload/', api_views.PresupuestoUploadView.as_view(), name='api-finanzas-presupuesto-upload'),
+    path('finanzas/presupuesto/upload-simple/', api_views.PresupuestoUploadSimpleView.as_view(), name='api-finanzas-presupuesto-upload-simple'),
+    path('finanzas/presupuesto/execute-file/', api_views.PresupuestoExecuteFileView.as_view(), name='api-finanzas-presupuesto-execute-file'),
+    path('finanzas/presupuesto/files/', api_views.presupuesto_files, name='api-finanzas-presupuesto-files'),
+    path('finanzas/presupuesto/', api_views.PresupuestoView.as_view(), name='api-finanzas-presupuesto-list'),
+    path('finanzas/presupuesto/<str:id>/', api_views.PresupuestoView.as_view(), name='api-finanzas-presupuesto-detail'),
+    path('finanzas/presupuesto-completo/', api_views.presupuesto_completo, name='api-finanzas-presupuesto-completo'),
+    path('finanzas/presupuesto-app/', api_views.presupuesto_app, name='api-finanzas-presupuesto-app'),
+    path('finanzas/cuentas-disponibles/', api_views.cuentas_disponibles, name='api-finanzas-cuentas-disponibles'),
     path('finanzas/indicadores/consolidados/', api_views.finanzas_indicadores_consolidados, name='api-finanzas-indicadores-consolidados'),
     path('finanzas/indicadores/analisis/', api_views.IndicadoresAnalisisView.as_view(), name='api-finanzas-indicadores-analisis'),
     # Indicadores (tabla comparativa propia)
     path('indicadores/comparativa/', api_views.indicadores_comparativa, name='api-indicadores-comparativa'),
+    path('indicadores/disponibles/', api_views.indicadores_disponibles, name='api-indicadores-disponibles'),
 
     # Oficinas (finanzas.oficinas_mes)
     path('finanzas/oficinas/', api_views.OficinasView.as_view(), name='api-finanzas-oficinas-list'),
     path('finanzas/oficinas/<str:codigo>/', api_views.OficinaView.as_view(), name='api-finanzas-oficina-detail'),
+    path('finanzas/oficinas-disponibles/', api_views.oficinas_disponibles, name='api-finanzas-oficinas-disponibles'),
+    
+    # Análisis Explicativo
+    path('analisis/explicativo/', api_views.AnalisisExplicativoView.as_view(), name='api-analisis-explicativo'),
+    path('analisis/explicativo/<int:id>/', api_views.AnalisisExplicativoView.as_view(), name='api-analisis-explicativo-detail'),
+    
+    # Ejecución Presupuestal PUC 6 dígitos
+    path('finanzas/ejecucion-presupuestal/', api_views.EjecucionPresupuestalView.as_view(), name='api-finanzas-ejecucion-presupuestal'),
+    path('finanzas/ejecucion-presupuestal/upload/', api_views.EjecucionPresupuestalUploadView.as_view(), name='api-finanzas-ejecucion-presupuestal-upload'),
+    path('finanzas/ejecucion-presupuestal/files/', api_views.ejecucion_presupuestal_files, name='api-finanzas-ejecucion-presupuestal-files'),
+    path('finanzas/ejecucion-presupuestal/<int:id>/', api_views.EjecucionPresupuestalView.as_view(), name='api-finanzas-ejecucion-presupuestal-detail'),
+
+    # ETL: población de tablas base
+    path('finanzas/etl/populate/', api_views.finanzas_etl_populate, name='api-finanzas-etl-populate'),
 ]

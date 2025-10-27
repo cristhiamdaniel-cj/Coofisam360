@@ -5,6 +5,7 @@ from dataclasses import dataclass
 from datetime import date, datetime
 from decimal import Decimal, InvalidOperation
 import re
+import logging
 from typing import Any
 
 from django.db import connections, transaction
@@ -13,6 +14,8 @@ from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
+
+logger = logging.getLogger('talento_cultura')
 
 
 @dataclass
@@ -720,48 +723,46 @@ RESOURCE_CONFIG: dict[str, dict[str, Any]] = {
     "formacion_participacion": {
         "select": """
             SELECT
+                id,
                 periodo,
                 EXTRACT(YEAR FROM periodo)::int AS anio,
                 EXTRACT(MONTH FROM periodo)::int AS mes_num,
                 upper(to_char(periodo, 'TMMonth')) AS mes,
                 oficina_dependencia,
-                rol,
+                rol_norm AS rol,
                 tema_formacion,
                 tipo_formacion,
                 cant_trab_participaron,
                 total_participantes,
+                total_trabajadores,
                 veces_formado,
                 calificacion,
-                grupo,
-                total_participantes_text,
+                1 AS grupo,
+                total_participantes::text AS total_participantes_text,
                 pct_participacion
-            FROM talento_cultura.formacion_participacion
+            FROM talento_cultura.fyc_formacion_snapshot
         """,
         "order": "periodo DESC, oficina_dependencia, rol",
-        "table": "talento_cultura.formacion_participacion",
-        "pk": [
-            "periodo",
-            "oficina_dependencia",
-            "rol",
-            "tema_formacion",
-            "tipo_formacion",
-            "grupo",
-        ],
+        "table": "talento_cultura.fyc_formacion_snapshot",
+        "pk": ["id"],
         "accepted_fields": {
+            "id": "int",
             "periodo": "date",
             "oficina_dependencia": "text",
-            "rol": "text",
+            "rol_norm": "text",
             "tema_formacion": "text",
             "tipo_formacion": "text",
             "cant_trab_participaron": "int",
             "total_participantes": "int",
+            "total_trabajadores": "int",
+            "pct_participacion": "int",
             "veces_formado": "int",
             "calificacion": "numeric",
-            "grupo": "int",
         },
         "period_field": "periodo",
         "period_keys": ("anio", "mes"),
         "filters": {
+            "id": filter_equals("id", cast="int"),
             "anio": filter_period_year("periodo"),
             "mes": filter_period_month("periodo"),
             "oficina": filter_ilike("oficina_dependencia"),
@@ -1537,6 +1538,12 @@ class TalentoResourceView(APIView):
                     payload["anio"] = date.today().year
         if not payload:
             return Response({"detail": "No se enviaron datos válidos"}, status=status.HTTP_400_BAD_REQUEST)
+        
+        # Debug: Log del payload para formacion_participacion
+        if self.resource_name == "formacion_participacion":
+            logger.debug(f"🔍 DEBUG - Payload recibido para formacion_participacion: {payload}")
+            logger.debug(f"🔍 DEBUG - Tipos de datos: {[(k, type(v).__name__, v) for k, v in payload.items()]}")
+        
         # Enriquecimiento específico de recurso (control disciplinario):
         if self.resource_name == "control_disciplinario":
             payload = enrich_control_disciplinario_payload(payload)
@@ -1559,10 +1566,11 @@ class TalentoResourceView(APIView):
         try:
             with transaction.atomic():
                 with connections['default'].cursor() as cursor:
-                    cursor.execute(
-                        f"INSERT INTO {resource['table']} ({columns}) VALUES ({placeholders}){returning_clause}",
-                        payload,
-                    )
+                    sql_query = f"INSERT INTO {resource['table']} ({columns}) VALUES ({placeholders}){returning_clause}"
+                    if self.resource_name == "formacion_participacion":
+                        logger.debug(f"🔍 DEBUG - SQL Query: {sql_query}")
+                        logger.debug(f"🔍 DEBUG - Payload final: {payload}")
+                    cursor.execute(sql_query, payload)
                     if returning_clause:
                         returned = cursor.fetchone()
                         if returned is not None:
@@ -1591,6 +1599,12 @@ class TalentoResourceView(APIView):
     def put(self, request, *args, **kwargs):
         resource = self.get_resource()
         incoming = combine_request_data(request, include_query=True)
+        
+        # Si viene un ID en la URL, usarlo como where_override Y en el payload
+        if 'id' in kwargs:
+            incoming['where_id'] = kwargs['id']
+            incoming['id'] = kwargs['id']  # También incluir en el payload para extract_pk
+        
         # Permitir cambiar valores de PK: soportamos claves 'where_<pk>' o 'old_<pk>'
         # y, si el recurso define 'period_field', aceptar 'where_anio' + 'where_mes'.
         where_override: dict[str, Any] = {}
@@ -1708,13 +1722,20 @@ class TalentoResourceView(APIView):
 
     def delete(self, request, *args, **kwargs):
         resource = self.get_resource()
-        payload = prepare_payload(resource, request.data)
-        try:
-            pk_values = extract_pk(resource, payload)
-        except ValueError as exc:
-            return Response({"detail": str(exc)}, status=status.HTTP_400_BAD_REQUEST)
-        where_clause, params = build_where_from_pk(pk_values)
-        sql = f"DELETE FROM {resource['table']} WHERE {where_clause}"
+        
+        # Si viene un ID en la URL, usarlo directamente
+        if 'id' in kwargs:
+            sql = f"DELETE FROM {resource['table']} WHERE id = %(id)s"
+            params = {'id': kwargs['id']}
+        else:
+            payload = prepare_payload(resource, request.data)
+            try:
+                pk_values = extract_pk(resource, payload)
+            except ValueError as exc:
+                return Response({"detail": str(exc)}, status=status.HTTP_400_BAD_REQUEST)
+            where_clause, params = build_where_from_pk(pk_values)
+            sql = f"DELETE FROM {resource['table']} WHERE {where_clause}"
+        
         with transaction.atomic():
             with connections['default'].cursor() as cursor:
                 cursor.execute(sql, params)

@@ -11,14 +11,14 @@ El entorno de desarrollo colaborativo ya está completamente configurado:
 2. cd ~/coofisam360
 3. git checkout feature/samir-development
 4. cd backend/django && source venv/bin/activate
-5. python manage.py runserver 0.0.0.0:8000
+5. python manage.py runserver 0.0.0.0:8060
 
 ### Christiam:
 1. ssh al servidor de desarrollo  
 2. cd ~/coofisam360
 3. git checkout feature/christiam-development
 4. cd backend/django && source venv/bin/activate
-5. python manage.py runserver 0.0.0.0:8000
+5. python manage.py runserver 0.0.0.0:8060
 
 ## 📚 Documentación disponible:
 - WORKFLOW.md: Guía completa de trabajo
