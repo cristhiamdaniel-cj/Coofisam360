@@ -158,23 +158,6 @@ const data = await response.json();
 return data;
 ```
 
-## Próximos Pasos
-
-### 1. Probar en el Navegador
-- Acceder a `http://localhost:8061/modulo-financiero/tabla-presupuesto`
-- Verificar que se cargan las cuentas disponibles
-- Probar funcionalidades de CRUD
-
-### 2. Probar con Ngrok
-- Configurar ngrok para el frontend
-- Verificar que la conectividad funciona desde ngrok
-- Probar todas las funcionalidades
-
-### 3. Monitorear Rendimiento
-- Verificar que no hay degradación en el rendimiento
-- Monitorear el uso de memoria
-- Verificar que no hay problemas de compatibilidad
-
 ## Conclusión
 
 La solución implementada **reemplazó axios por fetch nativo** para resolver los problemas de conectividad:

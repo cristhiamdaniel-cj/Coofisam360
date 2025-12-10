@@ -122,21 +122,6 @@ curl -s "http://localhost:8061/modulo-financiero/tabla-presupuesto" | head -c 20
 - ✅ **Fácil modificación**: Cambios en un solo lugar
 - ✅ **Documentación clara**: Código autodocumentado
 
-## Próximos Pasos
-
-### 1. Probar en el Navegador
-- Acceder a `http://localhost:8061/modulo-financiero/tabla-presupuesto`
-- Verificar que se cargan las cuentas disponibles
-- Probar funcionalidades de CRUD
-
-### 2. Probar con Ngrok (Opcional)
-- Configurar ngrok para el frontend
-- Verificar que la detección automática funciona
-- Probar la conectividad desde el dominio ngrok
-
-### 3. Configuración Adicional para Ngrok
-Si se usa ngrok para el backend:
-```bash
 # Terminal 1: Backend
 cd /home/desarrollo/coofisam360/backend/django
 source venv/bin/activate

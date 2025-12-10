@@ -183,23 +183,6 @@ curl -s -X GET "http://localhost:8060/api/v1/finanzas/ejecucion-presupuestal/?an
 - **Indicadores Financieros**: ✅ Formulario funcionando
 - **Análisis Explicativo**: ✅ Formulario funcionando
 
-## Próximos Pasos
-
-### 1. Probar en el Navegador
-- Acceder a `http://localhost:8061/modulo-financiero/tabla-presupuesto`
-- Verificar que se cargan las cuentas disponibles
-- Probar funcionalidades de CRUD
-
-### 2. Probar Formulario de Ejecución Presupuestal
-- Acceder a `http://localhost:8061/modulo-financiero/tabla-ejecucion-presupuestal`
-- Verificar que se cargan los datos de ejecución presupuestal
-- Probar funcionalidades de CRUD
-
-### 3. Probar Test de Conectividad
-- Acceder a `http://localhost:8061/modulo-financiero/test-conectividad`
-- Ejecutar el test de conectividad
-- Verificar que todos los endpoints funcionan
-
 ## Conclusión
 
 La solución implementada **resolvió completamente los problemas de conectividad** del frontend:

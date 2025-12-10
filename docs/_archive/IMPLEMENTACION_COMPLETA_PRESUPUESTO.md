@@ -118,19 +118,6 @@ El formulario mostraba "Cargando datos..." indefinidamente.
 - **Obtener token**: Después del login, el token se guardará en localStorage
 - **Acceder al formulario**: Una vez autenticado, el formulario funcionará correctamente
 
-## Próximos Pasos
-
-### Para el Usuario
-1. Iniciar sesión en el sistema
-2. Verificar que el token se guarde en localStorage
-3. Acceder al formulario de presupuesto
-4. Probar todas las funcionalidades
-
-### Para el Desarrollador (Opcional)
-1. Implementar verificación de autenticación en el componente
-2. Mostrar mensaje claro cuando no hay autenticación
-3. Redirigir al login si es necesario
-
 ## Conclusión
 
 **La implementación está completa y funcional.** El formulario de presupuesto tiene todas las funcionalidades solicitadas:

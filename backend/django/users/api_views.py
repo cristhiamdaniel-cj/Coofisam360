@@ -23,7 +23,7 @@ from pathlib import Path
 import os
 import re
 import unicodedata
-from datetime import datetime
+from datetime import datetime, timedelta
 from django.db import connections, transaction
 from django.http import FileResponse
 from rest_framework.decorators import api_view, permission_classes
@@ -1393,6 +1393,1443 @@ class CuposCreditoView(APIView):
             return Response({'error': str(e)}, status=500)
 
 
+# ====== Crédito: Radicaciones (solo lectura) ======
+
+@api_view(['GET', 'POST'])
+@permission_classes([IsAuthenticated])
+def credito_radicaciones(request):
+    """
+    Devuelve radicaciones de crédito agregadas por mes desde credito.kpi_radicaciones.
+    Permite filtrar por año/mes y limitar la cantidad de filas.
+    POST: inserta una nueva fila básica.
+    """
+    if request.method == 'POST':
+        payload = request.data or {}
+        periodo = (payload.get('periodo') or '').strip()
+        oficina_id = payload.get('oficina_id')
+        if not periodo:
+            return Response({'error': 'periodo es obligatorio (YYYY-MM)'}, status=400)
+        if oficina_id is None or str(oficina_id).strip() == "":
+            return Response({'error': 'oficina_id es obligatorio'}, status=400)
+        try:
+            periodo_ini = datetime.strptime(f"{periodo}-01", "%Y-%m-%d").date()
+        except Exception:
+            return Response({'error': 'periodo debe tener formato YYYY-MM'}, status=400)
+        periodo_fin = (periodo_ini.replace(day=1) + timedelta(days=32)).replace(day=1) - timedelta(days=1)
+        anio = periodo_ini.year
+        mes = periodo_ini.month
+        fecha_corte = payload.get('fecha_corte') or periodo_fin
+        campos = {
+            'radicados_valor': payload.get('radicados_valor'),
+            'radicados_cantidad': payload.get('radicados_cantidad'),
+            'radicados_pct': payload.get('radicados_pct'),
+            'aprobados_valor': payload.get('aprobados_valor'),
+            'aprobados_cantidad': payload.get('aprobados_cantidad'),
+            'aprobados_pct': payload.get('aprobados_pct'),
+            'negados_valor': payload.get('negados_valor'),
+            'negados_cantidad': payload.get('negados_cantidad'),
+            'negados_pct': payload.get('negados_pct'),
+            'aplazados_valor': payload.get('aplazados_valor'),
+            'aplazados_cantidad': payload.get('aplazados_cantidad'),
+            'aplazados_pct': payload.get('aplazados_pct'),
+            'sin_decision_valor': payload.get('sin_decision_valor'),
+            'sin_decision_cantidad': payload.get('sin_decision_cantidad'),
+            'sin_decision_pct': payload.get('sin_decision_pct'),
+        }
+        insert_sql = """
+            INSERT INTO credito.kpi_radicaciones (
+              periodo_ini, periodo_fin, oficina_id, anio, mes, fecha_corte,
+              rad_valor, rad_cantidad, rad_pct,
+              apr_valor, apr_cantidad, apr_pct,
+              neg_valor, neg_cantidad, neg_pct,
+              apl_valor, apl_cantidad, apl_pct,
+              sde_valor, sde_cantidad, sde_pct,
+              total_valor_periodo, total_cant_periodo
+            )
+            VALUES (
+              %(periodo_ini)s::date, %(periodo_fin)s::date, %(oficina_id)s::bigint, %(anio)s, %(mes)s, %(fecha_corte)s::date,
+              %(radicados_valor)s, %(radicados_cantidad)s, %(radicados_pct)s,
+              %(aprobados_valor)s, %(aprobados_cantidad)s, %(aprobados_pct)s,
+              %(negados_valor)s, %(negados_cantidad)s, %(negados_pct)s,
+              %(aplazados_valor)s, %(aplazados_cantidad)s, %(aplazados_pct)s,
+              %(sin_decision_valor)s, %(sin_decision_cantidad)s, %(sin_decision_pct)s,
+              COALESCE(%(radicados_valor)s,0)+COALESCE(%(aprobados_valor)s,0)+COALESCE(%(negados_valor)s,0)+COALESCE(%(aplazados_valor)s,0)+COALESCE(%(sin_decision_valor)s,0),
+              COALESCE(%(radicados_cantidad)s,0)+COALESCE(%(aprobados_cantidad)s,0)+COALESCE(%(negados_cantidad)s,0)+COALESCE(%(aplazados_cantidad)s,0)+COALESCE(%(sin_decision_cantidad)s,0)
+            )
+            RETURNING id
+        """
+        params = {
+            'periodo_ini': periodo_ini,
+            'periodo_fin': periodo_fin,
+            'oficina_id': oficina_id,
+            'anio': anio,
+            'mes': mes,
+            'fecha_corte': fecha_corte,
+            **campos,
+        }
+        try:
+            with connections['default'].cursor() as c:
+                _exec(c, insert_sql, params)
+                new_id = c.fetchone()[0]
+            return Response({'id': new_id, 'periodo': periodo, 'oficina_id': oficina_id}, status=201)
+        except Exception as exc:
+            logger.exception("Error insertando credito.kpi_radicaciones")
+            return Response({'error': str(exc)}, status=500)
+
+    year = request.query_params.get('year') or request.query_params.get('anio')
+    month = request.query_params.get('month') or request.query_params.get('mes')
+    try:
+        limit = int(request.query_params.get('limit', '200'))
+    except Exception:
+        limit = 200
+    limit = max(1, min(limit, 2000))
+
+    where = []
+    params = {}
+    if year:
+        try:
+            params['year'] = int(year)
+            where.append("anio_calc = %(year)s")
+        except Exception:
+            return Response({'error': 'El año debe ser numérico'}, status=400)
+    if month:
+        try:
+            params['month'] = int(month)
+            where.append("mes_calc = %(month)s")
+        except Exception:
+            return Response({'error': 'El mes debe ser numérico'}, status=400)
+    where_sql = f"WHERE {' AND '.join(where)}" if where else ''
+
+    sql = f"""
+        WITH base AS (
+            SELECT
+                date_trunc('month', kr.periodo_ini)::date AS periodo,
+                COALESCE(MAX(kr.periodo_fin), date_trunc('month', kr.periodo_ini) + INTERVAL '1 month - 1 day')::date AS periodo_fin,
+                COALESCE(MAX(kr.fecha_corte), date_trunc('month', kr.periodo_ini))::date AS fecha_corte,
+                SUM(COALESCE(kr.rad_valor, 0)) AS rad_valor,
+                SUM(COALESCE(kr.rad_cantidad, 0)) AS rad_cantidad,
+                SUM(COALESCE(kr.apr_valor, 0)) AS apr_valor,
+                SUM(COALESCE(kr.apr_cantidad, 0)) AS apr_cantidad,
+                SUM(COALESCE(kr.neg_valor, 0)) AS neg_valor,
+                SUM(COALESCE(kr.neg_cantidad, 0)) AS neg_cantidad,
+                SUM(COALESCE(kr.apl_valor, 0)) AS apl_valor,
+                SUM(COALESCE(kr.apl_cantidad, 0)) AS apl_cantidad,
+                SUM(COALESCE(kr.sde_valor, 0)) AS sde_valor,
+                SUM(COALESCE(kr.sde_cantidad, 0)) AS sde_cantidad,
+                SUM(COALESCE(kr.total_valor_periodo, 0)) AS total_valor,
+                SUM(COALESCE(kr.total_cant_periodo, 0)) AS total_cantidad
+            FROM credito.kpi_radicaciones kr
+            GROUP BY date_trunc('month', kr.periodo_ini)
+        )
+        SELECT
+            to_char(periodo, 'YYYY-MM') AS periodo,
+            EXTRACT(YEAR FROM periodo)::int AS anio,
+            EXTRACT(MONTH FROM periodo)::int AS mes,
+            periodo AS periodo_ini,
+            periodo_fin,
+            fecha_corte,
+            rad_valor,
+            rad_cantidad,
+            CASE WHEN NULLIF(total_cantidad, 0) IS NOT NULL THEN ROUND(rad_cantidad::numeric * 100 / NULLIF(total_cantidad, 0), 2) END AS rad_pct,
+            apr_valor,
+            apr_cantidad,
+            CASE WHEN NULLIF(total_cantidad, 0) IS NOT NULL THEN ROUND(apr_cantidad::numeric * 100 / NULLIF(total_cantidad, 0), 2) END AS apr_pct,
+            neg_valor,
+            neg_cantidad,
+            CASE WHEN NULLIF(total_cantidad, 0) IS NOT NULL THEN ROUND(neg_cantidad::numeric * 100 / NULLIF(total_cantidad, 0), 2) END AS neg_pct,
+            apl_valor,
+            apl_cantidad,
+            CASE WHEN NULLIF(total_cantidad, 0) IS NOT NULL THEN ROUND(apl_cantidad::numeric * 100 / NULLIF(total_cantidad, 0), 2) END AS apl_pct,
+            sde_valor,
+            sde_cantidad,
+            CASE WHEN NULLIF(total_cantidad, 0) IS NOT NULL THEN ROUND(sde_cantidad::numeric * 100 / NULLIF(total_cantidad, 0), 2) END AS sde_pct,
+            total_valor AS total_valor_periodo,
+            total_cantidad AS total_cant_periodo
+        FROM base
+        {where_sql}
+        ORDER BY periodo DESC
+        LIMIT {limit}
+    """
+    try:
+        with connections['default'].cursor() as c:
+            _exec(c, sql, params)
+            cols = [col[0] for col in c.description]
+            items = [dict(zip(cols, row)) for row in c.fetchall()]
+        return Response({
+            'source': 'credito.kpi_radicaciones',
+            'count': len(items),
+            'items': items,
+            'filters': {'year': year, 'month': month, 'limit': limit},
+        })
+    except Exception as exc:
+        logger.exception("Error leyendo credito.kpi_radicaciones")
+        return Response({'error': str(exc)}, status=500)
+
+
+# ====== Crédito: Seguimiento de campañas x oficina (solo lectura) ======
+
+@api_view(['GET', 'POST'])
+@permission_classes([IsAuthenticated])
+def credito_campanias_oficina(request):
+    """
+    Lee credito.kpi_campanias_oficina.
+    Permite filtrar por anio, mes (de fecha_corte), campana_codigo y oficina_id.
+    POST: inserta un registro básico.
+    """
+    if request.method == 'POST':
+        payload = request.data or {}
+        campana = (payload.get('campana') or payload.get('campana_codigo') or '').strip()
+        oficina = payload.get('oficina_id')
+        anio = payload.get('anio') or payload.get('year')
+        fecha_corte = payload.get('fecha_corte') or payload.get('fechaCorte')
+        if not anio and fecha_corte:
+            try:
+                anio = str(fecha_corte).split("-")[0]
+            except Exception:
+                anio = None
+        if not campana or oficina is None or not fecha_corte or not anio:
+            return Response({'error': 'campana, oficina_id, anio y fecha_corte son obligatorios'}, status=400)
+        insert_sql = """
+            INSERT INTO credito.kpi_campanias_oficina (
+              anio,
+              campana_codigo, campania_label, segmento, oficina_id, total_valor, total_cantidad,
+              cch_valor, cch_cantidad, c_viv_valor, c_viv_cantidad,
+              c_tc_valor, c_tc_cantidad, c_libcigg_valor, c_libcigg_cantidad,
+              c_monto_valor, c_monto_cantidad, c_ccart_valor, c_ccart_cantidad,
+              fng_emp255_valor, fng_emp255_cantidad, fng_emp285_valor, fng_emp285_cantidad,
+              fecha_corte
+            )
+            VALUES (
+              %(anio)s,
+              %(campana)s, %(campana_label)s, %(segmento)s, %(oficina_id)s, %(total_valor)s, %(total_cantidad)s,
+              %(cch_valor)s, %(cch_cantidad)s, %(c_viv_valor)s, %(c_viv_cantidad)s,
+              %(c_tc_valor)s, %(c_tc_cantidad)s, %(c_libcigg_valor)s, %(c_libcigg_cantidad)s,
+              %(c_monto_valor)s, %(c_monto_cantidad)s, %(c_ccart_valor)s, %(c_ccart_cantidad)s,
+              %(fng_emp255_valor)s, %(fng_emp255_cantidad)s, %(fng_emp285_valor)s, %(fng_emp285_cantidad)s,
+              %(fecha_corte)s::date
+            )
+            RETURNING id
+        """
+        params = {
+            'anio': anio,
+            'campana': campana,
+            'campana_label': payload.get('campana_label'),
+            'segmento': payload.get('segmento'),
+            'oficina_id': payload.get('oficina_id'),
+            'total_valor': payload.get('total_valor'),
+            'total_cantidad': payload.get('total_cantidad'),
+            'cch_valor': payload.get('cch_valor'),
+            'cch_cantidad': payload.get('cch_cantidad'),
+            'c_viv_valor': payload.get('c_viv_valor'),
+            'c_viv_cantidad': payload.get('c_viv_cantidad'),
+            'c_tc_valor': payload.get('c_tc_valor'),
+            'c_tc_cantidad': payload.get('c_tc_cantidad'),
+            'c_libcigg_valor': payload.get('c_libcigg_valor'),
+            'c_libcigg_cantidad': payload.get('c_libcigg_cantidad'),
+            'c_monto_valor': payload.get('c_monto_valor'),
+            'c_monto_cantidad': payload.get('c_monto_cantidad'),
+            'c_ccart_valor': payload.get('c_ccart_valor'),
+            'c_ccart_cantidad': payload.get('c_ccart_cantidad'),
+            'fng_emp255_valor': payload.get('fng_emp255_valor'),
+            'fng_emp255_cantidad': payload.get('fng_emp255_cantidad'),
+            'fng_emp285_valor': payload.get('fng_emp285_valor'),
+            'fng_emp285_cantidad': payload.get('fng_emp285_cantidad'),
+            'fecha_corte': fecha_corte,
+        }
+        try:
+            with connections['default'].cursor() as c:
+                _exec(c, insert_sql, params)
+                new_id = c.fetchone()[0]
+            return Response({'id': new_id}, status=201)
+        except Exception as exc:
+            logger.exception("Error insertando credito.kpi_campanias_oficina")
+            return Response({'error': str(exc)}, status=500)
+
+    year = request.query_params.get('year') or request.query_params.get('anio')
+    month = request.query_params.get('month') or request.query_params.get('mes')
+    campana = request.query_params.get('campana') or request.query_params.get('campana_codigo')
+    oficina = request.query_params.get('oficina_id')
+    try:
+        limit = int(request.query_params.get('limit', '500'))
+    except Exception:
+        limit = 500
+    limit = max(1, min(limit, 5000))
+
+    where = []
+    params = {}
+    if year:
+        where.append("EXTRACT(YEAR FROM kc.fecha_corte) = %(year)s::int")
+        params['year'] = year
+    if month:
+        where.append("EXTRACT(MONTH FROM kc.fecha_corte) = %(month)s::int")
+        params['month'] = month
+    if campana:
+        where.append("kc.campana_codigo ILIKE %(campana)s")
+        params['campana'] = f"%{campana}%"
+    if oficina:
+        where.append("kc.oficina_id = %(oficina)s::bigint")
+        params['oficina'] = oficina
+    where_sql = f"WHERE {' AND '.join(where)}" if where else ""
+
+    sql = f"""
+        SELECT
+            kc.id,
+            kc.anio,
+            kc.campana_codigo,
+            kc.campania_label,
+            kc.segmento,
+            kc.oficina_id,
+            kc.total_valor,
+            kc.total_cantidad,
+            kc.cch_valor,
+            kc.cch_cantidad,
+            kc.c_viv_valor,
+            kc.c_viv_cantidad,
+            kc.c_tc_valor,
+            kc.c_tc_cantidad,
+            kc.c_libcigg_valor,
+            kc.c_libcigg_cantidad,
+            kc.c_monto_valor,
+            kc.c_monto_cantidad,
+            kc.c_ccart_valor,
+            kc.c_ccart_cantidad,
+            kc.fng_emp255_valor,
+            kc.fng_emp255_cantidad,
+            kc.fng_emp285_valor,
+            kc.fng_emp285_cantidad,
+            kc.fecha_corte
+        FROM credito.kpi_campanias_oficina kc
+        {where_sql}
+        ORDER BY kc.fecha_corte DESC NULLS LAST, kc.campana_codigo, kc.oficina_id
+        LIMIT {limit}
+    """
+    try:
+        with connections['default'].cursor() as c:
+            _exec(c, sql, params)
+            cols = [col[0] for col in c.description]
+            items = [dict(zip(cols, row)) for row in c.fetchall()]
+        return Response({
+            'source': 'credito.kpi_campanias_oficina',
+            'count': len(items),
+            'items': items,
+            'filters': {'year': year, 'month': month, 'campana': campana, 'oficina': oficina, 'limit': limit},
+        })
+    except Exception as exc:
+        logger.exception("Error leyendo credito.kpi_campanias_oficina")
+        return Response({'error': str(exc)}, status=500)
+
+
+@api_view(['GET', 'POST'])
+@permission_classes([IsAuthenticated])
+def credito_campanias(request):
+    """
+    Lee credito.kpi_campanias.
+    Filtros opcionales: year/mes (fecha_corte), campana_codigo, oficina_id.
+    POST: inserta registro.
+    """
+    if request.method == 'POST':
+        payload = request.data or {}
+        campana = (payload.get('campana') or payload.get('campana_codigo') or '').strip()
+        oficina = payload.get('oficina_id')
+        anio = payload.get('anio') or payload.get('year')
+        fecha_corte = payload.get('fecha_corte') or payload.get('fechaCorte')
+        if not campana or oficina is None or not anio or not fecha_corte:
+            return Response({'error': 'campana, oficina_id, anio y fecha_corte son obligatorios'}, status=400)
+        insert_sql = """
+            INSERT INTO credito.kpi_campanias (
+              campana_codigo, oficina_id, anio, valor_desembolsos, n_operaciones,
+              recursos_programados, recursos_disponibles, pct_avance, estado,
+              color_hex, gap_meta_valor, gap_meta_pct, codigo_op, fecha_corte
+            )
+            VALUES (
+              %(campana)s, %(oficina_id)s, %(anio)s, %(valor_desembolsos)s, %(n_operaciones)s,
+              %(recursos_programados)s, %(recursos_disponibles)s, %(pct_avance)s, %(estado)s,
+              %(color_hex)s, %(gap_meta_valor)s, %(gap_meta_pct)s, %(codigo_op)s, %(fecha_corte)s::date
+            )
+            RETURNING id
+        """
+        params = {
+            'campana': campana,
+            'oficina_id': oficina,
+            'anio': anio,
+            'valor_desembolsos': payload.get('valor_desembolsos'),
+            'n_operaciones': payload.get('n_operaciones'),
+            'recursos_programados': payload.get('recursos_programados'),
+            'recursos_disponibles': payload.get('recursos_disponibles'),
+            'pct_avance': payload.get('pct_avance'),
+            'estado': payload.get('estado'),
+            'color_hex': payload.get('color_hex'),
+            'gap_meta_valor': payload.get('gap_meta_valor'),
+            'gap_meta_pct': payload.get('gap_meta_pct'),
+            'codigo_op': payload.get('codigo_op'),
+            'fecha_corte': fecha_corte,
+        }
+        try:
+            with connections['default'].cursor() as c:
+                _exec(c, insert_sql, params)
+                new_id = c.fetchone()[0]
+            return Response({'id': new_id}, status=201)
+        except Exception as exc:
+            logger.exception("Error insertando credito.kpi_campanias")
+            return Response({'error': str(exc)}, status=500)
+
+    year = request.query_params.get('year') or request.query_params.get('anio')
+    month = request.query_params.get('month') or request.query_params.get('mes')
+    campana = request.query_params.get('campana') or request.query_params.get('campana_codigo')
+    oficina = request.query_params.get('oficina_id')
+    try:
+        limit = int(request.query_params.get('limit', '500'))
+    except Exception:
+        limit = 500
+    limit = max(1, min(limit, 5000))
+
+    where = []
+    params = {}
+    if year:
+        where.append("EXTRACT(YEAR FROM kc.fecha_corte) = %(year)s::int")
+        params['year'] = year
+    if month:
+        where.append("EXTRACT(MONTH FROM kc.fecha_corte) = %(month)s::int")
+        params['month'] = month
+    if campana:
+        where.append("kc.campana_codigo ILIKE %(campana)s")
+        params['campana'] = f"%{campana}%"
+    if oficina:
+        where.append("kc.oficina_id = %(oficina)s::int")
+        params['oficina'] = oficina
+    where_sql = f"WHERE {' AND '.join(where)}" if where else ""
+
+    sql = f"""
+        SELECT
+            kc.id,
+            kc.anio,
+            kc.campana_codigo,
+            kc.n_operaciones,
+            kc.valor_desembolsos,
+            kc.recursos_programados,
+            kc.recursos_disponibles,
+            kc.pct_avance,
+            kc.estado,
+            kc.color_hex,
+            kc.gap_meta_valor,
+            kc.gap_meta_pct,
+            kc.oficina_id,
+            kc.codigo_op,
+            kc.fecha_corte
+        FROM credito.kpi_campanias kc
+        {where_sql}
+        ORDER BY kc.fecha_corte DESC NULLS LAST, kc.campana_codigo, kc.oficina_id
+        LIMIT {limit}
+    """
+    try:
+        with connections['default'].cursor() as c:
+            _exec(c, sql, params)
+            cols = [col[0] for col in c.description]
+            items = [dict(zip(cols, row)) for row in c.fetchall()]
+        return Response({
+            'source': 'credito.kpi_campanias',
+            'count': len(items),
+            'items': items,
+            'filters': {'year': year, 'month': month, 'campana': campana, 'oficina': oficina, 'limit': limit},
+        })
+    except Exception as exc:
+        logger.exception("Error leyendo credito.kpi_campanias")
+        return Response({'error': str(exc)}, status=500)
+
+
+# ====== Cartera: Asignación de llamadas (solo lectura) ======
+
+@api_view(['GET', 'POST'])
+@permission_classes([IsAuthenticated])
+def cartera_asignacion_llamadas(request):
+    """
+    Lee cartera.stg_llamadas_detalle con filtros simples.
+    Filtros opcionales: year/mes (fecha_corte), gestor, estado, search (nombre/identificación/crédito/agencia).
+    POST: inserta una fila básica (campos mínimos: agencia, numero_credito_raw, linea_credito, numero_identificacion, nombre_asociado).
+    """
+    if request.method == 'POST':
+        p = request.data or {}
+        required = ['agencia', 'numero_credito_raw', 'linea_credito', 'numero_identificacion', 'nombre_asociado']
+        missing = [k for k in required if not p.get(k)]
+        if missing:
+            return Response({'error': f"Faltan campos obligatorios: {', '.join(missing)}"}, status=400)
+        insert_sql = """
+            INSERT INTO cartera.stg_llamadas_detalle (
+              agencia, numero_credito_raw, linea_credito, numero_identificacion, nombre_asociado,
+              saldo_capital_raw, dias_mora_raw, periodicidad_capital, tipo_garantia, celular,
+              estado, gestor, fecha_gestion_raw, fecha_acuerdo_raw, gestion_titular, gestion_codeudor,
+              novedad_gestion, programar_visita, gestor_apoya, calificacion, fecha_corte
+            )
+            VALUES (
+              %(agencia)s, %(numero_credito_raw)s, %(linea_credito)s, %(numero_identificacion)s, %(nombre_asociado)s,
+              %(saldo_capital_raw)s, %(dias_mora_raw)s, %(periodicidad_capital)s, %(tipo_garantia)s, %(celular)s,
+              %(estado)s, %(gestor)s, %(fecha_gestion_raw)s, %(fecha_acuerdo_raw)s, %(gestion_titular)s, %(gestion_codeudor)s,
+              %(novedad_gestion)s, %(programar_visita)s, %(gestor_apoya)s, %(calificacion)s, %(fecha_corte)s
+            )
+            RETURNING id
+        """
+        try:
+            with connections['default'].cursor() as c:
+                _exec(c, insert_sql, p)
+                new_id = c.fetchone()[0]
+            return Response({'id': new_id}, status=201)
+        except Exception as exc:
+            logger.exception("Error insertando en cartera.stg_llamadas_detalle")
+            return Response({'error': str(exc)}, status=500)
+
+    year = request.query_params.get('year') or request.query_params.get('anio')
+    month = request.query_params.get('month') or request.query_params.get('mes')
+    gestor = request.query_params.get('gestor')
+    estado = request.query_params.get('estado')
+    search = request.query_params.get('search') or request.query_params.get('q')
+    try:
+        limit = int(request.query_params.get('limit', '500'))
+    except Exception:
+        limit = 500
+    limit = max(1, min(limit, 5000))
+
+    where = []
+    params = {}
+    if year:
+        where.append("EXTRACT(YEAR FROM ld.fecha_corte) = %(year)s::int")
+        params['year'] = year
+    if month:
+        where.append("EXTRACT(MONTH FROM ld.fecha_corte) = %(month)s::int")
+        params['month'] = month
+    if gestor:
+        where.append("ld.gestor ILIKE %(gestor)s")
+        params['gestor'] = f"%{gestor}%"
+    if estado:
+        where.append("ld.estado ILIKE %(estado)s")
+        params['estado'] = f"%{estado}%"
+    if search:
+        where.append("""
+            (
+              ld.nombre_asociado ILIKE %(search)s OR
+              ld.numero_identificacion ILIKE %(search)s OR
+              ld.numero_credito_raw ILIKE %(search)s OR
+              ld.agencia ILIKE %(search)s
+            )
+        """)
+        params['search'] = f"%{search}%"
+    where_sql = f"WHERE {' AND '.join(where)}" if where else ""
+
+    sql = f"""
+        SELECT
+            ld.id,
+            ld.agencia,
+            ld.numero_credito_raw AS numero_credito,
+            ld.linea_credito,
+            ld.numero_identificacion,
+            ld.nombre_asociado,
+            ld.saldo_capital_raw,
+            ld.dias_mora_raw,
+            ld.periodicidad_capital,
+            ld.tipo_garantia,
+            ld.celular,
+            ld.estado,
+            ld.gestor,
+            ld.fecha_gestion_raw,
+            ld.fecha_acuerdo_raw,
+            ld.gestion_titular,
+            ld.gestion_codeudor,
+            ld.novedad_gestion,
+            ld.programar_visita,
+            ld.gestor_apoya,
+            ld.calificacion,
+            ld.fecha_corte
+        FROM cartera.stg_llamadas_detalle ld
+        {where_sql}
+        ORDER BY ld.fecha_corte DESC NULLS LAST, ld.agencia, ld.nombre_asociado
+        LIMIT {limit}
+    """
+    try:
+        with connections['default'].cursor() as c:
+            _exec(c, sql, params)
+            cols = [col[0] for col in c.description]
+            items = [dict(zip(cols, row)) for row in c.fetchall()]
+        return Response({
+            'source': 'cartera.stg_llamadas_detalle',
+            'count': len(items),
+            'items': items,
+            'filters': {'year': year, 'month': month, 'gestor': gestor, 'estado': estado, 'search': search, 'limit': limit},
+        })
+    except Exception as exc:
+        logger.exception("Error leyendo cartera.stg_llamadas_detalle")
+        return Response({'error': str(exc)}, status=500)
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def cartera_gestion_llamadas(request):
+    """
+    Lee cartera.stg_asignacion_llamadas.
+    Filtros opcionales: year/mes (fecha_corte), oficina, gestor.
+    """
+    if request.method == 'POST':
+        p = request.data or {}
+        required = ['fecha_corte', 'oficina', 'gestor', 'llamadas_asignadas', 'obligaciones_al_dia_llamadas']
+        missing = [k for k in required if not p.get(k)]
+        if missing:
+            return Response({'error': f"Faltan campos obligatorios: {', '.join(missing)}"}, status=400)
+        fecha_corte = _to_iso_date(p.get('fecha_corte'))
+        insert_sql = """
+            INSERT INTO cartera.stg_asignacion_llamadas (
+              fecha_corte, oficina, gestor, llamadas_asignadas, obligaciones_al_dia_llamadas
+            )
+            VALUES (%(fecha_corte)s, %(oficina)s, %(gestor)s, %(llamadas_asignadas)s, %(obligaciones_al_dia_llamadas)s)
+            RETURNING id
+        """
+        try:
+            with connections['default'].cursor() as c:
+                _exec(c, insert_sql, {
+                    'fecha_corte': fecha_corte,
+                    'oficina': p.get('oficina'),
+                    'gestor': p.get('gestor'),
+                    'llamadas_asignadas': p.get('llamadas_asignadas'),
+                    'obligaciones_al_dia_llamadas': p.get('obligaciones_al_dia_llamadas'),
+                })
+                new_id = c.fetchone()[0]
+            return Response({'id': new_id}, status=201)
+        except Exception as exc:
+            logger.exception("Error insertando en cartera.stg_asignacion_llamadas")
+            return Response({'error': str(exc)}, status=500)
+
+    year = request.query_params.get('year') or request.query_params.get('anio')
+    month = request.query_params.get('month') or request.query_params.get('mes')
+    oficina = request.query_params.get('oficina')
+    gestor = request.query_params.get('gestor')
+    try:
+        limit = int(request.query_params.get('limit', '500'))
+    except Exception:
+        limit = 500
+    limit = max(1, min(limit, 5000))
+
+    where = []
+    params = {}
+    if year:
+        where.append("EXTRACT(YEAR FROM g.fecha_corte) = %(year)s::int")
+        params['year'] = year
+    if month:
+        where.append("EXTRACT(MONTH FROM g.fecha_corte) = %(month)s::int")
+        params['month'] = month
+    if oficina:
+        where.append("g.oficina ILIKE %(oficina)s")
+        params['oficina'] = f"%{oficina}%"
+    if gestor:
+        where.append("g.gestor ILIKE %(gestor)s")
+        params['gestor'] = f"%{gestor}%"
+    where_sql = f"WHERE {' AND '.join(where)}" if where else ""
+
+    sql = f"""
+        SELECT
+            g.id,
+            g.fecha_corte,
+            g.oficina,
+            g.gestor,
+            g.llamadas_asignadas,
+            g.obligaciones_al_dia_llamadas,
+            g.created_at
+        FROM cartera.stg_asignacion_llamadas g
+        {where_sql}
+        ORDER BY g.fecha_corte DESC NULLS LAST, g.oficina
+        LIMIT {limit}
+    """
+    try:
+        with connections['default'].cursor() as c:
+            _exec(c, sql, params)
+            cols = [col[0] for col in c.description]
+            items = [dict(zip(cols, row)) for row in c.fetchall()]
+        return Response({
+            'source': 'cartera.stg_asignacion_llamadas',
+            'count': len(items),
+            'items': items,
+            'filters': {'year': year, 'month': month, 'oficina': oficina, 'gestor': gestor, 'limit': limit},
+        })
+    except Exception as exc:
+        logger.exception("Error leyendo cartera.stg_asignacion_llamadas")
+        return Response({'error': str(exc)}, status=500)
+
+
+@api_view(['GET', 'POST'])
+@permission_classes([IsAuthenticated])
+def cartera_link_llamadas(request):
+    """
+    Lee cartera.stg_llamadas_detalle (link de llamadas).
+    Filtros opcionales: year/mes (fecha_corte), gestor, agencia, search.
+    POST: inserta fila básica (usa la misma tabla que asignación de llamadas).
+    """
+    if request.method == 'POST':
+        p = request.data or {}
+        required = ['agencia', 'numero_credito_raw', 'linea_credito', 'numero_identificacion', 'nombre_asociado']
+        missing = [k for k in required if not p.get(k)]
+        if missing:
+            return Response({'error': f"Faltan campos obligatorios: {', '.join(missing)}"}, status=400)
+        insert_sql = """
+            INSERT INTO cartera.stg_llamadas_detalle (
+              agencia, numero_credito_raw, linea_credito, numero_identificacion, nombre_asociado,
+              saldo_capital_raw, dias_mora_raw, periodicidad_capital, calificacion, gestor, fecha_corte
+            )
+            VALUES (
+              %(agencia)s, %(numero_credito_raw)s, %(linea_credito)s, %(numero_identificacion)s, %(nombre_asociado)s,
+              %(saldo_capital_raw)s, %(dias_mora_raw)s, %(periodicidad_capital)s, %(calificacion)s, %(gestor)s, %(fecha_corte)s
+            )
+            RETURNING id
+        """
+        try:
+            with connections['default'].cursor() as c:
+                _exec(c, insert_sql, p)
+                new_id = c.fetchone()[0]
+            return Response({'id': new_id}, status=201)
+        except Exception as exc:
+            logger.exception("Error insertando en cartera.stg_llamadas_detalle (link)")
+            return Response({'error': str(exc)}, status=500)
+
+    year = request.query_params.get('year') or request.query_params.get('anio')
+    month = request.query_params.get('month') or request.query_params.get('mes')
+    agencia = request.query_params.get('agencia')
+    gestor = request.query_params.get('gestor')
+    search = request.query_params.get('search') or request.query_params.get('q')
+    try:
+        limit = int(request.query_params.get('limit', '500'))
+    except Exception:
+        limit = 500
+    limit = max(1, min(limit, 5000))
+
+    where = []
+    params = {}
+    if year:
+        where.append("EXTRACT(YEAR FROM l.fecha_corte) = %(year)s::int")
+        params['year'] = year
+    if month:
+        where.append("EXTRACT(MONTH FROM l.fecha_corte) = %(month)s::int")
+        params['month'] = month
+    if agencia:
+        where.append("l.agencia ILIKE %(agencia)s")
+        params['agencia'] = f"%{agencia}%"
+    if gestor:
+        where.append("l.gestor ILIKE %(gestor)s")
+        params['gestor'] = f"%{gestor}%"
+    if search:
+        where.append("""
+            (
+              l.nombre_asociado ILIKE %(search)s OR
+              l.numero_identificacion ILIKE %(search)s OR
+              l.numero_credito_raw ILIKE %(search)s OR
+              l.linea_credito ILIKE %(search)s OR
+              l.agencia ILIKE %(search)s
+            )
+        """)
+        params['search'] = f"%{search}%"
+    where_sql = f"WHERE {' AND '.join(where)}" if where else ""
+
+    sql = f"""
+        SELECT
+            l.id,
+            l.fecha_corte,
+            l.agencia,
+            l.numero_credito_raw AS numero_credito,
+            l.linea_credito,
+            l.numero_identificacion,
+            l.nombre_asociado,
+            l.saldo_capital_raw,
+            l.dias_mora_raw,
+            l.periodicidad_capital,
+            l.calificacion,
+            l.gestor,
+            l.created_at
+        FROM cartera.stg_llamadas_detalle l
+        {where_sql}
+        ORDER BY l.id ASC
+        LIMIT {limit}
+    """
+    try:
+        with connections['default'].cursor() as c:
+            _exec(c, sql, params)
+            cols = [col[0] for col in c.description]
+            items = [dict(zip(cols, row)) for row in c.fetchall()]
+        return Response({
+            'source': 'cartera.stg_llamadas_detalle',
+            'count': len(items),
+            'items': items,
+            'filters': {'year': year, 'month': month, 'agencia': agencia, 'gestor': gestor, 'search': search, 'limit': limit},
+        })
+    except Exception as exc:
+        logger.exception("Error leyendo cartera.stg_llamadas_detalle (link)")
+        return Response({'error': str(exc)}, status=500)
+
+
+@api_view(['GET', 'POST'])
+@permission_classes([IsAuthenticated])
+def cartera_link_visitas(request):
+    """
+    Lee cartera.stg_visitas_link (link de visitas).
+    Filtros opcionales: year/mes (fecha_corte), agencia, asesor, search.
+    POST: inserta fila básica.
+    """
+    if request.method == 'POST':
+        p = request.data or {}
+        required = ['agencia', 'numero_credito_raw', 'linea_credito', 'numero_identificacion', 'nombre_asociado']
+        missing = [k for k in required if not p.get(k)]
+        if missing:
+            return Response({'error': f"Faltan campos obligatorios: {', '.join(missing)}"}, status=400)
+        insert_sql = """
+            INSERT INTO cartera.stg_visitas_link (
+              agencia, numero_credito_raw, linea_credito, numero_identificacion, nombre_asociado,
+              saldo_capital_raw, dias_mora_raw, periodicidad_capital, dias_actualizados_raw, asesor, fecha_corte
+            )
+            VALUES (
+              %(agencia)s, %(numero_credito_raw)s, %(linea_credito)s, %(numero_identificacion)s, %(nombre_asociado)s,
+              %(saldo_capital_raw)s, %(dias_mora_raw)s, %(periodicidad_capital)s, %(dias_actualizados_raw)s, %(asesor)s, %(fecha_corte)s
+            )
+            RETURNING id
+        """
+        try:
+            with connections['default'].cursor() as c:
+                _exec(c, insert_sql, p)
+                new_id = c.fetchone()[0]
+            return Response({'id': new_id}, status=201)
+        except Exception as exc:
+            logger.exception("Error insertando en cartera.stg_visitas_link")
+            return Response({'error': str(exc)}, status=500)
+
+    year = request.query_params.get('year') or request.query_params.get('anio')
+    month = request.query_params.get('month') or request.query_params.get('mes')
+    agencia = request.query_params.get('agencia')
+    asesor = request.query_params.get('asesor')
+    search = request.query_params.get('search') or request.query_params.get('q')
+    try:
+        limit = int(request.query_params.get('limit', '500'))
+    except Exception:
+        limit = 500
+    limit = max(1, min(limit, 5000))
+
+    where = []
+    params = {}
+    if year:
+        where.append("EXTRACT(YEAR FROM l.fecha_corte) = %(year)s::int")
+        params['year'] = year
+    if month:
+        where.append("EXTRACT(MONTH FROM l.fecha_corte) = %(month)s::int")
+        params['month'] = month
+    if agencia:
+        where.append("l.agencia ILIKE %(agencia)s")
+        params['agencia'] = f"%{agencia}%"
+    if asesor:
+        where.append("l.asesor ILIKE %(asesor)s")
+        params['asesor'] = f"%{asesor}%"
+    if search:
+        where.append("""
+            (
+              l.nombre_asociado ILIKE %(search)s OR
+              l.numero_identificacion ILIKE %(search)s OR
+              l.numero_credito_raw ILIKE %(search)s OR
+              l.linea_credito ILIKE %(search)s OR
+              l.agencia ILIKE %(search)s
+            )
+        """)
+        params['search'] = f"%{search}%"
+    where_sql = f"WHERE {' AND '.join(where)}" if where else ""
+
+    sql = f"""
+        SELECT
+            l.id,
+            l.fecha_corte,
+            l.agencia,
+            l.numero_credito_raw AS numero_credito,
+            l.linea_credito,
+            l.numero_identificacion,
+            l.nombre_asociado,
+            l.saldo_capital_raw,
+            l.dias_mora_raw,
+            l.periodicidad_capital,
+            COALESCE(l.dias_actualizados_raw, l."DIAS ACTUALIZADOS") AS dias_actualizados,
+            l.asesor,
+            l.created_at
+        FROM cartera.stg_visitas_link l
+        {where_sql}
+        ORDER BY l.id ASC
+        LIMIT {limit}
+    """
+    try:
+        with connections['default'].cursor() as c:
+            _exec(c, sql, params)
+            cols = [col[0] for col in c.description]
+            items = [dict(zip(cols, row)) for row in c.fetchall()]
+        return Response({
+            'source': 'cartera.stg_visitas_link',
+            'count': len(items),
+            'items': items,
+            'filters': {
+                'year': year,
+                'month': month,
+                'agencia': agencia,
+                'asesor': asesor,
+                'search': search,
+                'limit': limit
+            },
+        })
+    except Exception as exc:
+        logger.exception("Error leyendo cartera.stg_visitas_link")
+        return Response({'error': str(exc)}, status=500)
+
+
+@api_view(['GET', 'POST'])
+@permission_classes([IsAuthenticated])
+def cartera_seguimiento_campanas(request):
+    """
+    Lee cartera.stg_pagares_paz_y_salvo (seguimiento de campañas).
+    Filtros opcionales: year/mes (fecha_carga), gestor, estado_obligacion, search (nombre/cedula/pagares/oficina).
+    POST: inserta fila básica.
+    """
+    if request.method == 'POST':
+        p = request.data or {}
+        required = ['pagare_virtualcop_raw', 'cedula_raw', 'nombre', 'estado_obligacion']
+        missing = [k for k in required if not p.get(k)]
+        if missing:
+            return Response({'error': f"Faltan campos obligatorios: {', '.join(missing)}"}, status=400)
+        insert_sql = """
+            INSERT INTO cartera.stg_pagares_paz_y_salvo (
+              oficina, pagare_virtualcop_raw, pagare_opa_raw, cedula_raw, nombre,
+              saldo_capital_raw, capital_condonado_raw, estado_obligacion, novedad, fecha_raw,
+              gestor, honorarios_raw, abogado, fuente_archivo, fecha_carga
+            )
+            VALUES (
+              %(oficina)s, %(pagare_virtualcop_raw)s, %(pagare_opa_raw)s, %(cedula_raw)s, %(nombre)s,
+              %(saldo_capital_raw)s, %(capital_condonado_raw)s, %(estado_obligacion)s, %(novedad)s, %(fecha_raw)s,
+              %(gestor)s, %(honorarios_raw)s, %(abogado)s, %(fuente_archivo)s, %(fecha_carga)s
+            )
+            RETURNING id
+        """
+        try:
+            with connections['default'].cursor() as c:
+                _exec(c, insert_sql, p)
+                new_id = c.fetchone()[0]
+            return Response({'id': new_id}, status=201)
+        except Exception as exc:
+            logger.exception("Error insertando en cartera.stg_pagares_paz_y_salvo")
+            return Response({'error': str(exc)}, status=500)
+
+    year = request.query_params.get('year') or request.query_params.get('anio')
+    month = request.query_params.get('month') or request.query_params.get('mes')
+    gestor = request.query_params.get('gestor')
+    estado = request.query_params.get('estado') or request.query_params.get('estado_obligacion')
+    search = request.query_params.get('search') or request.query_params.get('q')
+    try:
+        limit = int(request.query_params.get('limit', '500'))
+    except Exception:
+        limit = 500
+    limit = max(1, min(limit, 5000))
+
+    where = []
+    params = {}
+    if year:
+        where.append("EXTRACT(YEAR FROM p.fecha_carga) = %(year)s::int")
+        params['year'] = year
+    if month:
+        where.append("EXTRACT(MONTH FROM p.fecha_carga) = %(month)s::int")
+        params['month'] = month
+    if gestor:
+        where.append("p.gestor ILIKE %(gestor)s")
+        params['gestor'] = f"%{gestor}%"
+    if estado:
+        where.append("p.estado_obligacion ILIKE %(estado)s")
+        params['estado'] = f"%{estado}%"
+    if search:
+        where.append("""
+            (
+              p.nombre ILIKE %(search)s OR
+              p.cedula_raw ILIKE %(search)s OR
+              p.pagare_virtualcop_raw ILIKE %(search)s OR
+              p.pagare_opa_raw ILIKE %(search)s OR
+              p.oficina ILIKE %(search)s
+            )
+        """)
+        params['search'] = f"%{search}%"
+    where_sql = f"WHERE {' AND '.join(where)}" if where else ""
+
+    sql = f"""
+        SELECT
+            p.id,
+            p.oficina,
+            p.pagare_virtualcop_raw,
+            p.pagare_opa_raw,
+            p.cedula_raw,
+            p.nombre,
+            p.saldo_capital_raw,
+            p.capital_condonado_raw,
+            p.estado_obligacion,
+            p.novedad,
+            p.fecha_raw,
+            p.gestor,
+            p.honorarios_raw,
+            p.abogado,
+            p.fuente_archivo,
+            p.fecha_carga
+        FROM cartera.stg_pagares_paz_y_salvo p
+        {where_sql}
+        ORDER BY p.id ASC
+        LIMIT {limit}
+    """
+    try:
+        with connections['default'].cursor() as c:
+            _exec(c, sql, params)
+            cols = [col[0] for col in c.description]
+            items = [dict(zip(cols, row)) for row in c.fetchall()]
+        return Response({
+            'source': 'cartera.stg_pagares_paz_y_salvo',
+            'count': len(items),
+            'items': items,
+            'filters': {'year': year, 'month': month, 'gestor': gestor, 'estado': estado, 'search': search, 'limit': limit},
+        })
+    except Exception as exc:
+        logger.exception("Error leyendo cartera.stg_pagares_paz_y_salvo (seguimiento campañas)")
+        return Response({'error': str(exc)}, status=500)
+
+
+@api_view(['GET', 'POST'])
+@permission_classes([IsAuthenticated])
+def cartera_gestiones(request):
+    """
+    Lee cartera.stg_gestiones ajustada al formulario de gestiones.
+    Filtros opcionales: year/mes (fecha_gestion o fecha_corte), gestor/usuario_gestion, tipo, search (comentario, cédula, nombre, nro_producto, oficina).
+    POST: inserta fila básica.
+    """
+    if request.method == 'POST':
+        p = request.data or {}
+        required = ['tipo', 'comentario', 'nro_producto', 'cedula', 'nombre', 'usuario_gestion']
+        missing = [k for k in required if not p.get(k)]
+        if missing:
+            return Response({'error': f"Faltan campos obligatorios: {', '.join(missing)}"}, status=400)
+        insert_sql = """
+            INSERT INTO cartera.stg_gestiones (
+              fecha_gestion, tipo, comentario, nro_producto, cedula, nombre,
+              usuario_gestion, oficina, gestion_validada, gestor, gestiones_efectuadas
+            )
+            VALUES (
+              %(fecha_gestion)s, %(tipo)s, %(comentario)s, %(nro_producto)s, %(cedula)s, %(nombre)s,
+              %(usuario_gestion)s, %(oficina)s, %(gestion_validada)s, %(gestor)s, %(gestiones_efectuadas)s
+            )
+            RETURNING id
+        """
+        try:
+            with connections['default'].cursor() as c:
+                _exec(c, insert_sql, p)
+                new_id = c.fetchone()[0]
+            return Response({'id': new_id}, status=201)
+        except Exception as exc:
+            logger.exception("Error insertando en cartera.stg_gestiones")
+            return Response({'error': str(exc)}, status=500)
+
+    year = request.query_params.get('year') or request.query_params.get('anio')
+    month = request.query_params.get('month') or request.query_params.get('mes')
+    gestor = request.query_params.get('gestor') or request.query_params.get('usuario_gestion')
+    tipo = request.query_params.get('tipo')
+    search = request.query_params.get('search') or request.query_params.get('q')
+    try:
+        limit = int(request.query_params.get('limit', '500'))
+    except Exception:
+        limit = 500
+    limit = max(1, min(limit, 5000))
+
+    where = []
+    params = {}
+    if year:
+        where.append("""
+            (
+              (fecha_gestion IS NOT NULL AND EXTRACT(YEAR FROM fecha_gestion) = %(year)s::int)
+              OR (fecha_gestion IS NULL AND fecha_corte IS NOT NULL AND EXTRACT(YEAR FROM fecha_corte) = %(year)s::int)
+            )
+        """)
+        params['year'] = year
+    if month:
+        where.append("""
+            (
+              (fecha_gestion IS NOT NULL AND EXTRACT(MONTH FROM fecha_gestion) = %(month)s::int)
+              OR (fecha_gestion IS NULL AND fecha_corte IS NOT NULL AND EXTRACT(MONTH FROM fecha_corte) = %(month)s::int)
+            )
+        """)
+        params['month'] = month
+    if gestor:
+        where.append("(usuario_gestion ILIKE %(gestor)s OR gestor ILIKE %(gestor)s)")
+        params['gestor'] = f"%{gestor}%"
+    if tipo:
+        where.append("tipo ILIKE %(tipo)s")
+        params['tipo'] = f"%{tipo}%"
+    if search:
+        where.append("""
+            (
+              comentario ILIKE %(search)s OR
+              cedula ILIKE %(search)s OR
+              nombre ILIKE %(search)s OR
+              nro_producto ILIKE %(search)s OR
+              oficina ILIKE %(search)s OR
+              usuario_gestion ILIKE %(search)s
+            )
+        """)
+        params['search'] = f"%{search}%"
+    where_sql = f"WHERE {' AND '.join(where)}" if where else ""
+
+    sql = f"""
+        SELECT
+            id,
+            COALESCE(fecha_gestion, fecha_corte) AS fecha_gestion,
+            tipo,
+            comentario,
+            nro_producto,
+            cedula,
+            nombre,
+            usuario_gestion,
+            oficina,
+            gestion_validada,
+            gestor,
+            gestiones_efectuadas,
+            created_at
+        FROM cartera.stg_gestiones
+        {where_sql}
+        ORDER BY id ASC
+        LIMIT {limit}
+    """
+    try:
+        with connections['default'].cursor() as c:
+            _exec(c, sql, params)
+            cols = [col[0] for col in c.description]
+            items = [dict(zip(cols, row)) for row in c.fetchall()]
+        return Response({
+            'source': 'cartera.stg_gestiones',
+            'count': len(items),
+            'items': items,
+            'filters': {'year': year, 'month': month, 'gestor': gestor, 'tipo': tipo, 'search': search, 'limit': limit},
+        })
+    except Exception as exc:
+        logger.exception("Error leyendo cartera.stg_gestiones")
+        return Response({'error': str(exc)}, status=500)
+
+
+@api_view(['GET', 'POST'])
+@permission_classes([IsAuthenticated])
+def ing_org_encuesta_satisfaccion(request):
+    """
+    Lee ingenieria_organizacional.io_encuesta_satisfaccion.
+    Filtros opcionales: year/mes (fecha_inicio), oficina_area, search (nombre/correo).
+    POST: inserta encuesta (obligatorio: fecha_inicio, correo_electronico, nombre, oficina_area).
+    """
+    if request.method == 'POST':
+        p = request.data or {}
+        required = ['fecha_inicio', 'correo_electronico', 'nombre', 'oficina_area']
+        missing = [k for k in required if not p.get(k)]
+        if missing:
+            return Response({'error': f"Faltan campos obligatorios: {', '.join(missing)}"}, status=400)
+        insert_sql = """
+            INSERT INTO ingenieria_organizacional.io_encuesta_satisfaccion (
+              fecha_inicio, fecha_fin, correo_electronico, nombre, oficina_area,
+              calidad_documentos, claridad_comunicacion, rapidez_respuesta, satisfaccion_general,
+              tiempo_creacion_texto, apertura_ajustes_texto, comentario_mejora
+            )
+            VALUES (
+              %(fecha_inicio)s, %(fecha_fin)s, %(correo_electronico)s, %(nombre)s, %(oficina_area)s,
+              %(calidad_documentos)s, %(claridad_comunicacion)s, %(rapidez_respuesta)s, %(satisfaccion_general)s,
+              %(tiempo_creacion_texto)s, %(apertura_ajustes_texto)s, %(comentario_mejora)s
+            )
+            RETURNING id_encuesta
+        """
+        try:
+            with connections['default'].cursor() as c:
+                _exec(c, insert_sql, p)
+                new_id = c.fetchone()[0]
+            return Response({'id': new_id}, status=201)
+        except Exception as exc:
+            logger.exception("Error insertando io_encuesta_satisfaccion")
+            return Response({'error': str(exc)}, status=500)
+
+    year = request.query_params.get('year') or request.query_params.get('anio')
+    month = request.query_params.get('month') or request.query_params.get('mes')
+    oficina = request.query_params.get('oficina') or request.query_params.get('oficina_area')
+    search = request.query_params.get('search') or request.query_params.get('q')
+    try:
+        limit = int(request.query_params.get('limit', '1000'))
+    except Exception:
+        limit = 1000
+    limit = max(1, min(limit, 5000))
+
+    where = []
+    params = {}
+    if year:
+        where.append("EXTRACT(YEAR FROM e.fecha_inicio) = %(year)s::int")
+        params['year'] = year
+    if month:
+        where.append("EXTRACT(MONTH FROM e.fecha_inicio) = %(month)s::int")
+        params['month'] = month
+    if oficina:
+        where.append("e.oficina_area ILIKE %(oficina)s")
+        params['oficina'] = f"%{oficina}%"
+    if search:
+        where.append("""
+            (
+              e.nombre ILIKE %(search)s OR
+              e.correo_electronico ILIKE %(search)s OR
+              e.oficina_area ILIKE %(search)s
+            )
+        """)
+        params['search'] = f"%{search}%"
+    where_sql = f"WHERE {' AND '.join(where)}" if where else ""
+
+    sql = f"""
+        SELECT
+            e.id_encuesta AS id,
+            e.fecha_inicio,
+            e.fecha_fin,
+            e.correo_electronico,
+            e.nombre,
+            e.oficina_area,
+            e.calidad_documentos,
+            e.claridad_comunicacion,
+            e.rapidez_respuesta,
+            e.satisfaccion_general,
+            e.tiempo_creacion_texto,
+            e.apertura_ajustes_texto,
+            e.comentario_mejora
+        FROM ingenieria_organizacional.io_encuesta_satisfaccion e
+        {where_sql}
+        ORDER BY e.fecha_inicio DESC NULLS LAST, e.id_encuesta DESC
+        LIMIT {limit}
+    """
+    try:
+        with connections['default'].cursor() as c:
+            _exec(c, sql, params)
+            cols = [col[0] for col in c.description]
+            items = [dict(zip(cols, row)) for row in c.fetchall()]
+        return Response({
+            'source': 'ingenieria_organizacional.io_encuesta_satisfaccion',
+            'count': len(items),
+            'items': items,
+            'filters': {'year': year, 'month': month, 'oficina_area': oficina, 'search': search, 'limit': limit},
+        })
+    except Exception as exc:
+        logger.exception("Error leyendo io_encuesta_satisfaccion")
+        return Response({'error': str(exc)}, status=500)
+
+
+@api_view(['GET', 'POST'])
+@permission_classes([IsAuthenticated])
+def ing_org_documentos(request):
+    """
+    Lee ingenieria_organizacional.io_documento para listado de maestros.
+    Filtros opcionales: estrategia, gestion, tipo_documento, search (nombre/código/proceso).
+    POST: inserta documento (obligatorio: estrategia, gestion, tipo_documento, proceso, nombre_documento, codigo, fecha_ultima_actualizacion, version).
+    """
+    if request.method == 'POST':
+        p = request.data or {}
+        required = ['estrategia', 'gestion', 'tipo_documento', 'proceso', 'nombre_documento', 'codigo', 'fecha_ultima_actualizacion', 'version']
+        missing = [k for k in required if not p.get(k)]
+        if missing:
+            return Response({'error': f"Faltan campos obligatorios: {', '.join(missing)}"}, status=400)
+        insert_sql = """
+            INSERT INTO ingenieria_organizacional.io_documento (
+              estrategia, gestion, tipo_documento, proceso, nombre_documento, codigo,
+              fecha_ultima_actualizacion, version, porcentaje_actualizado, estado_actualizacion,
+              tipo_conservacion, publicado_intranet
+            )
+            VALUES (
+              %(estrategia)s, %(gestion)s, %(tipo_documento)s, %(proceso)s, %(nombre_documento)s, %(codigo)s,
+              %(fecha_ultima_actualizacion)s::date, %(version)s, %(porcentaje_actualizado)s, %(estado_actualizacion)s,
+              %(tipo_conservacion)s, %(publicado_intranet)s
+            )
+            RETURNING id_documento
+        """
+        try:
+            with connections['default'].cursor() as c:
+                _exec(c, insert_sql, p)
+                new_id = c.fetchone()[0]
+            return Response({'id': new_id}, status=201)
+        except Exception as exc:
+            logger.exception("Error insertando io_documento")
+            return Response({'error': str(exc)}, status=500)
+
+    estrategia = request.query_params.get('estrategia')
+    gestion = request.query_params.get('gestion')
+    tipo = request.query_params.get('tipo') or request.query_params.get('tipo_documento')
+    search = request.query_params.get('search') or request.query_params.get('q')
+    try:
+        limit = int(request.query_params.get('limit', '1000'))
+    except Exception:
+        limit = 1000
+    limit = max(1, min(limit, 5000))
+
+    where = []
+    params = {}
+    if estrategia:
+        where.append("d.estrategia ILIKE %(estrategia)s")
+        params['estrategia'] = f"%{estrategia}%"
+    if gestion:
+        where.append("d.gestion ILIKE %(gestion)s")
+        params['gestion'] = f"%{gestion}%"
+    if tipo:
+        where.append("d.tipo_documento ILIKE %(tipo)s")
+        params['tipo'] = f"%{tipo}%"
+    if search:
+        where.append("""
+            (
+              d.nombre_documento ILIKE %(search)s OR
+              d.codigo ILIKE %(search)s OR
+              d.proceso ILIKE %(search)s
+            )
+        """)
+        params['search'] = f"%{search}%"
+    where_sql = f"WHERE {' AND '.join(where)}" if where else ""
+
+    sql = f"""
+        SELECT
+            d.id_documento AS id,
+            d.estrategia,
+            d.gestion,
+            d.tipo_documento,
+            d.proceso,
+            d.nombre_documento,
+            d.codigo,
+            d.fecha_ultima_actualizacion,
+            d.version,
+            d.porcentaje_actualizado,
+            d.estado_actualizacion,
+            d.tipo_conservacion,
+            d.publicado_intranet
+        FROM ingenieria_organizacional.io_documento d
+        {where_sql}
+        ORDER BY d.fecha_ultima_actualizacion DESC NULLS LAST, d.id_documento DESC
+        LIMIT {limit}
+    """
+    try:
+        with connections['default'].cursor() as c:
+            _exec(c, sql, params)
+            cols = [col[0] for col in c.description]
+            items = [dict(zip(cols, row)) for row in c.fetchall()]
+        return Response({
+            'source': 'ingenieria_organizacional.io_documento',
+            'count': len(items),
+            'items': items,
+            'filters': {'estrategia': estrategia, 'gestion': gestion, 'tipo': tipo, 'search': search, 'limit': limit},
+        })
+    except Exception as exc:
+        logger.exception("Error leyendo io_documento")
+        return Response({'error': str(exc)}, status=500)
+
+
+@api_view(['GET', 'POST'])
+@permission_classes([IsAuthenticated])
+def ing_org_solicitudes(request):
+    """
+    Lee ingenieria_organizacional.io_solicitud.
+    Filtros opcionales: year/mes (fecha_solicitud), gestion, estado, tipo_solicitud, search (descripcion, creado_por, asignado_a).
+    POST: inserta solicitud (obligatorio: radicado, gestion, estado, creado_por, tipo_solicitud, asignado_a, fecha_solicitud).
+    """
+    if request.method == 'POST':
+        p = request.data or {}
+        required = ['radicado', 'gestion', 'estado', 'creado_por', 'tipo_solicitud', 'asignado_a', 'fecha_solicitud']
+        missing = [k for k in required if not p.get(k)]
+        if missing:
+            return Response({'error': f"Faltan campos obligatorios: {', '.join(missing)}"}, status=400)
+        insert_sql = """
+            INSERT INTO ingenieria_organizacional.io_solicitud (
+              radicado, mes, gestion, descripcion, avance, estado, creado_por,
+              tipo_solicitud, asignado_a, fecha_solicitud, fecha_en_curso, fecha_revision,
+              fecha_en_ajustes, fecha_en_aprobacion, fecha_completado, tiene_doc_adjunto
+            )
+            VALUES (
+              %(radicado)s, %(mes)s, %(gestion)s, %(descripcion)s, %(avance)s, %(estado)s, %(creado_por)s,
+              %(tipo_solicitud)s, %(asignado_a)s, %(fecha_solicitud)s::date, %(fecha_en_curso)s, %(fecha_revision)s,
+              %(fecha_en_ajustes)s, %(fecha_en_aprobacion)s, %(fecha_completado)s, %(tiene_doc_adjunto)s
+            )
+            RETURNING id_solicitud
+        """
+        try:
+            with connections['default'].cursor() as c:
+                _exec(c, insert_sql, p)
+                new_id = c.fetchone()[0]
+            return Response({'id': new_id}, status=201)
+        except Exception as exc:
+            logger.exception("Error insertando io_solicitud")
+            return Response({'error': str(exc)}, status=500)
+
+    year = request.query_params.get('year') or request.query_params.get('anio')
+    month = request.query_params.get('month') or request.query_params.get('mes')
+    gestion = request.query_params.get('gestion')
+    estado = request.query_params.get('estado')
+    tipo = request.query_params.get('tipo') or request.query_params.get('tipo_solicitud')
+    search = request.query_params.get('search') or request.query_params.get('q')
+    try:
+        limit = int(request.query_params.get('limit', '1000'))
+    except Exception:
+        limit = 1000
+    limit = max(1, min(limit, 5000))
+
+    where = []
+    params = {}
+    if year:
+        where.append("EXTRACT(YEAR FROM s.fecha_solicitud) = %(year)s::int")
+        params['year'] = year
+    if month:
+        where.append("EXTRACT(MONTH FROM s.fecha_solicitud) = %(month)s::int")
+        params['month'] = month
+    if gestion:
+        where.append("s.gestion ILIKE %(gestion)s")
+        params['gestion'] = f"%{gestion}%"
+    if estado:
+        where.append("s.estado ILIKE %(estado)s")
+        params['estado'] = f"%{estado}%"
+    if tipo:
+        where.append("s.tipo_solicitud ILIKE %(tipo)s")
+        params['tipo'] = f"%{tipo}%"
+    if search:
+        where.append("""
+            (
+              s.descripcion ILIKE %(search)s OR
+              s.creado_por ILIKE %(search)s OR
+              s.asignado_a ILIKE %(search)s
+            )
+        """)
+        params['search'] = f"%{search}%"
+    where_sql = f"WHERE {' AND '.join(where)}" if where else ""
+
+    sql = f"""
+        SELECT
+            s.id_solicitud AS id,
+            s.radicado,
+            s.mes,
+            s.gestion,
+            s.descripcion,
+            s.avance,
+            s.estado,
+            s.creado_por,
+            s.tipo_solicitud,
+            s.asignado_a,
+            s.fecha_solicitud,
+            s.fecha_en_curso,
+            s.fecha_revision,
+            s.fecha_en_ajustes,
+            s.fecha_en_aprobacion,
+            s.fecha_completado,
+            s.tiene_doc_adjunto
+        FROM ingenieria_organizacional.io_solicitud s
+        {where_sql}
+        ORDER BY s.fecha_solicitud DESC NULLS LAST, s.id_solicitud DESC
+        LIMIT {limit}
+    """
+    try:
+        with connections['default'].cursor() as c:
+            _exec(c, sql, params)
+            cols = [col[0] for col in c.description]
+            items = [dict(zip(cols, row)) for row in c.fetchall()]
+        return Response({
+            'source': 'ingenieria_organizacional.io_solicitud',
+            'count': len(items),
+            'items': items,
+            'filters': {'year': year, 'month': month, 'gestion': gestion, 'estado': estado, 'tipo': tipo, 'search': search, 'limit': limit},
+        })
+    except Exception as exc:
+        logger.exception("Error leyendo io_solicitud")
+        return Response({'error': str(exc)}, status=500)
+
+
 # ====== Presupuesto ======
 
 @api_view(['GET'])
@@ -1791,22 +3228,38 @@ class PresupuestoUploadSimpleView(APIView):
         import io, csv, re
         content = f.read()
 
+        uploaded_meta = {
+            'original_name': getattr(f, 'name', ''),
+            'saved_name': None,
+            'uploaded_at': None,
+        }
+
         # Guardar el archivo subido bajo LIBRO_BALANCE_ROOT/Presupuesto/Aanoo_<anio>/
         try:
             root = _get_balance_root()
             target_dir = root / 'Presupuesto' / f'Aanoo_{anio}'
             target_dir.mkdir(parents=True, exist_ok=True)
-            # Nombre seguro: presupuesto_simple_<anio>_<mes>_<timestamp>.<ext>
-            ext = Path(f.name).suffix or '.xlsx'
             from datetime import datetime as pydt
-            safe_name = f"presupuesto_simple_{anio}_{mes}_{pydt.now().strftime('%Y%m%d_%H%M%S')}{ext}"
-            dest_path = target_dir / safe_name
+            timestamp = pydt.now()
+            original_name = Path(f.name or '').name or 'presupuesto.xlsx'
+            base_name = Path(original_name).stem or 'presupuesto'
+            ext = Path(original_name).suffix or '.xlsx'
+            clean_base = re.sub(r'[^A-Za-z0-9._-]+', '_', base_name).strip('_') or 'presupuesto'
+            candidate = f"{clean_base}{ext}"
+            dest_path = target_dir / candidate
+            counter = 1
+            while dest_path.exists():
+                candidate = f"{clean_base}_{counter}{ext}"
+                dest_path = target_dir / candidate
+                counter += 1
             with open(dest_path, 'wb+') as dst:
                 dst.write(content)
             try:
                 saved_rel = dest_path.relative_to(root).as_posix()
             except Exception:
                 saved_rel = dest_path.name
+            uploaded_meta['saved_name'] = dest_path.name
+            uploaded_meta['uploaded_at'] = timestamp.isoformat()
         except Exception:
             # No es bloqueante: si falla el guardado del archivo, continuar con la carga lógica
             saved_rel = None
@@ -1919,7 +3372,13 @@ class PresupuestoUploadSimpleView(APIView):
         except Exception as e:
             return Response({'error': str(e)}, status=400)
 
-        return Response({'success': True, 'imported': imported, 'errors': errors, 'saved_rel': saved_rel})
+        return Response({
+            'success': True,
+            'imported': imported,
+            'errors': errors,
+            'saved_rel': saved_rel,
+            'uploaded_meta': uploaded_meta,
+        })
 
 
 class PresupuestoExecuteFileView(APIView):

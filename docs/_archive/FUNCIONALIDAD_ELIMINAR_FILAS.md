@@ -142,20 +142,6 @@ curl -X DELETE "https://coofisam360.ngrok.io/api/v1/analisis/explicativo/2/" \
 - **Mensajes de estado**: Éxito y error
 - **Actualización automática**: Datos se recargan después de eliminar
 
-## 📋 Próximos Pasos
-
-### 🔄 Implementar en Otras Tablas
-- [ ] **Cupos de Crédito**: Agregar funcionalidad de eliminar
-- [ ] **Categorías de Oficinas**: Agregar funcionalidad de eliminar
-- [ ] **Indicadores Financieros**: Agregar funcionalidad de eliminar
-
-### 🎯 Patrón a Replicar
-1. **Backend**: Agregar método `delete()` a la vista
-2. **URLs**: Agregar ruta con `<id>/`
-3. **Frontend**: Agregar función `handleDelete()` con doble confirmación
-4. **UI**: Agregar botón "Eliminar" en columna de acciones
-5. **Estilo**: Usar colores rojos para indicar acción destructiva
-
 ## 🎨 Estética del Botón Eliminar
 
 ### ✅ Características Visuales

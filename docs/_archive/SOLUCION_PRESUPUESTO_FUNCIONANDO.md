@@ -235,23 +235,6 @@ export async function listPresupuesto(filters = {}) {
 }
 ```
 
-## Próximos Pasos
-
-### 1. Probar en el Navegador
-- Acceder a `http://localhost:8061/modulo-financiero/tabla-presupuesto`
-- Verificar que se cargan las cuentas disponibles
-- Probar funcionalidades de CRUD
-
-### 2. Probar Formulario de Ejecución Presupuestal
-- Acceder a `http://localhost:8061/modulo-financiero/tabla-ejecucion-presupuestal`
-- Verificar que se cargan los datos de ejecución presupuestal
-- Probar funcionalidades de CRUD
-
-### 3. Verificar Consistencia
-- Verificar que todos los formularios del módulo financiero funcionan igual
-- Probar funcionalidades de CRUD en todos los formularios
-- Verificar que no hay regresiones
-
 ## Conclusión
 
 La solución implementada **unificó el patrón de servicios** para que el formulario de presupuesto use la misma configuración que los otros formularios que funcionan:

@@ -101,13 +101,6 @@ Se implementó la funcionalidad CRUD completa para el formulario de presupuesto 
 - ✅ Componente con todas las funcionalidades
 - ❌ Problema de carga de datos (investigación en curso)
 
-### 8. Próximos Pasos
-1. Resolver el problema de carga de datos
-2. Probar todas las funcionalidades CRUD
-3. Verificar el formateo de números y porcentajes
-4. Validar la exportación a Excel
-5. Probar la funcionalidad de filtros
-
 ## Conclusión
 La implementación está completa en términos de funcionalidad, pero hay un problema de carga de datos que necesita ser resuelto. Una vez solucionado, el formulario de presupuesto tendrá todas las funcionalidades solicitadas y será consistente con el resto del módulo financiero.
 

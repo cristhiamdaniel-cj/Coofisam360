@@ -80,24 +80,6 @@ useEffect(() => {
 }, [selectedYear, selectedMonth]);
 ```
 
-## Próximos Pasos
-
-### 1. Implementar Verificación de Autenticación
-- Agregar verificación de token en el componente
-- Mostrar mensaje claro cuando no hay autenticación
-- Redirigir al login si es necesario
-
-### 2. Probar con Usuario Autenticado
-- Iniciar sesión en el sistema
-- Verificar que el token se guarde en localStorage
-- Probar el formulario de presupuesto
-
-### 3. Validar Funcionalidades
-- Probar agregar filas
-- Probar editar filas
-- Probar eliminar filas
-- Probar exportación a Excel
-
 ## Conclusión
 
 El problema no está en la implementación del formulario de presupuesto, sino en la **falta de autenticación del usuario**. Una vez que el usuario inicie sesión y tenga un token válido, el formulario funcionará correctamente con todas las funcionalidades implementadas:

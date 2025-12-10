@@ -4,6 +4,8 @@
 - **Nombre**: COOFISAM360
 - **Versión**: 1.0
 - **Fecha de inicio**: 2025-09-04
+- **Empresa**: Neusi Solutions
+- **Desarrollador**: Samir Alejandro Sanchez Romero
 - **Tecnologías**: React, Node.js, SQL Server, Power BI
 
 ## Estructura del Proyecto
@@ -107,4 +109,3 @@
 - **Infraestructura**: [Contacto]
 - **Base de Datos**: [Contacto]
 - **Aplicaciones**: [Contacto]
-

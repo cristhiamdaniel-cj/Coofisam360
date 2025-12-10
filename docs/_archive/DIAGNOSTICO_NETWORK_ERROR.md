@@ -98,29 +98,6 @@ CORS_ALLOWED_ORIGINS = [
 - **Causa**: Servidor no disponible o puerto bloqueado
 - **Solución**: ✅ Servidor verificado funcionando
 
-## Próximos Pasos para Resolución
-
-### 1. Verificar en Navegador
-- Abrir DevTools (F12)
-- Ir a la pestaña Network
-- Recargar la página
-- Verificar errores específicos en la consola
-
-### 2. Probar Página de Test
-- Acceder a `/modulo-financiero/test-ejecucion/`
-- Hacer clic en "Probar API"
-- Verificar respuesta
-
-### 3. Verificar Logs del Backend
-- Revisar logs de Django
-- Verificar peticiones entrantes
-- Identificar errores específicos
-
-### 4. Verificar Configuración del Frontend
-- Revisar variables de entorno
-- Verificar configuración de Next.js
-- Comprobar imports y dependencias
-
 ## Comandos de Diagnóstico
 
 ### Verificar Backend:

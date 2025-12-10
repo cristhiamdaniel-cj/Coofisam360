@@ -29,8 +29,9 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
     DJANGO_SETTINGS_MODULE=coofisam_project.settings
 WORKDIR /app/django
 
-# Copiar dependencias
+# Copiar dependencias (librerías + ejecutables de consola como gunicorn)
 COPY --from=deps /usr/local/lib/python3.12/site-packages /usr/local/lib/python3.12/site-packages
+COPY --from=deps /usr/local/bin /usr/local/bin
 
 # Copiar proyecto ya preparado
 COPY --from=builder /app/django /app/django
@@ -40,4 +41,3 @@ EXPOSE 8060
 
 # Migraciones y arranque con Gunicorn
 CMD sh -c "python manage.py migrate --noinput && gunicorn coofisam_project.wsgi:application --bind 0.0.0.0:8060 --workers 3"
-

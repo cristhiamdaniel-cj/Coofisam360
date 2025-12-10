@@ -139,23 +139,6 @@ curl -X GET "http://localhost:8060/api/v1/finanzas/ejecucion-presupuestal/?anio=
 - ✅ `saveEjecucionPresupuestal()`: `axios` → `fetch`
 - ✅ `deleteEjecucionPresupuestal()`: `axios` → `fetch`
 
-## Próximos Pasos
-
-### 1. Verificar en Navegador
-- Recargar la página del formulario de presupuesto
-- Verificar que se cargan las cuentas disponibles
-- Probar funcionalidades de CRUD
-
-### 2. Verificar Ejecución Presupuestal
-- Acceder al formulario de ejecución presupuestal
-- Verificar que se cargan los 523 registros
-- Probar filtros y búsquedas
-
-### 3. Limpieza (Opcional)
-- Remover imports de `axios` no utilizados
-- Eliminar configuración de `api` no utilizada
-- Optimizar código si es necesario
-
 ## Conclusión
 
 La solución **estandariza el uso de `fetch`** en todos los servicios del módulo financiero, eliminando la inconsistencia que causaba los errores de red. 

@@ -382,25 +382,41 @@ RESOURCE_CONFIG: dict[str, dict[str, Any]] = {
                  AND COALESCE(il.trabajo_fecha_ingreso_compania, il.empleado_activo_desde, r.dia_inicio) <= r.dia_fin
                  AND COALESCE(il.trabajo_fecha_termino_trabajo, il.trabajo_fecha_fin_de_contrato, il.empleado_activo_hasta, r.dia_fin) >= r.dia_inicio
                 GROUP BY 1, 2
+            ),
+            base AS (
+                SELECT
+                    r.periodo,
+                    r.oficina_codigo,
+                    r.oficina_nombre,
+                    r.cantidad,
+                    r.observacion,
+                    r.anio,
+                    r.mes_num,
+                    r.mes,
+                    COALESCE(b.total_empleados, 0) AS total_empleados,
+                    CASE
+                        WHEN COALESCE(b.total_empleados, 0) > 0 THEN ROUND((r.cantidad::numeric * 100) / b.total_empleados, 2)
+                        ELSE 0
+                    END AS variacion_pct
+                FROM rango r
+                LEFT JOIN buk_activos b
+                  ON b.periodo = r.periodo
+                 AND b.oficina_codigo = r.oficina_codigo
             )
             SELECT
-                r.periodo,
-                r.oficina_codigo,
-                r.oficina_nombre,
-                r.cantidad,
-                r.observacion,
-                r.anio,
-                r.mes_num,
-                r.mes,
-                COALESCE(b.total_empleados, 0) AS total_empleados,
-                CASE
-                    WHEN COALESCE(b.total_empleados, 0) > 0 THEN ROUND((r.cantidad::numeric * 100) / b.total_empleados, 2)
-                    ELSE 0
-                END AS variacion_pct
-            FROM rango r
-            LEFT JOIN buk_activos b
-              ON b.periodo = r.periodo
-             AND b.oficina_codigo = r.oficina_codigo
+                periodo,
+                oficina_codigo,
+                oficina_nombre,
+                cantidad,
+                observacion,
+                anio,
+                mes_num,
+                mes,
+                total_empleados,
+                variacion_pct,
+                -- Promedio del porcentaje de variación por mes (mismo valor para todas las filas del mes)
+                ROUND(AVG(variacion_pct) OVER (PARTITION BY periodo), 2) AS promedio
+            FROM base
         """,
         "order": "periodo DESC, oficina_codigo",
         "table": "talento_cultura.ascensos",
@@ -429,6 +445,12 @@ RESOURCE_CONFIG: dict[str, dict[str, Any]] = {
                 cantidad_empleados,
                 cantidad_beneficiados,
                 valor_bono,
+                -- Porcentaje del mes calculado para compatibilidad con el frontend
+                ROUND(
+                    COALESCE(cantidad_beneficiados,0)::numeric * 100
+                    / NULLIF(COALESCE(cantidad_empleados,0), 0),
+                    2
+                ) AS porcentaje,
                 porcentaje_variacion
             FROM talento_cultura.reporte_bonos_mensual
         """,

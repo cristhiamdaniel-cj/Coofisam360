@@ -382,12 +382,3 @@ LIMIT 12;
 ```
 
 ---
-
-## 14) Próximos pasos
-
-* Incorporar **SQL de `T_Calendario`** y **(si aplica) `g_matriz_oficina`**.
-* Parametrizar umbrales de `matriz_oficinas` en tabla de configuración.
-* Evaluar **materialización** mensual de vistas pesadas.
-* Añadir **tests automatizados** (p.ej., dbt o pytest + queries) para checks de integridad.
-
----

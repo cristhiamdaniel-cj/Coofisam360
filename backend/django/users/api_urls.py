@@ -73,6 +73,22 @@ urlpatterns = [
     path('finanzas/ejecucion-presupuestal/files/', api_views.ejecucion_presupuestal_files, name='api-finanzas-ejecucion-presupuestal-files'),
     path('finanzas/ejecucion-presupuestal/<int:id>/', api_views.EjecucionPresupuestalView.as_view(), name='api-finanzas-ejecucion-presupuestal-detail'),
 
+    # Crédito
+    path('credito/radicaciones/', api_views.credito_radicaciones, name='api-credito-radicaciones'),
+    path('credito/campanias-oficina/', api_views.credito_campanias_oficina, name='api-credito-campanias-oficina'),
+    path('credito/campanias/', api_views.credito_campanias, name='api-credito-campanias'),
+    path('cartera/asignacion-llamadas/', api_views.cartera_asignacion_llamadas, name='api-cartera-asignacion-llamadas'),
+    path('cartera/gestion-llamadas/', api_views.cartera_gestion_llamadas, name='api-cartera-gestion-llamadas'),
+    path('cartera/link-llamadas/', api_views.cartera_link_llamadas, name='api-cartera-link-llamadas'),
+    path('cartera/link-visitas/', api_views.cartera_link_visitas, name='api-cartera-link-visitas'),
+    path('cartera/seguimiento-campanas/', api_views.cartera_seguimiento_campanas, name='api-cartera-seguimiento-campanas'),
+    path('cartera/gestiones/', api_views.cartera_gestiones, name='api-cartera-gestiones'),
+
+    # Ingeniería organizacional
+    path('ing-org/encuesta-satisfaccion/', api_views.ing_org_encuesta_satisfaccion, name='api-ingorg-encuesta-satisfaccion'),
+    path('ing-org/documentos/', api_views.ing_org_documentos, name='api-ingorg-documentos'),
+    path('ing-org/solicitudes/', api_views.ing_org_solicitudes, name='api-ingorg-solicitudes'),
+
     # ETL: población de tablas base
     path('finanzas/etl/populate/', api_views.finanzas_etl_populate, name='api-finanzas-etl-populate'),
 ]

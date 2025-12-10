@@ -138,23 +138,6 @@ const API_BASE_URL = getApiBaseUrl();
 # URL detectada: http://mi-dominio.com:8060
 ```
 
-## Próximos Pasos
-
-### 1. Verificar en Navegador
-- Acceder a `http://localhost:8061/modulo-financiero/test-conectividad`
-- Ejecutar el test de conectividad
-- Verificar que se detecta la URL correcta
-
-### 2. Probar Formularios
-- Acceder al formulario de presupuesto
-- Verificar que se cargan las cuentas disponibles
-- Probar funcionalidades de CRUD
-
-### 3. Probar con Ngrok (Opcional)
-- Configurar ngrok para el frontend
-- Verificar que la detección automática funciona
-- Probar la conectividad desde el dominio ngrok
-
 ## Configuración Adicional para Ngrok
 
 ### Si se usa ngrok para el backend:
