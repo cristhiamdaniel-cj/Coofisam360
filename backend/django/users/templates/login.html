@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Iniciar sesión · Coofisam 360{% endblock %}
+
+{% block body_class %}login-bg{% endblock %}
+
+{% block content %}
+<div class="card glass p-4 shadow-sm" style="max-width: 400px; margin:auto;">
+  <h2 class="mb-3">Iniciar sesión</h2>
+
+  {% if form.errors or form.non_field_errors %}
+    <div class="alert alert-danger py-2 px-3 mb-3">
+      Usuario o contraseña inválidos. Inténtalo de nuevo.
+    </div>
+  {% endif %}
+
+  <form method="post" novalidate>
+    {% csrf_token %}
+    <div class="mb-3">
+      <label for="id_username" class="form-label">Usuario</label>
+      {{ form.username }}
+    </div>
+    <div class="mb-3">
+      <label for="id_password" class="form-label">Contraseña</label>
+      {{ form.password }}
+    </div>
+    {% if next %}<input type="hidden" name="next" value="{{ next }}">{% endif %}
+    <button type="submit" class="btn btn-primary w-100">Ingresar</button>
+  </form>
+</div>
+{% endblock %}

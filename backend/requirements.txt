@@ -1,0 +1,20 @@
+# Dependencias principales del proyecto Coofisam360
+# Django y framework web
+Django==5.2.5
+djangorestframework==3.16.1
+django-cors-headers==4.7.0
+
+# Servidor de producción
+gunicorn==23.0.0
+
+# Base de datos
+psycopg2-binary==2.9.10
+
+# Archivos estáticos
+whitenoise==6.9.0
+
+# Utilidades
+asgiref==3.9.1
+sqlparse==0.5.3
+packaging==25.0
+

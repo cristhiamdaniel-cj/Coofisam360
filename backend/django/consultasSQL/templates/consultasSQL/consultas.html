@@ -1,0 +1,48 @@
+<!-- consultasSQL/templates/consultasSQL/consultas.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consultas SQL</title>
+</head>
+<body>
+    <h2>Ejecutar Consulta SQL</h2>
+
+    <form method="POST">
+        {% csrf_token %}
+        <textarea name="sql_query" rows="10" cols="80" placeholder="Escribe tu consulta SQL aquí..."></textarea><br><br>
+        <button type="submit">Ejecutar Consulta</button>
+    </form>
+
+    <h3>Acciones Predefinidas</h3>
+    <form method="GET">
+        <button type="submit" formaction="{% url 'ver_tablas' %}">Ver Tablas</button><br><br>
+        <button type="submit" formaction="{% url 'ver_vistas' %}">Ver Vistas</button><br><br>
+    </form>
+
+    {% if result %}
+        <h3>Resultado:</h3>
+        <table border="1">
+            <thead>
+                <tr>
+                    {% for column in result.0 %}
+                        <th>{{ column }}</th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in result %}
+                    <tr>
+                        {% for cell in row %}
+                            <td>{{ cell }}</td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% elif error %}
+        <p style="color: red;">Error: {{ error }}</p>
+    {% endif %}
+</body>
+</html>

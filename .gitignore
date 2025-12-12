@@ -1,3 +1,116 @@
+# Coofisam360 - Archivos a ignorar
 
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Django
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+media/
+staticfiles/
+static/
+
+# Entornos virtuales
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Archivos de sistema
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Archivos temporales
+*.tmp
+*.temp
+*.bak
+*.backup
+*_backup
+*_prueba*
+test_*.txt
+_prueba_*.txt
+
+# Node.js (Frontend)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.next/
+out/
+build/
+# Paths explícitos usados antes
 frontend/node_modules/
 frontend/.next/
+
+# Variables de entorno
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Logs
+logs/
+*.log
+
+# Archivos de configuración local
+config.local.py
+settings.local.py
+
+# Archivos de backup
+.backups/
+*.bak.*
+*.backup.*
+*.safe.*
+*.fullbak.*
+
+# Archivos de documentación generados
+docs/generated/
+docs/build/
+
+# Archivos de datos sensibles
+data/sensitive/
+*.xlsx
+*.xls
+*.csv
+!data/sample/
+
+# Archivos de token y credenciales
+token.txt
+credentials.json
+secrets.json

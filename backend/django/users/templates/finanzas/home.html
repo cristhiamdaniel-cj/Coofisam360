@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}Módulo Financiero · Coofisam 360{% endblock %}
+
+{% block content %}
+<div class="card p-4 shadow-sm">
+  <h2 class="mb-3">Módulo Financiero</h2>
+  <p class="text-muted mb-4">Selecciona una opción para continuar:</p>
+
+  <div class="row g-3">
+    <div class="col-12 col-md-4">
+      <a href="{% url 'users:finanzas_carga_balance' %}" class="btn btn-outline-primary w-100 py-3">
+        📥 Carga Libro Balance
+      </a>
+    </div>
+    <div class="col-12 col-md-4">
+      <a href="{% url 'users:finanzas_form_indicadores' %}" class="btn btn-outline-success w-100 py-3">
+        📊 Formulario Indicadores
+      </a>
+    </div>
+    <div class="col-12 col-md-4">
+      <a href="{% url 'users:finanzas_form_cupos' %}" class="btn btn-outline-warning w-100 py-3">
+        🏦 Formulario Cupos de Crédito
+      </a>
+    </div>
+  </div>
+</div>
+{% endblock %}

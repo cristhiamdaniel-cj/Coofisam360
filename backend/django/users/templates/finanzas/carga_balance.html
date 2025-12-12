@@ -1,0 +1,182 @@
+{% extends "base.html" %}
+{% block title %}Carga Libro Balance · Coofisam 360{% endblock %}
+
+{% block content %}
+<div class="card p-4 shadow-sm">
+  <h3>📥 Carga Libro Balance</h3>
+  <p class="text-muted">Aquí irá el formulario para subir y procesar el Libro de Balance.</p>
+
+  <!-- Botones de acción -->
+  <div class="mt-4 d-flex gap-2 flex-wrap">
+    <!-- Botón que dispara el explorador -->
+    <button id="btn-upload" type="button" class="btn btn-primary">📂 Agregar Archivo</button>
+    <!-- input file oculto -->
+    <input id="file-input" type="file" accept=".xlsx,.xls" class="d-none" />
+
+    <!-- Botón que abre modal de exploración -->
+    <button id="btn-consulta" type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#modalTree">
+      🔎 Consulta Archivos
+    </button>
+
+    <button id="btn-etl" type="button" class="btn btn-success">⚙️ Ejecutar ETL</button>
+  </div>
+
+  <div id="upload-status" class="mt-2 small text-muted"></div>
+</div>
+
+<!-- Modal: Árbol de archivos -->
+<div class="modal fade" id="modalTree" tabindex="-1" aria-labelledby="modalTreeLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalTreeLabel">📁 Explorador de Libro de Balance</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body">
+        <div id="tree-loading" class="text-muted">Cargando estructura…</div>
+        <div id="tree-container" class="mt-2"></div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-outline-secondary" data-bs-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+/* Estilos simples para árbol */
+.tree ul { list-style: none; padding-left: 1rem; }
+.tree li { margin: .15rem 0; }
+.tree .dir::before { content: "📂 "; }
+.tree .file::before { content: "📄 "; }
+.tree .toggle { cursor: pointer; user-select: none; }
+.tree .children { margin-left: .75rem; }
+</style>
+
+<script>
+// ========= CSRF helper =========
+function getCookie(name) {
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+  if (parts.length === 2) return parts.pop().split(';').shift();
+  return null;
+}
+const csrftoken = getCookie('csrftoken');
+
+// ========= ÁRBOL DE ARCHIVOS =========
+const treeContainer = document.getElementById("tree-container");
+const loading = document.getElementById("tree-loading");
+const btnConsulta = document.getElementById("btn-consulta");
+
+// Construye DOM recursivo para el árbol
+function renderNode(node) {
+  const li = document.createElement('li');
+  if (node.type === 'dir') {
+    const head = document.createElement('span');
+    head.className = 'dir toggle fw-semibold';
+    head.textContent = node.name;
+    const children = document.createElement('ul');
+    children.className = 'children';
+    (node.children || []).forEach(child => children.appendChild(renderNode(child)));
+    children.style.display = 'none';
+    head.addEventListener('click', () => {
+      children.style.display = (children.style.display === 'none') ? '' : 'none';
+    });
+    li.appendChild(head);
+    li.appendChild(children);
+  } else {
+    const file = document.createElement('span');
+    file.className = 'file';
+    file.textContent = node.name;
+    li.appendChild(file);
+  }
+  return li;
+}
+
+function renderTree(rootName, nodes) {
+  const wrapper = document.createElement('div');
+  wrapper.className = 'tree';
+  const title = document.createElement('div');
+  title.className = 'mb-2 text-muted';
+  title.textContent = "Raíz: " + rootName;
+  const ul = document.createElement('ul');
+  (nodes || []).forEach(n => ul.appendChild(renderNode(n)));
+  wrapper.appendChild(title);
+  wrapper.appendChild(ul);
+  return wrapper;
+}
+
+// la exponemos en window para poder llamarla tras subir
+async function fetchTree() {
+  if (!loading || !treeContainer) return;
+  loading.style.display = '';
+  treeContainer.innerHTML = '';
+  try {
+    const resp = await fetch("/finanzas/api/tree/");
+    if (!resp.ok) throw new Error("HTTP " + resp.status);
+    const data = await resp.json();
+    const treeEl = renderTree(data.root, data.tree || []);
+    treeContainer.appendChild(treeEl);
+  } catch (err) {
+    treeContainer.innerHTML = '<div class="text-danger">No se pudo cargar el árbol: ' + err.message + '</div>';
+  } finally {
+    loading.style.display = 'none';
+  }
+}
+window.fetchTree = fetchTree;
+
+btnConsulta?.addEventListener('click', fetchTree);
+
+// ========= SUBIDA DE ARCHIVO =========
+const btnUpload = document.getElementById('btn-upload');
+const fileInput = document.getElementById('file-input');
+const statusEl  = document.getElementById('upload-status');
+
+btnUpload?.addEventListener('click', () => fileInput.click());
+
+fileInput?.addEventListener('change', async (e) => {
+  const file = e.target.files?.[0];
+  if (!file) return;
+
+  const fd = new FormData();
+  fd.append('file', file);
+
+  btnUpload.disabled = true;
+  statusEl.className = "mt-2 small text-muted";
+  statusEl.textContent = `Subiendo "${file.name}"…`;
+
+  try {
+    const resp = await fetch("/finanzas/upload/", {
+      method: "POST",
+      headers: { "X-CSRFToken": csrftoken },
+      body: fd
+    });
+    const data = await resp.json();
+    if (!resp.ok || !data.success) {
+      throw new Error(data.error || `HTTP ${resp.status}`);
+    }
+    statusEl.className = "mt-2 small text-success";
+    statusEl.textContent = `✅ Subido: ${data.saved_name} → ${data.rel_dir}`;
+
+    // Si el modal del árbol está abierto, lo refrescamos
+    const modalEl = document.getElementById('modalTree');
+    const isOpen = modalEl && modalEl.classList.contains('show');
+    if (isOpen) {
+      try { await fetchTree(); } catch {}
+    }
+  } catch (err) {
+    statusEl.className = "mt-2 small text-danger";
+    statusEl.textContent = `❌ Error: ${err.message}`;
+  } finally {
+    btnUpload.disabled = false;
+    fileInput.value = "";
+  }
+});
+
+// (Opcional) botón ETL — aquí solo placeholder
+document.getElementById('btn-etl')?.addEventListener('click', async () => {
+  // Implementar llamada a tu endpoint de ETL cuando esté listo
+  alert('Próximamente: ejecución automática del ETL.');
+});
+</script>
+{% endblock %}

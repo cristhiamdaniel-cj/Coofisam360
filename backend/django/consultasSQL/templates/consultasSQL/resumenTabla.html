@@ -1,0 +1,32 @@
+<!-- consultasSQL/templates/consultasSQL/resumenTabla.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resumen de Tabla</title>
+</head>
+<body>
+    <h2>Resumen de la Tabla: {{ table_name }}</h2>
+    {% if result %}
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Campo</th>
+                    <th>Tipo de Dato</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in result %}
+                    <tr>
+                        <td>{{ row.0 }}</td>
+                        <td>{{ row.1 }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No se encontraron campos.</p>
+    {% endif %}
+</body>
+</html>

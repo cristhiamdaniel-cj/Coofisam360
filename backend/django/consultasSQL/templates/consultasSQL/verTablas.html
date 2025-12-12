@@ -1,0 +1,25 @@
+<!-- consultasSQL/templates/consultasSQL/verTablas.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ver Tablas</title>
+</head>
+<body>
+    <h2>Tablas</h2>
+    {% if tables %}
+        <ul>
+            {% for table in tables %}
+                <li>
+                    {{ table.0 }} 
+                    <a href="{% url 'ver_resumen_tabla' table.0 %}">Ver Resumen</a> |
+                    <a href="?sql_query=SELECT * FROM {{ table.0 }} LIMIT 10;">Ver Definición SQL</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No hay tablas disponibles.</p>
+    {% endif %}
+</body>
+</html>
